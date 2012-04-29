@@ -1,0 +1,78 @@
+[submodule "_vim/bundle-available/snipmate"]
+	path = _vim/bundle-available/snipmate
+	url = https://github.com/garbas/vim-snipmate.git
+[submodule "_vim/bundle-available/tlib_vim"]
+	path = _vim/bundle-available/tlib_vim
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule "_vim/bundle-available/addon-mw-utils"]
+	path = _vim/bundle-available/addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "_vim/bundle-available/snipmate-snippets"]
+	path = _vim/bundle-available/snipmate-snippets
+	url = https://github.com/honza/snipmate-snippets.git
+[submodule "_vim/bundle-available/fugitive"]
+	path = _vim/bundle-available/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "_vim/bundle-available/surround"]
+	path = _vim/bundle-available/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "_vim/bundle-available/supertab"]
+	path = _vim/bundle-available/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "_vim/bundle-available/minibufexpl"]
+	path = _vim/bundle-available/minibufexpl
+	url = https://github.com/sontek/minibufexpl.vim.git
+[submodule "_vim/bundle-available/command-t"]
+	path = _vim/bundle-available/command-t
+	url = https://github.com/wincent/Command-T.git
+[submodule "_vim/bundle-available/pyflakes"]
+	path = _vim/bundle-available/pyflakes
+	url = https://github.com/mitechie/pyflakes-pathogen.git
+[submodule "_vim/bundle-available/ack"]
+	path = _vim/bundle-available/ack
+	url = https://github.com/mileszs/ack.vim.git
+[submodule "_vim/bundle-available/gundo"]
+	path = _vim/bundle-available/gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "_vim/bundle-available/pydoc"]
+	path = _vim/bundle-available/pydoc
+	url = https://github.com/fs111/pydoc.vim.git
+[submodule "_vim/bundle-available/pep8"]
+	path = _vim/bundle-available/pep8
+	url = https://github.com/vim-scripts/pep8.git
+[submodule "_vim/bundle-available/pytest"]
+	path = _vim/bundle-available/pytest
+	url = https://github.com/alfredodeza/pytest.vim.git
+[submodule "_vim/bundle-available/makegreen"]
+	path = _vim/bundle-available/makegreen
+	url = https://github.com/reinh/vim-makegreen.git
+[submodule "_vim/bundle-available/tasklist"]
+	path = _vim/bundle-available/tasklist
+	url = https://github.com/vim-scripts/TaskList.vim.git
+[submodule "_vim/bundle-available/nerdtree"]
+	path = _vim/bundle-available/nerdtree
+	url = https://github.com/vim-scripts/The-NERD-tree.git
+[submodule "_vim/bundle-available/ropevim"]
+	path = _vim/bundle-available/ropevim
+	url = https://github.com/sontek/rope-vim.git
+[submodule "_vim/bundle-available/vim-ipython"]
+	path = _vim/bundle-available/vim-ipython
+	url = https://github.com/ivanov/vim-ipython.git
+[submodule "_vim/bundle-available/vim-javascript"]
+	path = _vim/bundle-available/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
+[submodule "_vim/bundle-available/powerline"]
+	path = _vim/bundle-available/powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "_vim/testing/vim-mustang"]
+	path = _vim/testing/vim-mustang
+	url = https://github.com/marcus/vim-mustang.git
+[submodule "_vim/testing/pasta"]
+	path = _vim/testing/pasta
+	url = https://github.com/sickill/vim-pasta.git
+[submodule "_vim/testing/pangloss-javascript"]
+	path = _vim/testing/pangloss-javascript
+	url = https://github.com/pangloss/vim-javascript.git
+[submodule "_vim/testing/gist"]
+	path = _vim/testing/gist
+	url = https://github.com/mattn/gist-vim.git
