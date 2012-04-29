@@ -1,0 +1,14 @@
+#!/bin/bash
+
+alias gmail="screen firefox 'http://www.gmail.com'"
+alias stack-overflow="screen firefox 'http://www.stackoverflow.com'"
+alias gsearch="screen firefox -search"
+alias gappserver="screen ~/Dropbox/Projects/google-appengine/dev_appserver.py"
+alias ip="screen ipython qtconsole --colors=Linux"
+alias ipythonqt="screen ipython qtconsole --colors=Linux"
+alias gipython="screen ipython qtconsole --colors=Linux"
+alias s='screen'
+alias dropbox='screen ~/.dropbox-dist/dropboxd'
+alias gedit='screen gedit'
+alias esimpleutils='gvim ~/Dropbox/python/simpleutils/'
+alias gitrm='git rm -r --cached'
