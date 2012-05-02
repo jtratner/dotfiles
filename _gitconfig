@@ -1,0 +1,8 @@
+[core]
+    excludefiles = /home/rhymingorange/.cvsignore
+    excludefiles = /home/jtratner/.csvignore
+[user]
+	name = Jeffrey Tratner
+	email = jeffrey.tratner@gmail.com
+[github]
+	user = jtratner

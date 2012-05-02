@@ -230,10 +230,6 @@ let g:ipy_perform_mappings=0
 noremap <silent> <F5> :python run_this_file()<CR>
 noremap <silent> <S-F5> :python run_this_line()<CR>
 noremap <silent> <F9> :python run_these_lines()<CR>
-" idea: i+f 
-noremap <silent> if :python run_this_file()<CR>
-noremap <silent><leader>is :call <SID>toggle_send_on_save()<CR>
-noremap <silent> il :python run_this_line()<CR>
 noremap <silent> <leader>d :py get_doc_buffer()<CR>
 noremap <silent> <leader>s :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
 noremap <silent> <S-F9> :python toggle_reselect()<CR>
@@ -252,16 +248,16 @@ map <C-F5> :call <SID>toggle_send_on_save()<CR>
 "map <silent> <F11> :python run_command("plt.close('all')")<cr>
 
 "pi custom
-map <silent> <C-Return> :python run_this_file()<CR>
-map <silent> <C-s> :python run_this_line()<CR>
-imap <silent> <C-s> <C-O>:python run_this_line()<CR>
-map <silent> <M-s> :python dedent_run_this_line()<CR>
-vmap <silent> <C-S> :python run_these_lines()<CR>
-vmap <silent> <M-s> :python dedent_run_these_lines()<CR>
-map <silent> <M-c> I#<ESC>
-vmap <silent> <M-c> I#<ESC>
-map <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
-vmap <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
+"map <silent> <C-Return> :python run_this_file()<CR>
+"map <silent> <C-s> :python run_this_line()<CR>
+"imap <silent> <C-s> <C-O>:python run_this_line()<CR>
+"map <silent> <M-s> :python dedent_run_this_line()<CR>
+"vmap <silent> <C-S> :python run_these_lines()<CR>
+"vmap <silent> <M-s> :python dedent_run_these_lines()<CR>
+"map <silent> <M-c> I#<ESC>
+"vmap <silent> <M-c> I#<ESC>
+"map <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
+"vmap <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
 
 " ==========================================================
 " Pathogen - Allows us to organize our vim plugins
@@ -415,9 +411,9 @@ au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 " set the coloring for errors to be readable :P
-au FileType python hi SpellBad term=reverse ctermfg = black ctermbg=9 gui=undercurl guisp=Red
+"au FileType python hi SpellBad term=reverse ctermfg = black ctermbg=9 gui=undercurl guisp=Red
 " set up Pylint so it can be used to check python files
-autocmd FileType python compiler pylint
+"autocmd FileType python compiler pylint
 " don't run pylint on every save (instead run by :make in a python file)
 "let g:pylint_onwrite=0
 " uncomment to disable pylint in quickfix window
