@@ -78,7 +78,7 @@ c.TerminalIPythonApp.ignore_old_config = True
 # configuration (through profiles), history storage, etc. The default is usually
 # $HOME/.ipython. This options can also be specified through the environment
 # variable IPYTHON_DIR.
-c.TerminalIPythonApp.ipython_dir = u'$HOME/.ipython'
+#c.TerminalIPythonApp.ipython_dir = u'$HOME/.ipython'
 
 # Whether to display a banner upon starting IPython.
 # c.TerminalIPythonApp.display_banner = True
@@ -210,10 +210,10 @@ c.TerminalInteractiveShell.confirm_exit = True
 # c.TerminalInteractiveShell.readline_remove_delims = '-/~'
 
 # Start logging to the default log file.
-c.TerminalInteractiveShell.logstart = True
+#c.TerminalInteractiveShell.logstart = True
 
 # The name of the logfile to use.
-c.TerminalInteractiveShell.logfile = '$HOME/.ipython/ipython_logs/ipython_log.py'
+#c.TerminalInteractiveShell.logfile = '$HOME/.ipython/ipython_logs/ipython_log.py'
 
 # The shell program to be used for paging.
 c.TerminalInteractiveShell.pager = 'less'

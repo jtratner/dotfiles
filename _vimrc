@@ -51,10 +51,10 @@
 " Py.test (disabled)
 "    Run py.test test's from within vim
 "
-" MakeGreen
+" MakeGreen (disabled)
 "    Generic test runner that works with nose
 "
-" Pylint
+" Pylint (disabled)
 "    Checks python files
 " 
 " TaskList - special highlighting and quickfix window
@@ -139,6 +139,14 @@ endfu
 nmap <leader>sb :call SplitScroll()<CR>
 "<CR><C-w>l<C-f>:set scrollbind<CR>
 
+""
+"restructuredtext / Markdown shortcuts
+"
+" TODO: make this respect indentation, etc -- not sure how to do that yet
+command EqualLine :put=repeat('=', col('$')-1)
+command DashLine :put=repeat('-', col('$')-1)
+
+
 " ==========================================================
 " Powerline
 " ==========================================================
@@ -219,6 +227,15 @@ map <leader>j :RopeGotoDefinition<CR>
 
 " Rename whatever the cursor is on (including references to it)
 map <leader>r :RopeRename<CR>
+
+" MKEQUALS
+" Voom
+" MKEQUALS
+" set Voom to know certain filetypes (keys are vim fts, values are voom modes)
+let g:voom_ft_modes = {'markdown': 'markdown', 'python': 'python', 'rst':'rest'}
+map <C-F3> :Voom<CR>
+map <F3> :Voom
+
 
 " ==========================================================
 " vim-ipython
@@ -369,12 +386,11 @@ set incsearch               " Incrementally search while typing a /regex
 """" Display
 if has("gui_running")
     colorscheme xoria256
-    " keep menubar
-    set guioptions+=m
+    " keep menubar only
+    set guioptions=m
+    set novisualbell
     " set powerline to fancy
     let g:Powerline_symbols="fancy"
-    " keep toolbar
-    set guioptions+=T
 else
     " set powerline to normal instead (otherwise superugly)
     colorscheme xoria256
