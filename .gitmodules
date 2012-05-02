@@ -79,3 +79,6 @@
 [submodule "ubuntu-java/flexion-java6sh"]
 	path = ubuntu-java/flexion-java6sh
 	url = https://github.com/flexiondotorg/oab-java6.git
+[submodule "_vim/bundle-available/webapi-vim"]
+	path = _vim/bundle-available/webapi-vim
+	url = https://github.com/mattn/webapi-vim.git
