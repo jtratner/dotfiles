@@ -1,6 +1,10 @@
-
+# snippets I might want to contribute
+snippet mapd:
+	map(lambda ${1:vars} : ${3:action}, ${4:somelst})
+snippet filterd:
+	filter(lambda ${1:vars} : ${3:cond}, ${4:somelst})
 # ternary statement
-snippet t?:
+snippet tern:
 	${2:$1 is true} if ${1:condition} else ${3:$1 is false}
 # quick file reads
 snippet fread:
@@ -19,7 +23,10 @@ snippet Beau
 	BeautifulSoup(${1:markup},${2:'html5lib'})
 snippet bs4
 	from bs4 import BeautifulSoup
-# if none
+snippet ifn IfNone (one line)
+	if ${1:obj} is${2:} None:
+		${2:pass}
+# if nonei
 snippet ifn IfNone/Else
 	if ${1:obj} is None:
 		${2:pass}
@@ -35,7 +42,21 @@ snippet ifn IfNone/Elif/Else
 snippet elifn
 	elif ${1:obj} is${2:not }None:
 		${3:pass}
+# to paralell syntax below
+snippet ein
+	elif ${1:obj} is${2:not }None:
+		${3:pass}
 
+# python debugger (pdb)
+snippet pdb
+	import pdb; pdb.set_trace()
+# ipython debugger (ipdb)
+snippet ipdb ipdb
+	import ipdb; ipdb.set_trace()
+# ipython Tracer - which I think is better, maybe?
+snippet ipdb Tracer
+	from IPython.Debugger import Tracer; debug_here=Tracer()
+	debug_here()
 
 # Ifs
 snippet if
@@ -59,22 +80,10 @@ snippet clatin1
 snippet cascii
 	# -*- coding: ascii -*-
 
-snippet mapd:
-	map(lambda ${1:vars} : ${3:action}, ${4:somelst})
-snippet filterd:
-	filter(lambda ${1:vars} : ${3:cond}, ${4:somelst})
 snippet ld Filter/Map
-	lambda ${1:vars} : ${2:action}, 
-snippet ld Local Variable
-
-
-# disabling because I use '.' for code completion far more
-#snippet .
-#	self.
+	lambda ${1:vars} : ${2:action},
 snippet s.
 	self.
-
-
 # Try/Finally's for writing files
 snippet tryw Try/Finally (write)
 	try:
@@ -97,13 +106,3 @@ snippet test
 		${3:pass}
 
 
-# python debugger (pdb)
-snippet pdb
-	import pdb; pdb.set_trace()
-# ipython debugger (ipdb)
-snippet ipdb ipdb
-	import ipdb; ipdb.set_trace()
-# ipython Tracer
-snippet ipdb Tracer
-	from IPython.Debugger import Tracer; debug_here=Tracer()
-	debug_here()

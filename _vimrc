@@ -59,6 +59,8 @@
 " 
 " TaskList - special highlighting and quickfix window
 "
+" tComment - comment and uncomment lines
+" voom - two-panel outline view for vim
 " ==========================================================
 " Pathogen
 " ==========================================================
@@ -81,8 +83,18 @@ let mapleader=","             " change the leader to be a comma vs slash
 command! W :w
 
 " turn on and off color bar relative to textwidth
-command ColorBar  :set colorcolumn=+0 "sets colorbar at textwidth
-command NoColorBar :set colorcolumn=0
+" TODO: fix for when textwidth is not zero
+command ColorBar  :set colorcolumn=80<CR> "sets colorbar at textwidth
+command NoColorBar :set colorcolumn=0<CR>
+command T :set textwidth= <CR>
+" turn on autowrapping for comments
+" TODO: figure out how to convert these into functions so can be accessed by keyword to
+" to work even with textwidth off?
+" 'ec' - edit comment, 'en' - edit normal, 'ed' - edit done
+map <silent><leader>ec :set textwidth=72<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
+map <silent><leader>en :set textwidth=80<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 80, autowrapping on, go edit"'<CR>
+map <silent><leader>ed :set textwidth=0<CR>:set colorcolumn=0<CR>:set fo-=t<CR>:exe ':echo "autowrapping off"'<CR>
+command CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
 
 
 " Paste from clipboard
@@ -146,6 +158,18 @@ nmap <leader>sb :call SplitScroll()<CR>
 command EqualLine :put=repeat('=', col('$')-1)
 command DashLine :put=repeat('-', col('$')-1)
 
+" ==========================================================
+" tComment
+" ==========================================================
+"" note that its commands are:
+"gc{motion}   :: Toggle comments (for small comments within one line 
+"                    the &filetype_inline style will be used, if 
+"                    defined)
+"    gcc          :: Toggle comment for the current line
+"    gC{motion}   :: Comment region
+"    gCc          :: Comment the current line
+" also uses <C-_> and <leader>_
+"
 
 " ==========================================================
 " Powerline
@@ -232,9 +256,10 @@ map <leader>r :RopeRename<CR>
 " Voom
 " MKEQUALS
 " set Voom to know certain filetypes (keys are vim fts, values are voom modes)
-let g:voom_ft_modes = {'markdown': 'markdown', 'python': 'python', 'rst':'rest'}
-map <C-F3> :Voom<CR>
-map <F3> :Voom
+let g:voom_ft_modes = {'markdown': 'markdown', 'python': 'python', 'rst': 'rest'}
+map <M-F3> :Voomquit<CR>
+map <C-F3> :Voomlog<CR>
+map <F3> :Voomtoggle<CR>
 
 
 " ==========================================================

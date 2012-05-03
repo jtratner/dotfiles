@@ -15,4 +15,4 @@ pip-log.txt
 # Mac OSX
 .DS_Store
 
-.ropeproject
+\.ropeproject
