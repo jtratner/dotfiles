@@ -82,3 +82,6 @@
 [submodule "_vim/bundle-disabled/nerdtree"]
 	path = _vim/bundle-disabled/nerdtree
 	url = https://github.com/vim-scripts/The-NERD-tree.git
+[submodule "_vim/bundle-available/tcomment"]
+	path = _vim/bundle-available/tcomment
+	url = https://github.com/tomtom/tcomment_vim.git
