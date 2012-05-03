@@ -252,9 +252,9 @@ map <leader>j :RopeGotoDefinition<CR>
 " Rename whatever the cursor is on (including references to it)
 map <leader>r :RopeRename<CR>
 
-" MKEQUALS
+" ==========================================================
 " Voom
-" MKEQUALS
+" ==========================================================
 " set Voom to know certain filetypes (keys are vim fts, values are voom modes)
 let g:voom_ft_modes = {'markdown': 'markdown', 'python': 'python', 'rst': 'rest'}
 map <M-F3> :Voomquit<CR>

@@ -1,10 +1,4 @@
-.DS_Store
-ipython_log.py
-ipython_log.py*
-*.swp
-bundle/[^.]*
-ipython_logs/[^.]*
-# standard python ignores
+
 # Packages
 *.egg
 *.egg-info
