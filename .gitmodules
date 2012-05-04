@@ -85,3 +85,9 @@
 [submodule "_vim/bundle-disabled/nerdtree"]
 	path = _vim/bundle-disabled/nerdtree
 	url = https://github.com/vim-scripts/The-NERD-tree.git
+[submodule "zsh/zsh-dotfiles"]
+	path = zsh/zsh-dotfiles
+	url = git@github.com:jtratner/zsh-dotfiles.git
+[submodule "zsh/ohmyzsh"]
+	path = zsh/ohmyzsh
+	url = git://github.com/sorin-ionescu/oh-my-zsh.git
