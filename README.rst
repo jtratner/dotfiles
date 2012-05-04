@@ -75,6 +75,8 @@ reStructuredText/autounderline Functions
 
 .. code:: vim
 
+::
+
     some vim text
 
     ":Un 2
@@ -145,12 +147,16 @@ Compiling Vim (Medium!)
 
 .. code:: bash
 
+::
+
     ./configure --enable-pythoninterp --enable-rubyinterp --enable-gui --with-features=huge --prefix=$HOME/path/to/directory `
 
 2. Go to your directory where you installed vim and check that you got the right
    version with
 
 .. code:: bash
+
+::
 
     ./vim --version
 
@@ -176,6 +182,8 @@ Option 1: Clone the dotfiles
 
 .. code:: bash
 
+::
+
     git clone https://github.com/jtratner/dotfiles.git
 
 Option 2: Fork the dotfiles yourself
@@ -188,6 +196,8 @@ Option 2: Fork the dotfiles yourself
    remote. Finally, download your files.
 
 .. code:: bash
+
+::
 
     mkdir dotfiles
     cd dotfiles
@@ -211,6 +221,8 @@ Symlink the bundle(s) you want to use
 
 .. code:: bash
 
+::
+
     ./symlinkdirectory bundle-available bundle
 
 5. That script created symlinks in the bundle folder to all the plugins in
@@ -229,6 +241,8 @@ Install rope, nose and ack (optional virtualenv)
 
 .. code:: bash
 
+::
+
     pip install rope nose
 
 1. Ack you have to get as a package (e.g. ``apt-get install ack`` or through
@@ -238,6 +252,8 @@ Install rope, nose and ack (optional virtualenv)
    the previous items need to be installed system-wide)
 
 .. code:: bash
+
+::
 
     pip install virtualenv virtualenvwrapper
     virtualenvwrapper.sh
@@ -257,6 +273,8 @@ Installing IPython (+ dependencies)
 
 .. code:: bash
 
+::
+
     easy_install ipython[zmq,qtconsole,notebook,test]
 
 It never works for me. You **can** install IPython with ``pip``/``easy_install``, you
@@ -267,6 +285,8 @@ the `IPython website`_ and its `guide to installation`_
    that matplotlib, scipy, and numpy are only required if you want to run pylab;
    however I highly suggest that you get them because they are very useful and
    pretty darn cool
+
+::
 
 .. code:: bash
 
@@ -280,6 +300,8 @@ the `IPython website`_ and its `guide to installation`_
 
 2. **Install IPython** Okay, actually this is pretty easy now! Yay!
 
+::
+
 .. code:: bash
 
     pip install ipython
@@ -288,6 +310,8 @@ the `IPython website`_ and its `guide to installation`_
    make sure you aren't missing any libraries.
 
 .. code:: bash
+
+::
 
     iptest
 
