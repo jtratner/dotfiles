@@ -9,6 +9,26 @@ termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 # Erase background with current bg color.  Not needed if TERM=screen-256color
 defbce "on"
 
+#From dominikl's screenrc
+# common
+#nethack 	on
+#autodetach	on
+#hardcopy_append	on
+vbell		off
+#startup_message off
+#silencewait	5
+#defscrollback	1024
+shell 		zsh
+
+#sorendition	rw
+
+activity		"^Gactivity in %n (%t) [%w:%s]~"
+bell_msg		"bell in %n!"
+#vbell_msg		"   Wuff  ----  Wuff!!  "
+
+setenv SSH_AUTH_SOCK $HOME/.screen-ssh-agent
+
+
 # Created by John Anderson < sontek@gmail.com >
 ##    Explanation of hardstatus line    ##
 

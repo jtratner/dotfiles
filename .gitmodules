@@ -94,3 +94,6 @@
 [submodule "_vim/modular-vimrc"]
 	path = _vim/modular-vimrc
 	url = git://github.com/jtratner/modular-vimrc.git
+[submodule "_rbenv"]
+	path = _rbenv
+	url = git://github.com/sstephenson/rbenv.git

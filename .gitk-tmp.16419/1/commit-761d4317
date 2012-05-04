@@ -1,0 +1,203 @@
+commit 761d4317afbecb2a1077ade3729568208fd99991
+Author: Jeffrey Tratner <jeffrey.tratner@gmail.com>
+Date:   Fri May 4 00:01:01 2012 +0000
+
+    detailed README and SETUP guides, rm-dotsymlinks script
+    
+    rm-dotsymlinks: script to remove dotfile symlinks from a target directory
+    
+    to use: ``./rm-symlinks $HOME``
+    
+    converted README to rst and added detailed guide, vimrc fixes, SETUP files
+    
+    created SETUP_Debian.rst (and its symlink SETUP_Ubuntu) explaining how to
+    handle some of the setup on Ubuntu/Debian (including selecting default editor, etc
+    
+    created README in bundle to describe how to use the bundle and vim folders
+    
+    (deleted old readme.md)
+
+diff --git a/_vimrc b/_vimrc
+index de21ae6..c6afff2 100644
+--- a/_vimrc
++++ b/_vimrc
+@@ -84,17 +84,17 @@ command! W :w
+ 
+ " turn on and off color bar relative to textwidth
+ " TODO: fix for when textwidth is not zero
+-command! ColorBar  :set colorcolumn=+1 "sets colorbar just past t
+-command NoColorBar :set colorcolumn=0
++command ColorBar  :set colorcolumn=+0 "sets colorbar at textwidth
++command NoColorBar :set colorcolumn=0 "sets colorbar just past textwidth
+ command T :set textwidth= <CR>
+ " turn on autowrapping for comments
+ " TODO: figure out how to convert these into functions so can be accessed by keyword to
+ " to work even with textwidth off?
+ " 'ec' - edit comment, 'en' - edit normal, 'ed' - edit done
+-map <silent><leader>ec :set textwidth=72<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
+-map <silent><leader>en :set textwidth=80<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 80, autowrapping on, go edit"'<CR>
+-map <silent><leader>ed :set textwidth=0<CR>:set colorcolumn=0<CR>:set fo-=t<CR>:exe ':echo "autowrapping off"'<CR>
+-command CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
++map <silent><leader>ec :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
++map <silent><leader>en :set textwidth=80<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 80, autowrapping on, go edit"'<CR>
++map <silent><leader>ed :set textwidth=0<CR>:NoColorBar<CR>:set fo-=t<CR>:exe ':echo "autowrapping off"'<CR>
++command CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
+ 
+ 
+ " Paste from clipboard
+@@ -168,7 +168,7 @@ function! s:Boxline(char)
+     :let line=repeat(character, col('$')-1)
+     :exe "normal O".line
+     :exe "normal 't"
+-    :exe "normal o".line."\<Esc>o\<Esc>o"
++    :exe "normal o".line."\<Esc>o"
+ endfunction
+ 
+ function! s:Underline(char)
+@@ -180,7 +180,7 @@ function! s:Underline(char)
+         :let character=a:char
+     endif
+     :let line=repeat(character, col('$')-1)
+-    :exe "normal o".line."\<Esc>o\<Esc>o"
++    :exe "normal o".line."\<Esc>o"
+ endfunction
+ 
+ " TODO: make this respect indentation, etc -- not sure how to do that yet
+diff --git a/scripts/rm-dotsymlinks b/scripts/rm-dotsymlinks
+new file mode 100755
+index 0000000..379534a
+--- /dev/null
++++ b/scripts/rm-dotsymlinks
+@@ -0,0 +1,132 @@
++#!/usr/bin/env python
++
++import re
++import os
++import sys
++
++
++def check_platform(platform='posix', warnmsg=None, endscript=False):
++    """ Checks to see that os is on given platform and gives user option
++    to quit if not.  If endscript set to True, then will attempt to exit
++    script if user is not root and user does not choose to continue.
++
++    We're all adults. This function treats your user like one too.
++    Returns True if everything's okay, False if user elects to continue
++    and raises OSError or quits otherwise.
++
++    INPUT:
++        platform - string, platform to be checked. default is 'posix'.
++            NOTE: It is recommended that you explicitly set platform.
++        warnmsg - string, warning message to be displayed to user if not
++            root default: warning that script is meant to be run on given
++            platform
++        endscript - bool, whether to call sys.exit if user doesn't continue
++            -> True: calls sys.exit
++            -> False: raises OSError
++            default: False
++    RETURNS:
++        True - if user is root
++        False - otherwise
++
++    RAISES:
++        OSError
++    """
++    if not os.name == platform:
++        if warnmsg is None:
++            warnmsg = """
++            This script is meant to run on posix platforms.
++            Are you sure you want to run this script?
++            'y' or enter to continue, otherwise script will quit.
++            [ENTER to continue]>
++            """
++        cont = raw_input(warnmsg)
++        if cont is not None or cont != 'y':
++            if endscript or __name__ == '__main__':
++                sys.exit('\nQuitting...\n')
++            else:
++                raise OSError("Non-posix OS, user elected to stop.")
++        else:
++            print "OK. Continuing."
++            return False
++    else:
++        return True
++
++
++def rm_symlink(path):
++    """removes file so long as it is a symlink.
++    path must be an absolute path.
++    Returns True if removed, False if not."""
++    if os.path.islink(path):
++        print "Removing path %r" % path
++        os.remove(path)
++        return True
++    else:
++        return False
++
++
++def rm_dotsymlinks(target=None, filter_fn=None, verbose=True):
++    """creates symlinks for all the files in source in directory target.
++    INPUT
++        target - the directory to remove_symlinks from
++    OUTPUT
++        deletes symlinks in path (if run as main, will prompt for confirmation through main() fn)
++    RAISES
++        ValueError (if no target specified)"""
++    if target is None:
++        target = os.getcwd()
++    else:
++        target = os.path.realpath(target)
++    # get a list of symlinks in directory and get their full paths
++    symlist = map(lambda x: os.path.join(target,x),
++            filter(lambda x: x[0] == '.' and os.path.islink(x), os.listdir(target)))
++    sourcelist = map(os.path.realpath, symlist)
++    msg = "target  %r" % (target)
++    print "The following links will be removed(%s)" % msg
++    for sym,source in zip(symlist, sourcelist): 
++        print "link: %r -> %r" % (sym,source)
++    print msg
++    if raw_input("\nNOTE: no regular files will be deleted.\n[continue? y/n]>") in ['y','yes']:
++        for sym in symlist:
++            try:
++                if not rm_symlink(sym):
++                    print "Couldn't remove file %r. Continuing" % sym
++            except OSError as e:
++                print "OSError:\n%r\nDo you want to continue?" % e.message or e
++                if not raw_input("[Type any key to continue, n or q to quit]>") in ['q','n','quit','no']:
++                    continue
++                else:
++                    print "Raising error message for reference"
++                    raise e
++        return
++    else:
++        return "Ok, not continuing.\nNo files deleted.\n"
++
++def main():
++    try:
++        if len(sys.argv) == 1:
++            target = os.getcwd()
++        elif len(sys.argv) == 2:
++            source,target = sys.argv[1],sys.argv[2]
++        else:
++            raise ValueError("Too many arguments specified at command line")
++        if not os.path.isdir(os.path.realpath(target)):
++            raise ValueError("Specifed  target path is not a directory.\n Given %r" % target)
++        # run program and get output
++        output = rm_dotsymlinks(source=source,target=target, verbose = False)
++    except Exception as e:
++        # grab the error message if we can
++        msg = e.message if hasattr(e,'message') else 'No message given'
++        msg = e if isinstance(e, str) else msg
++        msg = """
++This script must be called as:
++`%s target`
++(specifying target is optional)
++
++Error message: 
++%r"""  % (sys.argv[0], msg)
++        sys.exit(msg)
++    sys.exit(output)
++
++
++if __name__ == '__main__':
++    main()

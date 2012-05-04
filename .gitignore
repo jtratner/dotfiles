@@ -43,4 +43,5 @@ pip-log.txt
 .mr.developer.cfg
 
 #submodule files I need to remove
-changevimsymlinks.py
+#symlinks
+_oh_my_zsh
