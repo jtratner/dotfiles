@@ -6,3 +6,5 @@
 	email = jeffrey.tratner@gmail.com
 [github]
 	user = jtratner
+[merge]
+	tool = meld
