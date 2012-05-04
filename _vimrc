@@ -84,17 +84,17 @@ command! W :w
 
 " turn on and off color bar relative to textwidth
 " TODO: fix for when textwidth is not zero
-command ColorBar  :set colorcolumn=80<CR> "sets colorbar at textwidth
-command NoColorBar :set colorcolumn=0<CR>
+command ColorBar  :set colorcolumn=+0 "sets colorbar at textwidth
+command NoColorBar :set colorcolumn=0 "sets colorbar just past textwidth
 command T :set textwidth= <CR>
 " turn on autowrapping for comments
 " TODO: figure out how to convert these into functions so can be accessed by keyword to
 " to work even with textwidth off?
 " 'ec' - edit comment, 'en' - edit normal, 'ed' - edit done
-map <silent><leader>ec :set textwidth=72<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
-map <silent><leader>en :set textwidth=80<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 80, autowrapping on, go edit"'<CR>
-map <silent><leader>ed :set textwidth=0<CR>:set colorcolumn=0<CR>:set fo-=t<CR>:exe ':echo "autowrapping off"'<CR>
-command CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:set colorcolumn=+0<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
+map <silent><leader>ec :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
+map <silent><leader>en :set textwidth=80<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 80, autowrapping on, go edit"'<CR>
+map <silent><leader>ed :set textwidth=0<CR>:NoColorBar<CR>:set fo-=t<CR>:exe ':echo "autowrapping off"'<CR>
+command CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
 
 
 " Paste from clipboard
@@ -153,11 +153,43 @@ nmap <leader>sb :call SplitScroll()<CR>
 
 ""
 "restructuredtext / Markdown shortcuts
-"
-" TODO: make this respect indentation, etc -- not sure how to do that yet
-command EqualLine :put=repeat('=', col('$')-1)
-command DashLine :put=repeat('-', col('$')-1)
 
+" for these two functions, you can give them a number, and that will give it
+" precedence
+function! s:Boxline(char)
+    :let charorder=['','=','-','"'] "make the indexes line up by starting with an empty string
+    :let indices=['1','2','3']
+    if index(indices,a:char) >=0
+        :let character=charorder[a:char]
+    else
+        :let character=a:char
+    endif
+    :exe "normal mt"
+    :let line=repeat(character, col('$')-1)
+    :exe "normal O".line
+    :exe "normal 't"
+    :exe "normal o".line."\<Esc>o"
+endfunction
+
+function! s:Underline(char)
+    :let charorder=['','=','-','"','^','*']
+    :let indices=['1','2','3','4','5']
+    if index(indices,a:char) >=0
+        :let character=charorder[a:char]
+    else
+        :let character=a:char
+    endif
+    :let line=repeat(character, col('$')-1)
+    :exe "normal o".line."\<Esc>o"
+endfunction
+
+" TODO: make this respect indentation, etc -- not sure how to do that yet
+" TODO: make this work with numbers
+" Shortcuts to add title and underlines for docstrings, etc
+command! EqualTitle :call s:Boxline('=')
+command! DashTitle :call s:Boxline('-')
+command! -nargs=1 Title :call s:Boxline(<f-args>)
+command! -nargs=1 Underline :call s:Underline(<f-args>)
 " ==========================================================
 " tComment
 " ==========================================================
@@ -257,8 +289,6 @@ map <leader>r :RopeRename<CR>
 " ==========================================================
 " set Voom to know certain filetypes (keys are vim fts, values are voom modes)
 let g:voom_ft_modes = {'markdown': 'markdown', 'python': 'python', 'rst': 'rest'}
-map <M-F3> :Voomquit<CR>
-map <C-F3> :Voomlog<CR>
 map <F3> :Voomtoggle<CR>
 
 
