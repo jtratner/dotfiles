@@ -3,7 +3,7 @@ the dotfiles of jtratner
 ========================
 
 From their start standing on the shoulders of dotfile giants like sontek,
-jtratner&#39;s dotfiles have begun to slowly evolve in their own right.
+jtratner's dotfiles have begun to slowly evolve in their own right.
 
 .. contents::
 
@@ -111,10 +111,11 @@ Setting up dotfiles, vim and IPython
 ====================================
 
 Getting Vim
------------
+===========
+
 
 Prepacked
-"""""""""
+---------
 
 Easiest way: ``sudo apt-get build-dep vim-gnome`` (if you're
 using unity)
@@ -123,10 +124,10 @@ using unity)
 * **Windows** : The ``_vim`` files will be helpful, but note that it has to be under
   ``vimfiles``, not ``.vim``
 
-_MacVim https://github.com/b4winckler/macvim
+.. _MacVim : https://github.com/b4winckler/macvim
 
 Compiling Vim (Medium!)
-"""""""""""""""""""""""
+-----------------------
 
 0. Handling dependencies - there are a ton and, unfortunately, vim doesn't
    always tell you that you've managed to get all the ones you want. I used to
@@ -139,9 +140,8 @@ Compiling Vim (Medium!)
 
 .. _homebrew : http://mxcl.github.com/homebrew/
 
-1. The easiest way to setup vim *and be sure
-     that you have the features you want* is to grab the tarball from the vim
-     homepage, and configure it with[2]
+1. The easiest way to setup vim and be sure that you have the features you want
+   is to grab the tarball from the vim homepage, and configure it with[2]
 
 .. code:: bash
 
@@ -159,15 +159,14 @@ Compiling Vim (Medium!)
 
    * ``+python``
    * ``+ruby`` (if you want Command-T)
-   * ``+xterm-clipboard`` (if on Linux w/ X11) or another
-   ``+clipboard`` entry -- you need this to be able to copy/paste
-   from the clipboard.
+   * ``+xterm-clipboard`` (if on Linux w/ X11) or another ``+clipboard`` entry
+     -- you need this to be able to copy/paste from the clipboard.
 
 Getting the dotfiles
---------------------
+====================
 
 Option 1: Clone the dotfiles
-""""""""""""""""""""""""""""
+----------------------------
 
 0. Install git. (e.g. ``sudo apt-get install git``)
 
@@ -197,13 +196,13 @@ Option 2: Fork the dotfiles yourself
     git pull origin master
 
 Install the dotfiles
---------------------
+====================
 
 2. Go into the dotfiles directory, run ``./install.sh`` in the command line. BOOM!
    You are halfway done.
 
 Symlink the bundle(s) you want to use
--------------------------------------
+=====================================
 
 3. Change into the ``_vim`` subfolder (``cd *vim``)
 
@@ -285,7 +284,7 @@ the `IPython website`_ and its `guide to installation`_
 
     pip install ipython
 
-3. _Check that it's working_ Run IPython's testing suite. Read the output to
+3. *Check that it's working* Run IPython's testing suite. Read the output to
    make sure you aren't missing any libraries.
 
 .. code:: bash
@@ -296,24 +295,24 @@ the `IPython website`_ and its `guide to installation`_
 
    1. It's okay. Happened to me too.
    2. Read the output of iptest, see if it gives any info. (google is your
-    friend).
+      friend).
    3. Check that you have all the dependencies.
    4. Try uninstalling and reinstalling IPython.
    5. If it's not fixed by now, try Google, `Stack Overflow`_ or the `IPython website`_
 
 .. _IPython website: http://www.ipython.org
-.. _IPinstall: http://ipython.org/ipython-doc/stable/install/install.html
+.. _guide to installation: http://ipython.org/ipython-doc/stable/install/install.html
 .. _Stack Overflow: http://www.stackoverflow.com
 
 .. _1: Email me if you'd like a copy
 .. _2: The easiest way is to download and install a precompiled version. On Ubuntu, ``vim-gnome`` has most of what you want.
 .. _3: I set up a different home directory and then symlink it to my local bin,
-that way I can still use the default system editor as needed (say if xwindows
-crashes or something :P)
+       that way I can still use the default system editor as needed (say if xwindows
+       crashes or something :P)
 .. _5: You can also do this individually with ``ln -s``. It's important to use the
-actual paths to the file, or sometimes the links will mess up. For that reason,
-I recommend that, instead of using relative paths, use full paths. E.g. in to
-symlink a file in a subfolder of the \_vim directory: ``ln -s $PWD/myfile ../bundle/``
+       actual paths to the file, or sometimes the links will mess up. For that reason,
+       I recommend that, instead of using relative paths, use full paths. E.g. in to
+       symlink a file in a subfolder of the \_vim directory: ``ln -s $PWD/myfile ../bundle/``
 
 
 .. _4: Here's the whole list:
