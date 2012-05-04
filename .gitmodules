@@ -91,3 +91,6 @@
 [submodule "zsh/ohmyzsh"]
 	path = zsh/ohmyzsh
 	url = git://github.com/sorin-ionescu/oh-my-zsh.git
+[submodule "_vim/modular-vimrc"]
+	path = _vim/modular-vimrc
+	url = git://github.com/jtratner/modular-vimrc.git
