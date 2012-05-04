@@ -239,8 +239,6 @@ Install rope, nose and ack (optional virtualenv)
 0. Rope and nose you can get through ``easy_install`` or ``pip`` (I prefer
    pip)
 
-.. code:: bash
-
 ::
 
     pip install rope nose
@@ -250,8 +248,6 @@ Install rope, nose and ack (optional virtualenv)
 
 2. ``virtualenv`` - highly useful, you probably want it. (I list it last because
    the previous items need to be installed system-wide)
-
-.. code:: bash
 
 ::
 
@@ -271,8 +267,6 @@ Installing IPython (+ dependencies)
 
 *Preface* This ought to work:
 
-.. code:: bash
-
 ::
 
     easy_install ipython[zmq,qtconsole,notebook,test]
@@ -288,8 +282,6 @@ the `IPython website`_ and its `guide to installation`_
 
 ::
 
-.. code:: bash
-
     pip install nose tornado pygments pyzmq pexpect distribute matplotlib scipy numpy
 
 1. **Getting Qt** This can be more or less of an ordeal, depending on your system.
@@ -302,14 +294,10 @@ the `IPython website`_ and its `guide to installation`_
 
 ::
 
-.. code:: bash
-
     pip install ipython
 
 3. *Check that it's working* Run IPython's testing suite. Read the output to
    make sure you aren't missing any libraries.
-
-.. code:: bash
 
 ::
 
@@ -328,20 +316,19 @@ the `IPython website`_ and its `guide to installation`_
 .. _guide to installation: http://ipython.org/ipython-doc/stable/install/install.html
 .. _Stack Overflow: http://www.stackoverflow.com
 
-.. _1: Email me if you'd like a copy
-.. _2: The easiest way is to download and install a precompiled version. On Ubuntu, ``vim-gnome`` has most of what you want.
-.. _3: I set up a different home directory and then symlink it to my local bin,
+.. _1 : Email me if you'd like a copy
+.. _2 : The easiest way is to download and install a precompiled version. On Ubuntu, ``vim-gnome`` has most of what you want.
+.. _3 : I set up a different home directory and then symlink it to my local bin,
        that way I can still use the default system editor as needed (say if xwindows
        crashes or something :P)
-.. _5: You can also do this individually with ``ln -s``. It's important to use the
+.. _5 : You can also do this individually with ``ln -s``. It's important to use the
        actual paths to the file, or sometimes the links will mess up. For that reason,
        I recommend that, instead of using relative paths, use full paths. E.g. in to
        symlink a file in a subfolder of the \_vim directory: ``ln -s $PWD/myfile ../bundle/``
 
+.. _4 : Here's the whole list:
 
-.. _4: Here's the whole list:
-
-.. code:: bash
+::
 
     VIM - Vi IMproved 7.3 (2010 Aug 15, compiled Apr 19 2012 21:01:31)
     Compiled by root@openwater
