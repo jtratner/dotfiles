@@ -85,3 +85,12 @@
 [submodule "_vim/bundle-disabled/nerdtree"]
 	path = _vim/bundle-disabled/nerdtree
 	url = https://github.com/vim-scripts/The-NERD-tree.git
+[submodule "_vim/bundle-available/gitv"]
+	path = _vim/bundle-available/gitv
+	url = https://github.com/gregsexton/gitv
+[submodule "_vim/testing/todo.txt-vim"]
+	path = _vim/testing/todo.txt-vim
+	url = https://github.com/davidoc/todo.txt-vim.git
+[submodule "_vim/testing/vimtodo"]
+	path = _vim/testing/vimtodo
+	url = https://github.com/mivok/vimtodo
