@@ -22,12 +22,18 @@ else
     done
 fi
 
+
 git submodule sync
 git submodule init
 git submodule update
 git submodule foreach git pull origin master
 git submodule foreach git submodule init
 git submodule foreach git submodule update
+
+# install bundles right away
+cd _vim
+./symlinkdirectory bundle-available bundle
+./symlinkdirectory testing bundle
 
 # setup command-t
 cd _vim/bundle/command-t
