@@ -1,8 +1,15 @@
+# source virtualenvwrapper *first*
+source /usr/local/bin/virtualenvwrapper.sh
+
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
+
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/Development
+export PROJECTS=~/Dropbox/classes
+export VIMPROJECTS=~/viml
+export PYTHONPROJECTS=~/python
+export DROPBOX=~/Dropbox
 
 # source every .zsh file in this rep
 for config_file ($ZSH/**/*.zsh) source $config_file
@@ -20,3 +27,11 @@ compinit
 
 # load every completion after autocomplete loads
 for config_file ($ZSH/**/completion.sh) source $config_file
+
+# extraordinarily important: (lets everyonen know that the terminal can handle
+# color
+    if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+            export TERM='xterm-256color'
+    else
+            export TERM='xterm-color'
+    fi

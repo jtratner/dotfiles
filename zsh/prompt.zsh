@@ -40,9 +40,6 @@ need_push () {
   fi
 }
 
-#virtual_env_prompt() {
-#    echo "%{$fg_bold[yellow]%}$(%M | awk '{print $1}')%{$reset_color%}"
-}
 
 # This keeps the number of todos always available the right hand side of my
 # command line. I filter it to only count those tagged as "+next", so it's more
@@ -67,7 +64,11 @@ directory_name(){
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'\nopenwater in $(directory_name) $(git_dirty)$(need_push)\n› '
+computer_and_name(){
+  echo "%{$fg_bold[blue]%}%T@%n%{$reset_color%}"
+}
+
+export PROMPT=$'%$(computer_and_name) in $(directory_name) $(git_dirty)$(need_push)\n› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
 }
