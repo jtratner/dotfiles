@@ -64,11 +64,15 @@ directory_name(){
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-computer_and_name(){
-  echo "%{$fg_bold[blue]%}%T@%n%{$reset_color%}"
+user_name() {
+    echo "%{$fg_bold[green]%}%n%{$reset_color%}"
 }
 
-export PROMPT=$'%$(computer_and_name) in $(directory_name) $(git_dirty)$(need_push)\n› '
+host_name(){
+  echo "%{$fg_bold[blue]%}%m%{$reset_color%}"
+}
+
+export PROMPT=$'$(user_name) on $(host_name) in $(directory_name) $(git_dirty)$(need_push)\n› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
 }
