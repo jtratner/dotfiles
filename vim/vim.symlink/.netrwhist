@@ -1,4 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/jtratner/Archive/dotfiles/_vim/autoload/vimrc_modules'
-let g:netrw_dirhist_2='/home/jtratner/.dotfiles/zsh/functions'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/jtratner/dotfiles'
+let g:netrw_dirhist_2='/home/jtratner'
+let g:netrw_dirhist_3='/home/jtratner/dotfiles/python/virtualenv'

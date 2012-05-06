@@ -7,4 +7,8 @@ then
   alias l="gls -lAh --color"
   alias ll="gls -l --color"
   alias la='gls -A --color'
+else
+  alias ls="ls --color=auto"
 fi
+
+alias 

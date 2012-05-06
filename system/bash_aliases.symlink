@@ -1,12 +1,10 @@
 #!/bin/bash
 
-alias gmail="screen firefox 'http://www.gmail.com'"
-alias stack-overflow="screen firefox 'http://www.stackoverflow.com'"
+alias gmail="screen google-chrome 'http://www.gmail.com'"
+alias stack-overflow="screen google-chrome 'http://www.stackoverflow.com'"
 alias gsearch="screen firefox -search"
 alias gappserver="screen ~/Dropbox/Projects/google-appengine/dev_appserver.py"
 alias ip="screen ipython qtconsole --colors=Linux"
-alias ipythonqt="screen ipython qtconsole --colors=Linux"
-alias gipython="screen ipython qtconsole --colors=Linux"
 alias s='screen'
 alias dropbox='screen ~/.dropbox-dist/dropboxd'
 alias gedit='screen gedit'
