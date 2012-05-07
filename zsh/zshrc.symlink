@@ -5,7 +5,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 export ZSH=$HOME/.dotfiles
 
 
-# your project folder that we can `c [tab]` to
+# project folders that you can quickly tab to (in order: c, v, p, d)
 export PROJECTS=~/Dropbox/classes
 export VIMPROJECTS=~/viml
 export PYTHONPROJECTS=~/python
@@ -28,8 +28,8 @@ compinit
 # load every completion after autocomplete loads
 for config_file ($ZSH/**/completion.sh) source $config_file
 
-# extraordinarily important: (lets everyonen know that the terminal can handle
+# extraordinarily important: (lets everyone know that the terminal can handle
 # color
-# I am sure that this line is not supposed to be the case on all systems, but
+# I am sure that this line might screw something up somewerhe
 # for the moment, I'm only using 256 color terminals anyways :P
 export TERM='xterm-256color'
