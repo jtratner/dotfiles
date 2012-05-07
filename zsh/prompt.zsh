@@ -6,6 +6,7 @@ git_branch() {
   echo $(/usr/bin/git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
 }
 
+# this has been really slow, not using
 git_dirty() {
   st=$(/usr/bin/git status 2>/dev/null | tail -n 1)
   if [[ $st == "" ]]
@@ -72,7 +73,9 @@ host_name(){
   echo "%{$fg_bold[blue]%}%m%{$reset_color%}"
 }
 
-export PROMPT=$'$(user_name) on $(host_name) in $(directory_name) $(git_dirty)$(need_push)\n› '
+#export PROMPT=$'$(user_name) on $(host_name) in $(directory_name) $(git_dirty)$(need_push)\n› '
+# put vcs back here eventually
+export PROMPT=$'$(user_name) on $(host_name) in $(directory_name)\n› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}$(todo)%{$reset_color%}"
 }
