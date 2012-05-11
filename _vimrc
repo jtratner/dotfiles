@@ -84,9 +84,9 @@ command! W :w
 
 " turn on and off color bar relative to textwidth
 " TODO: fix for when textwidth is not zero
-command ColorBar  :set colorcolumn=+0 "sets colorbar at textwidth
-command NoColorBar :set colorcolumn=0 "sets colorbar just past textwidth
-command T :set textwidth= <CR>
+command! ColorBar  :set colorcolumn=+0 "sets colorbar at textwidth
+command! NoColorBar :set colorcolumn=0 "sets colorbar just past textwidth
+command! T :set textwidth= <CR>
 " turn on autowrapping for comments
 " TODO: figure out how to convert these into functions so can be accessed by keyword to
 " to work even with textwidth off?
@@ -94,7 +94,7 @@ command T :set textwidth= <CR>
 map <silent><leader>ec :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
 map <silent><leader>en :set textwidth=80<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 80, autowrapping on, go edit"'<CR>
 map <silent><leader>ed :set textwidth=0<CR>:NoColorBar<CR>:set fo-=t<CR>:exe ':echo "autowrapping off"'<CR>
-command CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
+command! CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
 
 
 " Paste from clipboard
@@ -400,6 +400,7 @@ set shiftround              " rounds indent to a multiple of shiftwidth
 set matchpairs+=<:>         " show matching <> (html mainly) as well
 set foldmethod=indent       " allow us to fold on indents
 set foldlevel=99            " don't fold by default
+set hidden                  " keep buffers hidden when I switch
 
 " don't outdent hashes
 "inoremap # #
@@ -482,7 +483,9 @@ au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 " set the coloring for errors to be readable :P
-"au FileType python hi SpellBad term=reverse ctermfg = black ctermbg=9 gui=undercurl guisp=Red
+au FileType python hi SpellBad term=reverse ctermfg = black ctermbg=9 gui=undercurl guisp=Red
+command! FixHighlight :highlight SpellBad term=reverse ctermfg = black ctermbg=9 gui=undercurl guisp=Red
+
 " set up Pylint so it can be used to check python files
 "autocmd FileType python compiler pylint
 " don't run pylint on every save (instead run by :make in a python file)
@@ -524,14 +527,14 @@ endif
  """""""" things to try later
 
 " :DiffSaved to see diff of current buffer and version on disk
-" function! s:DiffWithSaved()
-  " let filetype=&ft
-  " diffthis
-  " vnew | r # | normal! 1Gdd
-  " diffthis
-  " exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-" endfunction
-" com! DiffSaved call s:DiffWithSaved()
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
 " map <Leader>ds :DiffSaved<CR>
 
 " function! OpenHgChangedFiles()

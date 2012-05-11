@@ -1,2 +1,2 @@
-#compdef h
+#compdef d
 _files -W $DROPBOX -/

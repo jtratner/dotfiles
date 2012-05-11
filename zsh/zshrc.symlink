@@ -7,8 +7,8 @@ export ZSH=$HOME/.dotfiles
 
 # project folders that you can quickly tab to (in order: c, v, p, d)
 export PROJECTS=~/Dropbox/Classes
-export VIMPROJECTS=~/viml
-export PYTHONPROJECTS=~/python
+export VIMPROJECTS=~/Dropbox/code/viml
+export PYTHONPROJECTS=~/Dropbox/code/python
 export DROPBOX=~/Dropbox
 
 # source the .bashrc with this, which converts the issue-laden-thangs to sweet, compatible zsh-functions!
@@ -24,6 +24,7 @@ export DROPBOX=~/Dropbox
 #bash_source("$HOME/.bashrc")
 # source every .zsh file in this rep
 for config_file ($ZSH/**/*.zsh) source $config_file
+
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
 if [[ -a ~/.localrc ]]
@@ -75,7 +76,7 @@ for config_file ($ZSH/**/completion.sh) source $config_file
 # color
 # I am sure that this line might screw something up somewerhe
 # for the moment, I'm only using 256 color terminals anyways :P
-#export TERM='xterm-256color'
+export TERM='xterm-256color'
 
 #### Key Bindings
 

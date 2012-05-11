@@ -2,6 +2,7 @@
 ipython_log.py
 ipython_log.py*
 *.swp
+\.netrwhist
 bundle/[^.]*
 ipython_logs/[^.]*
 # standard python ignores
