@@ -1,0 +1,108 @@
+# snippets I might want to contribute
+snippet mapd:
+	map(lambda ${1:vars} : ${3:action}, ${4:somelst})
+snippet filterd:
+	filter(lambda ${1:vars} : ${3:cond}, ${4:somelst})
+# ternary statement
+snippet tern:
+	${2:$1 is true} if ${1:condition} else ${3:$1 is false}
+# quick file reads
+snippet fread:
+	f = open(${1:path},${2:'rb'})
+	fread = f.read()
+	f.close()
+# for with dicts
+snippet fork
+	for ${1:k} in ${2:dict}.iterkeys():
+		${3:pass}
+snippet forkv
+	for ${1:k}, ${2:v} in ${3:dict}.iteritems():
+		${4:pass}
+# BeautifulSoup (from bs4) insertion
+snippet Beau
+	BeautifulSoup(${1:markup},${2:'html5lib'})
+snippet bs4
+	from bs4 import BeautifulSoup
+snippet ifn IfNone (one line)
+	if ${1:obj} is${2:} None:
+		${2:pass}
+# if nonei
+snippet ifn IfNone/Else
+	if ${1:obj} is None:
+		${2:pass}
+	else:
+		${3:pass}
+snippet ifn IfNone/Elif/Else
+	if ${1:obj} is${2:} None:
+		${2:pass}
+	elif ${3:$1}${4:cond}:
+		${5:pass}
+	else:
+		${4:pass}
+snippet elifn
+	elif ${1:obj} is${2:not }None:
+		${3:pass}
+# to paralell syntax below
+snippet ein
+	elif ${1:obj} is${2:not }None:
+		${3:pass}
+
+# python debugger (pdb)
+snippet pdb
+	import pdb; pdb.set_trace()
+# ipython debugger (ipdb)
+snippet ipdb ipdb
+	import ipdb; ipdb.set_trace()
+# ipython Tracer - which I think is better, maybe?
+snippet ipdb Tracer
+	from IPython.Debugger import Tracer; debug_here=Tracer()
+	debug_here()
+
+# Ifs
+snippet if
+	if ${1:condition}:
+		${2:code...}
+snippet el
+	else:
+		${1:code...}
+snippet ei
+	elif ${1:condition}:
+		${2:code...}
+# For
+snippet for
+	for ${1:item} in ${2:items}:
+		${3:code...}
+# Encodes
+snippet cutf8
+	# -*- coding: utf-8 -*-
+snippet clatin1
+	# -*- coding: latin-1 -*-
+snippet cascii
+	# -*- coding: ascii -*-
+
+snippet ld Filter/Map
+	lambda ${1:vars} : ${2:action},
+snippet s.
+	self.
+# Try/Finally's for writing files
+snippet tryw Try/Finally (write)
+	try:
+		${1:fileobjvar} = open(${2:path},${3:'wb'}
+		$1.write(${3:var})
+	finally:
+		$1.close()
+snippet tryw Try/Except/Finally (write)
+	try:
+		${1:f} = open(${2:path},${3:'wb'}
+		$1.write(${3:var})
+	except ${4:Exception}, ${5:e}:
+		${4:raise $5}
+	finally:
+		$1.close()
+
+
+snippet test
+	def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
+		${3:pass}
+
+

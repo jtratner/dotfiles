@@ -32,10 +32,10 @@ export PIP_RESPECT_VIRTUALENV=true # best option
 #export RUBYOPT=rubygems
 export GRIN_ARGS="--force-color"
 
-#export HISTFILE=~/.zhistory
-#export HISTSIZE='100000'
-#export SAVEHIST='100000'
-#export WORDCHARS=${WORDCHARS//[\/.]}
+export HISTFILE=~/.zhistory
+export HISTSIZE='100000'
+export SAVEHIST='100000'
+export WORDCHARS=${WORDCHARS//[\/.]}
 
 # for stupid BSD ls (osx)
 export LSCOLORS="Dxgxcxdxcxegedabagacad"
@@ -45,25 +45,25 @@ export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
 
 #### OPTIONS
 #
-#setopt extendedglob
-#setopt hist_ignore_dups
-#setopt extended_history # append history entries w/ timestamp
-#setopt inc_append_history
-#setopt hist_fcntl_lock # better locking for history file.  maybe doesn't work everywhere
-#setopt HIST_IGNORE_SPACE # don't write commands starting with space to history
+setopt extendedglob
+setopt hist_ignore_dups
+setopt extended_history # append history entries w/ timestamp
+setopt inc_append_history
+setopt hist_fcntl_lock # better locking for history file.  maybe doesn't work everywhere
+setopt HIST_IGNORE_SPACE # don't write commands starting with space to history
 #
-#setopt multibyte # maybe enabled by default
-##setopt no_beep # HATE. BEEPS.
-#setopt short_loops # they see me loopin', they hatin'
+setopt multibyte # maybe enabled by default
+#setopt no_beep # HATE. BEEPS.
+setopt short_loops # they see me loopin', they hatin'
 #
-#setopt autocd # evaluating a dir name cds to that dir
-#setopt auto_pushd # push dirs to the stack
-#setopt pushd_ignore_dups
-#setopt pushd_silent
+setopt autocd # evaluating a dir name cds to that dir
+setopt auto_pushd # push dirs to the stack
+setopt pushd_ignore_dups
+setopt pushd_silent
 #
 #ulimit -c 0 # no process limit?
-#setopt prompt_subst # allow variable substitution in the prompt
-#setopt c_bases # output hex and octal in better format.  what the hell?
+setopt prompt_subst # allow variable substitution in the prompt
+setopt c_bases # output hex and octal in better format.  what the hell?
 #
 ### ALIASES
 
