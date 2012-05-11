@@ -405,6 +405,7 @@ set hidden                  " keep buffers hidden when I switch
 " don't outdent hashes
 "inoremap # #
 
+" TODO: set this up so it isn't called 50x if the file is source again.
 " close preview window automatically when we move around
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
