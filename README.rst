@@ -5,7 +5,8 @@ the dotfiles of jtratner
 From their start standing on the shoulders of dotfile giants like sontek,
 jtratner's dotfiles have begun to slowly evolve in their own right.
 
-.. contents::
+.. contents:: What's In Here
+    :depth: 2
 
 Using these dotfiles
 ====================
@@ -15,11 +16,10 @@ tl;dr
 
 ::
 
-    git clone https://github.com/jtratner/dotfiles.git dotfiles
-    cd dotfiles
-    ./install.sh
-    cd _vim
-    ./symlinkdirectory bundle-available bundle
+    git clone https://github.com/jtratner/dotfiles.git .dotfiles
+    cd .dotfiles
+    rake install
+    ./bin/updatesubmodules
 
 My setup is different than that of sontek and others, because I like to be able
 to individually control bundles on each machine, so I use symlinks to each
@@ -27,43 +27,55 @@ directory. Plus, if you need to remove a bundle, you don't have to go through
 the annoying hassle of removing it from your gitmodules first. But you should do
 what works for you.
 
-Basic Use
----------
+Installing and Using These Dotfiles
+-----------------------------------
 
-* Pathogen reads from ``_vim/bundle``, so any bundles you want to use should be
-  symlinked into there (you can use the ``symlinkdirectory`` script to do that)
-* You need ``rope``, ``ack``, ``nose`` and ``ipython`` to use all of the features in the
-  bundle.
-* Run ``install.sh`` to set up the dotfiles. It auto backs up your existing
-  dotfiles to .bak. (if you want to remove the new files, you can do so either
-  by using ``rm -i *`` and only accepting symlinks or by using the ``rm_symlink``
-  function from my package [``simpleutils``][su] (vaguely shameless plug!)
+* Two options (for now):
+  1. Run ``rake install`` - prompts you to back up or overwrite your files,
+       you'll still need to update submodules (use the
+       ``updatesubmodules.sh``) script in the bin.
+  2. Run ``install.sh`` - sets up dotfiles and updates submodules + will back
+       up your files to .bak
 
 My personal touches
 ===================
 
-The ``_vimrc`` file is pretty well documented too. You should also go read
+The ``vimrc.symlink`` file is pretty well documented.  You could also go read
 `sontek's description of his dotfiles`_ for more in-depth info on many of
 these plugins.  I'm just going to mention the changes I've made since
-'forking'(ish) sontek's dotfiles.
+'forking'(ish) sontek's dotfiles. More info will come over time
 
 .. _sontek's description of his dotfiles: http://sontek.net/turning-vim-into-a-modern-python-ide
 
 New bundles
 -----------
 
+* **syntastic** - makes it real easy to check the syntax on any filetype (just
+  have to have the parser installed. I have ``docutils`` (rst), ``pyflakes``,
+  ``pep8`` (for python) installed at the moment, to name a few).
+
+* **Hammer** ``:Hammer``, converts your current lightweight-markup file to
+  HTML.
+
 * **vim-ipython** - *hands down the best tool to help you code in python* lets
   you connect to ipython, which is a fabulous suite for
+
 * **VOom** - simple but very useful vim application. Creates a two-pane outline
   window that allows you to browse the structure of your files (or
   classes/functions in python ,etc). For example if you run ``:Voom`` on this
   file, you'll see a neat directory tree that you can use to navigate the file.
   Also has a useful in-file grep.
+
 * **tComment** - handy for easily commenting/uncommenting sections
+
 * **snipmate** - (updated to garbas' new version + added the snippet repository)
-* **Powerline** - better vim status bar. NOTE: You have to install a patched font
-  to use it. Luckily, there are some included in \_fonts that'll be installed
-  automatically. Yay!
+
+* **Powerline** - better vim status bar. NOTE: You have to install a patched
+  font to use it. Luckily, there are some included in fonts/fonts.symlink/
+  that'll be installed automatically. Yay!
+
+* **Ctrl-P** - like ``Command-T`` but on steroids + no ruby required. Just
+  type ``<ctrl-P>`` and your
 
 .. _simpleutils : https://github.com/jtratner/simpleutils
 
@@ -97,15 +109,28 @@ reStructuredText/autounderline Functions
 New shortcuts
 -------------
 
-* **autolinebreaking for comments/plaintext** (textwrapping and autolinebreak)
-  * <leader>en[#^en], <leader>ec[#ec] <leader>ed[#ed], no autowrap
-* VOom on ``<C-F3>`` (and toggle ``Voom`` with ``<F3>``)
-* ``:EqualLine`` put an equals line just as long as current line of text
-  (from a great post on [Stack Overflow][SO]
+===========  ==============  =============================
+Mapping      Mnemonic        Settings                    
+===========  ==============  =============================
+Editing + Auto-linebreaks
+----------------------------------------------------------
+<leader> en  'edit normal'   tw=78; fo+=t, colorcolumn+=0
+<leader> ec  'edit comment'  tw=72; fo+=t, colorcolumn+=0
+<leader> ed  'edit done'     restore defaults 
+                             (or tw=80,fo-=t, colorcolumn=0) 
+<leader> p   'paste'         paste from clipboard
+<leader> y   'yank'          yank to clipboard
+<S-C-V>      (normal paste)  paste from clipboard
+<S-C-C>      'copy'          yank to clipboard
+Q            'quick form'?   format the current paragraph
 
-.. _en: en - 'Edit Normal' (textwidth 80, autolinebreak)
-.. _ec: ec - 'Edit Comment' (textwidth 72, autolinebreak)
-.. _ed: ed - 'Edit Done' (textwidth 0, autolinebreak off)
+Display
+----------------------------------------------------------------
+:SetFont                     use to quickly change font in gvim
+<F3>                         toggle VoOM
+:DiffSaved                   Show diffs between current file and saved file
+
+===========  ==============  =============================
 
 
 ====================================
