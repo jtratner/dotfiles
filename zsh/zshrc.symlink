@@ -1,0 +1,94 @@
+# source virtualenvwrapper *first*
+source /usr/local/bin/virtualenvwrapper.sh
+
+# shortcut to this dotfiles path is $ZSH
+export ZSH=$HOME/.dotfiles
+
+
+# project folders that you can quickly tab to (in order: c, v, p, d)
+export PROJECTS=~/Dropbox/Classes
+export VIMPROJECTS=~/Dropbox/code/viml
+export PYTHONPROJECTS=~/Dropbox/code/python
+export DROPBOX=~/Dropbox
+
+# source the .bashrc with this, which converts the issue-laden-thangs to sweet, compatible zsh-functions!
+#bash_source() {
+#  alias shopt=':'
+#  alias _expand=_bash_expand
+#  alias _complete=_bash_comp
+#  emulate -L sh
+#  setopt kshglob noshglob braceexpand
+#
+#  source "$@"
+#}
+#bash_source("$HOME/.bashrc")
+# source every .zsh file in this rep
+for config_file ($ZSH/**/*.zsh) source $config_file
+
+# use .localrc for SUPER SECRET CRAP that you don't
+# want in your public, versioned repo.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+
+# ls colors! Whee! :)
+# for stupid BSD ls (osx)
+export LSCOLORS="Dxgxcxdxcxegedabagacad"
+# for GNU ls (linux) (I wonder what this looks like)
+export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
+
+# the magic history, just like tcsh has
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+# up arrow or ^o will complete the current command based on a history search from most recent back
+# ^o because sometimes that up arrow is just so far away
+bindkey '\e[A' history-beginning-search-backward-end # up
+bindkey "^O" history-beginning-search-backward-end
+bindkey '\e[B' history-beginning-search-forward-end # down
+bindkey "^N" history-beginning-search-forward-end # ^N
+
+bindkey "^[[H" beginning-of-line # home
+bindkey "^[[F" end-of-line # end
+bindkey "^[[3~" delete-char # delete
+
+# cd to the current git or hg repo root
+rr() {
+    local dir="."
+    until ( [[ -a "$dir/.git" ]] || [[ -a "$dir/.hg" ]] ); do
+        dir="../$dir"
+        if [[ $dir -ef / ]]; then
+            return 1
+        fi
+    done
+    cd $dir
+}
+
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -U compinit
+compinit
+
+# load every completion after autocomplete loads
+for config_file ($ZSH/**/completion.sh) source $config_file
+# extraordinarily important: (lets everyone know that the terminal can handle
+# color
+# I am sure that this line might screw something up somewerhe
+# for the moment, I'm only using 256 color terminals anyways :P
+export TERM='xterm-256color'
+
+#### Key Bindings
+
+bindkey -v
+# vim key bindings, but there are a few emacs bindings I like
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+
+# somehow I survived for years without this.  They called it living, but I'm not so sure.
+bindkey "^R" history-incremental-search-backward
+
+# pushes the current command to a buffer, lets you do something else, then
+# brings you back to what you were doing
+bindkey "^P" push-line
+bindkey "^L" clear-screen
+

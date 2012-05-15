@@ -1,0 +1,6 @@
+PS1="$_OLD_VIRTUAL_PS1"
+_OLD_RPROMPT="$RPROMPT"
+# RPROMPT="%{${fg_bold[white]}%}(env: %{${fg[green]}%}`basename \"$VIRTUAL_ENV\"`%{${fg_bold[white]}%})%{${reset_color}%} $RPROMPT"
+RPROMPT="$FX[reset]$FG[015]$FX[bold]($FX[reset]$FG[173]`basename \"$VIRTUAL_ENV\"`$FX[reset]$FX[bold]$FG[015])$FX[reset] $RPROMPT"
+rehash
+

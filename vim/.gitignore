@@ -1,11 +1,4 @@
-.DS_Store
-ipython_log.py
-ipython_log.py*
-*.swp
-\.netrwhist
-bundle/[^.]*
-ipython_logs/[^.]*
-# standard python ignores
+
 # Packages
 *.egg
 *.egg-info
@@ -13,6 +6,7 @@ dist
 build
 eggs
 parts
+bin
 var
 sdist
 develop-eggs
@@ -43,5 +37,4 @@ pip-log.txt
 .mr.developer.cfg
 
 #submodule files I need to remove
-#symlinks
-_oh_my_zsh
+changevimsymlinks.py
