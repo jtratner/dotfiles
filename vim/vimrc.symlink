@@ -1,71 +1,4 @@
-" Download updates, install scripts, etc at https://github.com/jtratner/dotfiles
-" Heavily based upon: https://github.com/sontek/dotfiles/
-" ==========================================================
-" Dependencies - Libraries/Applications outside of vim
-" ==========================================================
-" Pep8 - http://pypi.python.org/pypi/pep8
-" Pyflakes
-" Ack
-" Rake & Ruby for command-t
-" nose, django-nose
-" pylint for Pylint
-" ==========================================================
-" Plugins included
-" ==========================================================
-" Pathogen
-"     Better Management of VIM plugins
-"
-" Powerline
-"     Awesome vim status bar
-"
-" Vim-IPython
-"     Connect vim and iPython. (with SuperTab, tab completion too)
-"
-" GunDo
-"     Visual Undo in vim with diff's to check the differences
-"
-" Pytest (disabled)
-"     Runs your Python tests in Vim.
-"
-" Command-T
-"     Allows easy search and opening of files within a given path
-"
-" Snipmate
-"     Configurable snippets to avoid re-typing common comands
-"
-" PyFlakes
-"     Underlines and displays errors with Python on-the-fly
-"
-" Fugitive
-"    Interface with git from vim
-"
-" Git
-"    Syntax highlighting for git config files
-"
-" Pydoc
-"    Opens up pydoc within vim
-"
-" Surround
-"    Allows you to surround text with open/close tags
-"
-" Py.test (disabled)
-"    Run py.test test's from within vim
-"
-" MakeGreen (disabled)
-"    Generic test runner that works with nose
-"
-" Pylint (disabled)
-"    Checks python files
-" 
-" TaskList - special highlighting and quickfix window
-"
-" tComment - comment and uncomment lines
-" voom - two-panel outline view for vim
-" ==========================================================
-" Pathogen
-" ==========================================================
-"
-"moving pathogen call up here to see if it helps :-/
+set nocompatible  " be iMproved
 set nocp
 call pathogen#infect()
 syntax on
@@ -73,34 +6,28 @@ filetype plugin indent on
 call pathogen#infect()                     " Only way to get the helptags to install, don't know why
 call pathogen#helptags()                   "
 source $VIMRUNTIME/macros/matchit.vim      " not on by default for some reason
-" ==========================================================
-" Shortcuts
-" ==========================================================
-set nocompatible              " Don't be compatible with vi
+
+
+"TODO: make a help doc for all this
+" <leader> mapping
 let mapleader=","             " change the leader to be a comma vs slash
+
+" map semicolon to ':' so you don't have to press 'shift-;' for each command.
+" Faster! Smarter! Woo!
+nnoremap ; :
 
 " Seriously, guys. It's not like :W is bound to anything anyway.
 command! W :w
 
-" turn on and off color bar relative to textwidth
-" TODO: fix for when textwidth is not zero
-command! ColorBar  :set colorcolumn=+0 "sets colorbar at textwidth
-command! NoColorBar :set colorcolumn=0 "sets colorbar just past textwidth
-command! T :set textwidth= <CR>
-" turn on autowrapping for comments
-" TODO: figure out how to convert these into functions so can be accessed by keyword to
-" to work even with textwidth off?
-" 'ec' - edit comment, 'en' - edit normal, 'ed' - edit done
-map <silent><leader>ec :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
-map <silent><leader>en :set textwidth=80<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 80, autowrapping on, go edit"'<CR>
-map <silent><leader>ed :set textwidth=0<CR>:NoColorBar<CR>:set fo-=t<CR>:exe ':echo "autowrapping off"'<CR>
-command! CommentWrap :set textwidth=72<CR>:set fo+=t<CR>:ColorBar<CR>:exe ':echo "textwidth 72, autowrapping on, go edit"'<CR>
-
 
 " Paste from clipboard
 map <leader>p "+p
-
 map <leader>y "+y
+" Plus if you press ctrl-shift-v and ctrl-shit-p, you can also copy and
+" paste. Neato! (note that you only need remap <leader>p or <leader> y for
+" your system
+map <S-C-V> <leader>p
+map <S-C-C> <leader>y
 
 " Quit window on <leader>q
 nnoremap <leader>q :q<CR>
@@ -114,8 +41,13 @@ nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
 " Select the item in the list with enter
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Reload Vimrc
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+" Edit/Reload Vimrc
+map <silent> <leader>ev :edit ~/.vimrc<CR>
+map <silent> <leader>sv :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" Hide buffer on H
+command! H :hide<CR>
+map <silent> <leader>H :hide<CR>
 
 " open/close the quickfix window
 nmap <leader>c :copen<CR>
@@ -138,7 +70,7 @@ imap <C-W> <C-O><C-W>
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
 
-
+" Display Formatting
 fu! SplitScroll()
     :wincmd v
     :wincmd w
@@ -151,51 +83,248 @@ endfu
 nmap <leader>sb :call SplitScroll()<CR>
 "<CR><C-w>l<C-f>:set scrollbind<CR>
 
-""
-"restructuredtext / Markdown shortcuts
+command! ColorColumn  :set colorcolumn=+0 "sets colorbar at textwidth
+command! NoColorColumn :set colorcolumn=0 "sets colorbar just past textwidth
 
-" for these two functions, you can give them a number, and that will give it
-" precedence
-function! s:Boxline(char)
-    :let charorder=['','=','-','"'] "make the indexes line up by starting with an empty string
-    :let indices=['1','2','3']
-    if index(indices,a:char) >=0
-        :let character=charorder[a:char]
-    else
-        :let character=a:char
+"Format text + wrapping
+"
+" important: vip - selects the entire paragraph
+function! ChangeFormat(new_tw)
+    " store all the old settings in a local buffer variable
+    " don't store if they've already been set, as those are the originals
+    " TODO: change this to an object instead
+    if !exists("b:thedict")
+       let b:thedict = {"oldtw":&tw,"oldfo":&fo,"oldcc":&colorcolumn}
     endif
-    :exe "normal mt"
-    :let line=repeat(character, col('$')-1)
-    :exe "normal O".line
-    :exe "normal 't"
-    :exe "normal o".line."\<Esc>o"
+    " set new textwidth
+    :exe ":set textwidth=".a:new_tw." fo+=t"
+    :ColorColumn
+    :echo "textwidth ".a:new_tw.", autowrapping on, go edit."
 endfunction
 
-function! s:Underline(char)
-    :let charorder=['','=','-','"','^','*']
-    :let indices=['1','2','3','4','5']
-    if index(indices,a:char) >=0
-        :let character=charorder[a:char]
+function! RestoreFormat()
+    if exists("b:thedict")
+        :exe ":set textwidth=".b:thedict["oldtw"]." fo=".b:thedict["oldfo"]." colorcolumn=".b:thedict["oldcc"]
     else
-        :let character=a:char
+        :echo "couldn't find old vars, turning it off"
+        :set textwidth=0
+        :set fo+=t
+        :NoColorColumn
     endif
-    :let line=repeat(character, col('$')-1)
-    :exe "normal o".line."\<Esc>o"
+    :echo "reset to defaults - autowrapping off"
+        unlet! b:thedict
 endfunction
 
-" TODO: make this respect indentation, etc -- not sure how to do that yet
-" TODO: make this work with numbers
-" Shortcuts to add title and underlines for docstrings, etc
-command! EqualTitle :call s:Boxline('=')
-command! DashTitle :call s:Boxline('-')
-command! -nargs=1 Title :call s:Boxline(<f-args>)
-command! -nargs=1 Underline :call s:Underline(<f-args>)
+" turn on autowrapping for comments
+" 'ec' - edit comment, 'en' - edit normal, 'ed' - edit done
+" TODO: figure out how to get this to start automatically within a comment
+" (e.g. I type '#' it starts wrapping then as soon as I'm done with comment
+" writing it goes back. One possible option: map '#' to my comment function
+" and then have a short function that deletes the current line of text. Dunno,
+" seems kinda overkill.
+map <leader>ec :call ChangeFormat(72)<CR>
+map <leader>en :call ChangeFormat(78)<CR>
+map <leader>ed :call RestoreFormat()<CR>
+
+" simplify block formatting
+"  (suggestion from nvie.com site...my muscle memory is to gq now
+" though)
+nmap Q gqap
+vmap Q gq
+
+" basically, use this if the highlighting starts to get out of control
+command! LessBadSpellBad :set hi SpellBad term=underline ctermfg=12 ctermbg=bg gui=undercurl guisp=Red
+" sets it to only underline and everything else normal
+command! LeastBadSpellBad :set hi SpellBad term=underline ctermfg=fg ctermbg=bg gui=undercurl guisp=Red
+
+" vim editing
+command! Pos :echo col('.')
+
+" ================
+" Basic Settings
+" ================
+"
+syntax on                     " syntax highlighing
+filetype on                   " try to detect filetypes
+filetype plugin indent on     " enable loading indent file for filetype
+set number                    " Display line numbers
+set numberwidth=1             " using only 1 column (and 1 space) while possible
+set background=dark           " We are using dark background in vim
+set title                     " show title in console title bar
+set wildmenu                  " Menu completion in command mode on <Tab>
+set wildmode=full             " <Tab> cycles between all matching choices.
+set encoding=utf-8            " Necessary for powerline to show unicode glyphs
+set lazyredraw                " According to gitv.txt - stops Vim from
+                              "   redrawing the screen and thereby results in
+                              "   much smoother looking plugins
+set hidden                    " allow switching buffers without unloading, etc
+" don't bell or blink
+set noerrorbells
+set vb t_vb=
+set novisualbell
+
+" Ignore these files when completing
+set wildignore+=*.o,*.obj,.git,*.pyc
+set wildignore+=eggs/**
+set wildignore+=*.egg-info/**
+
+set grepprg=ack         " replace the default grep program with ack
+
+""" Insert completion
+" don't select first item, follow typing in autocomplete
+set completeopt=menuone,longest,preview
+set pumheight=6             " Keep a small completion window
+
+
+let g:acp_completeoptPreview=1
+
+""" Moving Around/Editing
+set cursorline              " have a line indicate the cursor location
+set ruler                   " show the cursor position all the time
+set nostartofline           " Avoid moving cursor to BOL when jumping around
+set virtualedit=block       " Let cursor move past the last char in <C-v> mode
+set scrolloff=3             " Keep 3 context lines above and below the cursor
+set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
+set showmatch               " Briefly jump to a paren once it's balanced
+set nowrap                  " don't wrap text
+set linebreak               " don't wrap textin the middle of a word
+set autoindent              " always set autoindenting on
+set smartindent             " use smart indent if there is no indent file
+set tabstop=4               " <tab> inserts 4 spaces
+set shiftwidth=4            " but an indent level is 2 spaces wide.
+set softtabstop=4           " <BS> over an autoindent deletes both spaces.
+set expandtab               " Use spaces, not tabs, for autoindent/tab key.
+set shiftround              " rounds indent to a multiple of shiftwidth
+set matchpairs+=<:>         " show matching <> (html mainly) as well
+set foldmethod=indent       " allow us to fold on indents
+set foldlevel=99            " don't fold by default
+
+" don't outdent hashes
+inoremap # #
+
+" TODO: set this up so it isn't called 50x if the file is source again.
+" close preview window automatically when we move around
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+" make tab completion context sensitive
+let g:SuperTabDefaultCompletionType = "context"
+
+"""" Reading/Writing
+set noautowrite             " Never write a file unless I request it.
+set noautowriteall          " NEVER.
+set noautoread              " Don't automatically re-read changed files.
+set modeline                " Allow vim options to be embedded in files;
+set modelines=5             " they must be within the first or last 5 lines.
+set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
+
+"""" Messages, Info, Status
+set ls=2                    " allways show status line
+set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
+set confirm                 " Y-N-C prompt if closing with unsaved changes.
+set showcmd                 " Show incomplete normal mode commands as I type.
+set report=0                " : commands always print changed line count.
+set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
+set ruler                   " Show some info, even without statuslines.
+set laststatus=2            " Always show statusline, even if only 1 window.
+set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
+
+" displays tabs with :set list & displays when a line runs off-screen
+set listchars=tab:>-,eol:$,trail:-,precedes:<,extends:>
+set list
+
+""" Searching and Patterns
+set ignorecase              " Default to using case insensitive searches,
+set smartcase               " unless uppercase letters are used in the regex.
+set smarttab                " Handle tabs more intelligently
+set hlsearch                " Highlight searches by default.
+set incsearch               " Incrementally search while typing a /regex
+
+
+"""" Display
+" Setting it this way so I can change fonts by resolution, etc
+let g:UMono="Ubuntu\\ Mono"
+let g:Menlo="Menlo\\ for\\ Powerline"
+let g:Inconsolata="Inconsolata-dz\\ For\\ Powerline"
+let g:Bitstream="Bitstream\\ Vera\\ Sans\\ Mono\\ for\\ Powerline"
+let g:AnonymousPro="Anonymous\\ Pro\\ for\\ Powerline"
+let g:FontNames = ["UMono","Menlo","Inconsolata","Bitstream","AnonymousPro"]
+let g:FontChoices = [g:UMono,g:Menlo,g:Inconsolata,g:Bitstream,g:AnonymousPro]
+command! PatchedFonts :echo s:FontNames
+let g:DefaultFont=g:UMono
+
+function! SetFont(size, ...)
+    if a:0 > 0                  "a:0 is defined as number of *extra* arguments
+        echo g:{a:1}
+        let fontface=g:{a:1}
+    else
+        let fontface=g:DefaultFont
+    endif
+    let newfont=fontface.":h".a:size
+    :echo newfont
+    :exe ":set guifont=".newfont
+endfunction
+
+command! -nargs=* SetFont :call SetFont(<f-args>)
+if has("gui_running")
+    colorscheme xoria256
+    " keep menubar only
+    set guioptions=m
+    set novisualbell
+    " set powerline to fancy
+    let g:Powerline_symbols="fancy"
+else
+    " set powerline to normal instead (otherwise superugly)
+    colorscheme xoria256
+endif
+
+if has("gui_macvim")
+    colorscheme xoria256
+    call SetFont(20,"Inconsolata")
+    let g:Powerline_symbols="fancy"
+endif
+
+" =================
+" Plugin Settings
+" =================
+
+
+"
+" ===============================================
+" AutoComplPop - useful keyword completion, etc
+" ===============================================
+
+let g:acp_behaviorKeywordLength = 4 " make AutoComplPop a little less
+                                    " aggressive
+
+" =============================================
+" Gitv - git + gitk + diff all in vim -- yay!
+" =============================================
+
+" make it easier to write git commands :P
+cabbrev git Git
+command! -nargs=* MyGitv call MyGitv(<f-args>)
+
+" check out :help gitv-misc for more info
+" wrapper for gitv's neat open-gitcommand-function
+function! MyGitv(cmd, ...)
+    if a:0 == 0
+        let window = 'new'
+    elseif a:0 == 1
+        let window = a:1
+    else
+        echoerr "MyGitV takes 2 and only 2 arguments"
+    endif
+    call Gitv_OpenGitCommand(a:cmd,window)
+endfunction
+
+
 " ==========================================================
 " tComment
 " ==========================================================
 "" note that its commands are:
-"gc{motion}   :: Toggle comments (for small comments within one line 
-"                    the &filetype_inline style will be used, if 
+"gc{motion}   :: Toggle comments (for small comments within one line
+"                    the &filetype_inline style will be used, if
 "                    defined)
 "    gcc          :: Toggle comment for the current line
 "    gC{motion}   :: Comment region
@@ -206,9 +335,8 @@ command! -nargs=1 Underline :call s:Underline(<f-args>)
 " ==========================================================
 " Powerline
 " ==========================================================
-" TODO: set up powerline font
-" set powerline to fancy symbols
-" display short
+" Note that you need to have a patched font to use the fancy encodings (search
+" for has(gui_running) for more
 let g:Powerline_stl_path_style="short"
 " change to set color scheme
 "let g:Powerline_colorscheme="default"
@@ -227,28 +355,8 @@ map <leader>td <Plug>TaskList
 " Run pep8
 let g:pep8_map='<leader>8'
 
-" ==========================================================
-" Py.test
-" ==========================================================
-" run py.test's
-"nmap <silent><Leader>tf <Esc>:Pytest file<CR>
-"nmap <silent><Leader>tc <Esc>:Pytest class<CR>
-"nmap <silent><Leader>tm <Esc>:Pytest method<CR>
-"nmap <silent><Leader>tn <Esc>:Pytest next<CR>
-"nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
-"nmap <silent><Leader>te <Esc>:Pytest error<CR>
-
-" ==========================================================
-" MakeGreen
-" ==========================================================
-"
-" run MakeGreen with current file
-map <leader>m <Plug>MakeGreen
-
-"
-" Run django tests - disabled in favor of vim-ipython
-"map <leader>dt :set makeprg=python\ manage.py\ test\|:call MakeGreen()<CR>
-
+" Don't let pyflakes use the quickfix window
+let g:pyflakes_use_quickfix = 0
 
 " ==========================================================
 " NERDTree
@@ -291,212 +399,197 @@ map <leader>r :RopeRename<CR>
 let g:voom_ft_modes = {'markdown': 'markdown', 'python': 'python', 'rst': 'rest'}
 map <F3> :Voomtoggle<CR>
 
-
-" ==========================================================
-" vim-ipython
-" ==========================================================
-" don't let vim-ipython reset settings
-" TODO: remove some of these commands/revisit
-let g:ipy_perform_mappings=0
-" still haven't decided which way I want commands
-noremap <silent> <F5> :python run_this_file()<CR>
-noremap <silent> <S-F5> :python run_this_line()<CR>
-noremap <silent> <F9> :python run_these_lines()<CR>
-noremap <silent> <leader>d :py get_doc_buffer()<CR>
-noremap <silent> <leader>s :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
-noremap <silent> <S-F9> :python toggle_reselect()<CR>
-noremap <silent> <C-F6> :python send('%pdb')<CR>
-noremap <silent> <F6> :python set_breakpoint()<CR>
-noremap <silent> <s-F6> :python clear_breakpoint()<CR>
-noremap <silent> <F7> :python run_this_file_pdb()<CR>
-noremap <silent> <s-F7> :python clear_all_breaks()<CR>
-imap <C-F5> <C-O><F5>
-imap <S-F5> <C-O><S-F5>
-imap <silent> <F5> <C-O><F5>
-map <C-F5> :call <SID>toggle_send_on_save()<CR>
-"" Example of how to quickly clear the current plot with a keystroke
-"map <silent> <F12> :python run_command("plt.clf()")<cr>
-"" Example of how to quickly close all figures with a keystroke
-"map <silent> <F11> :python run_command("plt.close('all')")<cr>
-
-"pi custom
-"map <silent> <C-Return> :python run_this_file()<CR>
-"map <silent> <C-s> :python run_this_line()<CR>
-"imap <silent> <C-s> <C-O>:python run_this_line()<CR>
-"map <silent> <M-s> :python dedent_run_this_line()<CR>
-"vmap <silent> <C-S> :python run_these_lines()<CR>
-"vmap <silent> <M-s> :python dedent_run_these_lines()<CR>
-"map <silent> <M-c> I#<ESC>
-"vmap <silent> <M-c> I#<ESC>
-"map <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
-"vmap <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
-
-" ==========================================================
-" Pathogen - Allows us to organize our vim plugins
-" ==========================================================
-" Load pathogen with docs for all plugins
-
-"call pathogen#infect('~/.vim/bundle')
-"call pathogen#runtime_append_all_bundles() " set up all plugins managed with pathogen
-"call pathogen#helptags()                   " regenerate helptags from pathogen plugins
-
-" ==========================================================
-" Basic Settings
-" ==========================================================
-syntax on                     " syntax highlighing
-filetype on                   " try to detect filetypes
-filetype plugin indent on     " enable loading indent file for filetype
-set number                    " Display line numbers
-set numberwidth=1             " using only 1 column (and 1 space) while possible
-set background=dark           " We are using dark background in vim
-set title                     " show title in console title bar
-set wildmenu                  " Menu completion in command mode on <Tab>
-set wildmode=full             " <Tab> cycles between all matching choices.
-set encoding=utf-8            " Necessary for powerline to show unicode glyphs
-
-" don't bell or blink
-set noerrorbells
-set vb t_vb=
-set novisualbell
-
-" Ignore these files when completing
-set wildignore+=*.o,*.obj,.git,*.pyc
-set wildignore+=eggs/**
-set wildignore+=*.egg-info/**
-
-set grepprg=ack         " replace the default grep program with ack
+" ===========
+" Functions
+" ===========
 
 
-" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+" Note, this will be eliminated in favor of either a plugin or move into main
+" vimrc in the future. Not enough stuff here to necessarily justify separate
+" placement.
+"
+" turn on and off color bar relative to textwidth
+" TODO: fix for when textwidth is zero
 
-" Disable the colorcolumn when switching modes.  Make sure this is the
-" first autocmd for the filetype here
-"autocmd FileType * setlocal colorcolumn=0
+" for these two functions, you can give them a number, and that will give it
+" precedence
+function! Boxline(char)
+    :let charorder=['','=','-','"'] "make the indexes line up by starting with an empty string
+    :let indices=['1','2','3']
+    if index(indices,a:char) >=0
+        :let character=charorder[a:char]
+    else
+        :let character=a:char
+    endif
+    :exe "normal mt"
+    :let line=repeat(character, col('$')-1)
+    :exe "normal O".line
+    :exe "normal 't"
+    :exe "normal o".line."\<Esc>o"
+endfunction
 
-""" Insert completion
-" don't select first item, follow typing in autocomplete
-set completeopt=menuone,longest,preview
-set pumheight=6             " Keep a small completion window
+function! Underline(char)
+    :let charorder=['','=','-','"','^','*']
+    :let indices=['1','2','3','4','5']
+    if index(indices,a:char) >=0
+        :let character=charorder[a:char]
+    else
+        :let character=a:char
+    endif
+    :let line=repeat(character, col('$')-1)
+    :exe "normal o".line."\<Esc>o"
+endfunction
 
-
-""" Moving Around/Editing
-set cursorline              " have a line indicate the cursor location
-set ruler                   " show the cursor position all the time
-set nostartofline           " Avoid moving cursor to BOL when jumping around
-set virtualedit=block       " Let cursor move past the last char in <C-v> mode
-set scrolloff=3             " Keep 3 context lines above and below the cursor
-set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
-set showmatch               " Briefly jump to a paren once it's balanced
-set nowrap                  " don't wrap text
-set linebreak               " don't wrap textin the middle of a word
-set autoindent              " always set autoindenting on
-set smartindent             " use smart indent if there is no indent file
-set tabstop=4               " <tab> inserts 4 spaces 
-set shiftwidth=4            " but an indent level is 2 spaces wide.
-set softtabstop=4           " <BS> over an autoindent deletes both spaces.
-set expandtab               " Use spaces, not tabs, for autoindent/tab key.
-set shiftround              " rounds indent to a multiple of shiftwidth
-set matchpairs+=<:>         " show matching <> (html mainly) as well
-set foldmethod=indent       " allow us to fold on indents
-set foldlevel=99            " don't fold by default
-set hidden                  " keep buffers hidden when I switch
-
-" don't outdent hashes
-"inoremap # #
-
-" close preview window automatically when we move around
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-"""" Reading/Writing
-set noautowrite             " Never write a file unless I request it.
-set noautowriteall          " NEVER.
-set noautoread              " Don't automatically re-read changed files.
-set modeline                " Allow vim options to be embedded in files;
-set modelines=5             " they must be within the first or last 5 lines.
-set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
-
-"""" Messages, Info, Status
-set ls=2                    " allways show status line
-set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
-set confirm                 " Y-N-C prompt if closing with unsaved changes.
-set showcmd                 " Show incomplete normal mode commands as I type.
-set report=0                " : commands always print changed line count.
-set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
-set ruler                   " Show some info, even without statuslines.
-set laststatus=2            " Always show statusline, even if only 1 window.
-set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
-
-" displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:>-,eol:$,trail:-,precedes:<,extends:>
-set list
-
-""" Searching and Patterns
-set ignorecase              " Default to using case insensitive searches,
-set smartcase               " unless uppercase letters are used in the regex.
-set smarttab                " Handle tabs more intelligently 
-set hlsearch                " Highlight searches by default.
-set incsearch               " Incrementally search while typing a /regex
-
-"""" Display
-if has("gui_running")
-    colorscheme xoria256
-    " keep menubar only
-    set guioptions=m
-    set novisualbell
-    " set powerline to fancy
-    let g:Powerline_symbols="fancy"
-else
-    " set powerline to normal instead (otherwise superugly)
-    colorscheme xoria256
-endif
+" TODO: make this respect indentation, etc -- not sure how to do that yet
+" TODO: make this work with numbers
+" Shortcuts to add title and underlines for docstrings, etc
+command! EqualTitle :call Boxline('=')
+command! DashTitle :call Boxline('-')
+command! -nargs=1 Title :call Boxline(<f-args>)
+command! -nargs=1 Underline :call Underline(<f-args>)
 
 
 
-" ==========================================================
+" :DiffSaved to see diff of current buffer and version on disk
+" From the dotfiles files of natw - https://bitbucket.org/natw/dotfiles/
+function! DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call :DiffWithSaved()
+map <Leader>ds :DiffSaved<CR>
+
+" disable arrow keys to force myself to adapt to hjkl - h/t to
+" http://nvie.com/posts/how-i-boosted-my-vim
+function! DisableArrowKeys()
+    map <up> <nop>
+    map <down> <nop>
+    map <left> <nop>
+    map <right> <nop>
+endfunction
+
+command! DisableArrowKeys :call DisableArrowKeys()
+
+function! EnableArrowKeys()
+    map <up> <up>
+    map <down> <down>
+    map <left> <left>
+    map <right> <right>
+endfunction
+
+command! EnableArrowKeys :call EnableArrowKeys()
+
+" From Josh Triplett (found on the nvie.com site above), a nice function to set
+" spacing however you like
+" TODO: add some more autocmds for sensible spacing defaults
+
+function! Spaces(...)
+    if a:0 == 1
+        let l:width = a:1
+    else
+        let l:width = 4
+    endif
+    setlocal expandtab
+    let &l:shiftwidth = l:width
+    let &l:softtabstop = l:width
+endfunction
+command! T setlocal noexpandtab shiftwidth=8 softtabstop=0
+command! -nargs=? S call Spaces(<args>)</args>
+
+" ================
+" LoadPythonPath
+" ================
+"
+
+" autoload function to load and unload python path (thereby enhancing
+" autocomplete possibilities, etc. Note that this may be unnecessary if you
+" have other Vim plugins installed. I'm not sure :P)
+
+
+" If you want to autoload the python path any time you open a .py file, you
+" can do use this function (note that it will not reload the python path every
+" time, only if it hasn't been loaded already)
+
+function! GetPythonPath()
+    if !exists("g:PythonPathLoaded")
+        call LoadPythonPath()
+        return
+    elseif g:PythonPathLoaded
+        return
+    else
+        call LoadPythonPath()
+    endif
+endfunction
+
+" Load Python Path - allows hovering over module name and opening file in vim
+function! LoadPythonPath()
+py <<EOF
+# load PYTHONPATH into vim, this lets you hover over a module name
+# and type 'gf' (for goto file) and open that file in vim. Useful
+# and easier than rope for simple tasks
+import os.path
+import sys
+import vim
+for p in sys.path:
+    if os.path.isdir(p):
+        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
+EOF
+
+    let g:PythonPathLoaded = 1
+
+endfunction
+
+"Unfortunately, this also seems to slow down autocomplete, so I only want to
+"load/unload when *I* choose
+function! UnloadPythonPath()
+
+py <<EOF
+    # load PYTHONPATH into vim, this lets you hover over a module name
+    # and type 'gf' (for goto file) and open that file in vim. Useful
+    # and easier than rope for simple tasks
+for p in sys.path:
+    if os.path.isdir(p):
+        vim.command(r"set path-=%s" % (p.replace(" ", r"\ ")))
+EOF
+
+    let g:PythonPathLoaded = 0
+endfunction
+
+" ===================
+" Filetype Settings
+" ===================
+"
+
+" note: autocommands are separated into groups so that, even if you source
+" your vimrc multiple times, you won't end up setting far too many
+" autocommands
+" ============
 " Javascript
-" ==========================================================
-au BufRead *.js set makeprg=jslint\ %
-
-" Use tab to scroll through autocomplete menus
-"autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
-"autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
-
-let g:acp_completeoptPreview=1
-
-" ===========================================================
+" ============
+"
+:augroup javascript
+    au!
+    au BufRead *.js set makeprg=jslint\ %
+:augroup END
+" ===========================
 " FileType specific changes
-" ============================================================
+" ===========================
+"
 " Mako/HTML
-autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
-autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType html set omnifunc=htmlcompletion#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+augroup makohtml
+    au!
+    autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
+    autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+    autocmd FileType html set omnifunc=htmlcompletion#CompleteTags
+    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+augroup END
 
 
 
-" Python
-"au BufRead *.py compiler nose
-au FileType python set omnifunc=pythoncomplete#Complete
-au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-" set the coloring for errors to be readable :P
-au FileType python hi SpellBad term=reverse ctermfg = black ctermbg=9 gui=undercurl guisp=Red
-command! FixHighlight :highlight SpellBad term=reverse ctermfg = black ctermbg=9 gui=undercurl guisp=Red
-
-" set up Pylint so it can be used to check python files
-"autocmd FileType python compiler pylint
-" don't run pylint on every save (instead run by :make in a python file)
-"let g:pylint_onwrite=0
-" uncomment to disable pylint in quickfix window
-"let g:pylint_cwindow=0
-
-" Don't let pyflakes use the quickfix window
-let g:pyflakes_use_quickfix = 0
-" make tab completion context sensitive
-let g:SuperTabDefaultCompletionType = "context"
 
 
 " Add the virtualenv's site-packages to vim path
@@ -509,13 +602,6 @@ if 'VIRTUALENV' in os.environ:
     sys.path.insert(0, project_base_dir)
     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
     execfile(activate_this, dict(__file__=activate_this))
-
-# load PYTHONPATH into vim, this lets you hover over a module name
-# and type 'gf' (for goto file) and open that file in vim. Useful
-# and easier than rope for simple tasks
-for p in sys.path:
-    if os.path.isdir(p):
-        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
 EOF
 
 " Load up virtualenv's vimrc if it exists
@@ -524,46 +610,14 @@ if filereadable($VIRTUAL_ENV . '/.vimrc')
 endif
 
 
- """""""" things to try later
 
-" :DiffSaved to see diff of current buffer and version on disk
-function! s:DiffWithSaved()
-  let filetype=&ft
-  diffthis
-  vnew | r # | normal! 1Gdd
-  diffthis
-  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-endfunction
-com! DiffSaved call s:DiffWithSaved()
-" map <Leader>ds :DiffSaved<CR>
-
-" function! OpenHgChangedFiles()
-  " let status = system('hg status -nm')
-  " let filenames = split(status, "\n")
-  " exec "edit " . filenames[0]
-  " for filename in filenames[1:]
-    " exec "tabnew " . filename
-  " endfor
-" endfunction
-" command! OpenHgChangedFiles :call OpenHgChangedFiles()
-" map <Leader>oc :OpenHgChangedFiles<CR>
-
-
-
-" just some possibilities for later
-
-"if filereadable(expand("~/.vimrc.local"))
-      "source ~/.vimrc.local
-"endif
-
-"if hostname() == "foo"
-"" do something
-"endif
-"
-"""" Old Junk I don't want to forget about:
-
-""" Completion colors and highlights - incredibly ugly defaults
-"hi Pmenu ctermbg=DarkCyan guibg=DarkCyan guifg=White
-"hi PmenuSel ctermbg=8 guibg=DarkGrey
-"hi PmenuSbar ctermbg=7 guibg=Grey
-"hi PmenuThumb cterm=reverse gui=reverse
+" Python
+augroup python
+    au!
+    "au BufRead *.py compiler nose
+    au FileType python set omnifunc=pythoncomplete#Complete
+    au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+    au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+    " TODO: put LoadPythonPath into here instead of in vimrc
+    " set the coloring for errors to be readable :P
+augroup END

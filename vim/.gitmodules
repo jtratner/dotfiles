@@ -1,0 +1,120 @@
+[submodule "vim.symlink/bundle/gundo"]
+	path = vim.symlink/bundle/gundo
+	url = git://github.com/sjl/gundo.vim.git
+[submodule "vim.symlink/bundle/ctrlp"]
+	path = vim.symlink/bundle/ctrlp
+	url = git://github.com/kien/ctrlp.vim.git
+[submodule "vim.symlink/bundle/jquery"]
+	path = vim.symlink/bundle/jquery
+	url = git://github.com/itspriddle/vim-jquery.git
+[submodule "vim.symlink/bundle/hammer"]
+	path = vim.symlink/bundle/hammer
+	url = git://github.com/matthias-guenther/hammer.vim.git
+[submodule "vim.symlink/bundle/repeat"]
+	path = vim.symlink/bundle/repeat
+	url = git://github.com/tpope/vim-repeat.git
+[submodule "vim.symlink/bundle/powerline"]
+	path = vim.symlink/bundle/powerline
+	url = git://github.com/Lokaltog/vim-powerline.git
+[submodule "vim.symlink/bundle/minibufexpl"]
+	path = vim.symlink/bundle/minibufexpl
+	url = git://github.com/sontek/minibufexpl.vim.git
+[submodule "vim.symlink/bundle/nerdtree"]
+	path = vim.symlink/bundle/nerdtree
+	url = git://github.com/scrooloose/nerdtree.git
+[submodule "vim.symlink/bundle/VOoM"]
+	path = vim.symlink/bundle/VOoM
+	url = git://github.com/vim-scripts/VOoM.git
+[submodule "vim.symlink/bundle/tagbar"]
+	path = vim.symlink/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git
+[submodule "vim.symlink/bundle/taglist"]
+	path = vim.symlink/bundle/taglist
+	url = git://github.com/vim-scripts/taglist.vim.git
+[submodule "vim.symlink/bundle/tabular"]
+	path = vim.symlink/bundle/tabular
+	url = git://github.com/godlygeek/tabular.git
+[submodule "vim.symlink/bundle/surround"]
+	path = vim.symlink/bundle/surround
+	url = git://github.com/tpope/vim-surround.git
+[submodule "vim.symlink/bundle/pasta"]
+	path = vim.symlink/bundle/pasta
+	url = git://github.com/sickill/vim-pasta.git
+[submodule "vim.symlink/bundle/tcomment"]
+	path = vim.symlink/bundle/tcomment
+	url = git://github.com/tomtom/tcomment_vim.git
+[submodule "vim.symlink/bundle/commentary"]
+	path = vim.symlink/bundle/commentary
+	url = git://github.com/tpope/vim-commentary.git
+[submodule "vim.symlink/bundle/TaskList"]
+	path = vim.symlink/bundle/TaskList
+	url = git://github.com/vim-scripts/TaskList.vim.git
+[submodule "vim.symlink/bundle/ack"]
+	path = vim.symlink/bundle/ack
+	url = git://github.com/mileszs/ack.vim.git
+[submodule "vim.symlink/bundle/fugitive"]
+	path = vim.symlink/bundle/fugitive
+	url = git://github.com/tpope/vim-fugitive.git
+[submodule "vim.symlink/bundle/git"]
+	path = vim.symlink/bundle/git
+	url = git://github.com/tpope/vim-git.git
+[submodule "vim.symlink/bundle/gitv"]
+	path = vim.symlink/bundle/gitv
+	url = git://github.com/gregsexton/gitv.git
+[submodule "vim.symlink/bundle/gist"]
+	path = vim.symlink/bundle/gist
+	url = git://github.com/mattn/gist-vim.git
+[submodule "vim.symlink/bundle/webapi"]
+	path = vim.symlink/bundle/webapi
+	url = git://github.com/mattn/webapi-vim.git
+[submodule "vim.symlink/bundle/snipmate"]
+	path = vim.symlink/bundle/snipmate
+	url = git://github.com/garbas/vim-snipmate.git
+[submodule "vim.symlink/bundle/snipmate-snippets"]
+	path = vim.symlink/bundle/snipmate-snippets
+	url = git://github.com/honza/snipmate-snippets.git
+[submodule "vim.symlink/bundle/addon-mw-utils"]
+	path = vim.symlink/bundle/addon-mw-utils
+	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "vim.symlink/bundle/tlib"]
+	path = vim.symlink/bundle/tlib
+	url = git://github.com/tomtom/tlib_vim.git
+[submodule "vim.symlink/bundle/supertab"]
+	path = vim.symlink/bundle/supertab
+	url = git://github.com/ervandew/supertab.git
+[submodule "vim.symlink/bundle/AutoComplPop"]
+	path = vim.symlink/bundle/AutoComplPop
+	url = git://github.com/vim-scripts/AutoComplPop.git
+[submodule "vim.symlink/bundle/flake8"]
+	path = vim.symlink/bundle/flake8
+	url = git://github.com/nvie/vim-flake8.git
+[submodule "vim.symlink/bundle/pyunit"]
+	path = vim.symlink/bundle/pyunit
+	url = git://github.com/nvie/vim-pyunit.git
+[submodule "vim.symlink/bundle/pydoc"]
+	path = vim.symlink/bundle/pydoc
+	url = git://github.com/fs111/pydoc.vim.git
+[submodule "vim.symlink/bundle/pyflakes-pathogen"]
+	path = vim.symlink/bundle/pyflakes-pathogen
+	url = git://github.com/mitechie/pyflakes-pathogen.git
+[submodule "vim.symlink/bundle/ipython"]
+	path = vim.symlink/bundle/ipython
+	url = git://github.com/ivanov/vim-ipython.git
+[submodule "vim.symlink/bundle/rope"]
+	path = vim.symlink/bundle/rope
+	url = git://github.com/sontek/rope-vim.git
+[submodule "vim.symlink/bundle/python"]
+	path = vim.symlink/bundle/python
+	url = git://github.com/sorin-ionescu/python.vim.git
+[submodule "vim.symlink/bundle/javascript"]
+	path = vim.symlink/bundle/javascript
+	url = git://github.com/pangloss/vim-javascript.git
+[submodule "vim.symlink/bundle/togglemouse"]
+	path = vim.symlink/bundle/togglemouse
+	url = git://github.com/nvie/vim-togglemouse.git
+[submodule "vim.symlink/bundle/octave.vim"]
+	path = vim.symlink/bundle/octave.vim
+	url = git://github.com/vim-scripts/octave.vim--.git
+[submodule "vim.symlink/bundle/syntastic"]
+	path = vim.symlink/bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
