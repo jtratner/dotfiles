@@ -71,7 +71,6 @@ compinit
 
 # load every completion after autocomplete loads
 for config_file ($ZSH/**/completion.sh) source $config_file
-
 # extraordinarily important: (lets everyone know that the terminal can handle
 # color
 # I am sure that this line might screw something up somewerhe

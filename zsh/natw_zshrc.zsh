@@ -14,7 +14,7 @@
 #)
 # remove duplicates from fpath
 #typeset -U fpath
-export fpath
+#export fpath
 export VISUAL="vim"
 export EDITOR="vim"
 export LC_CTYPE=en_US.UTF-8
