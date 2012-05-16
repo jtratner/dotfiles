@@ -65,7 +65,6 @@ virtualenv_prompt(){
   echo "%{$fg_bold[yellow]%}$(%M | awk '{print $1}')%{$reset_color%}"
 }
 
-
 precmd() {
   title "zsh" "%m" "%55<...<%~"
   set_prompt
