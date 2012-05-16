@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# greps ls for the file you want
+
+ls -la | grep $1
