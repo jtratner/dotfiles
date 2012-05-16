@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# first, get rbenv
+cd $HOME
+git clone git://github.com/sstephenson/rbenv.git .rbenv
+# add rbenv set up to .localrc
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.localrc
+echo 'eval "$(rbenv init -)"' >> ~/.localrc
+# restart the shell to use rbenv
+exec $SHELL
+# (after this is done, you'll need to run install-ruby
