@@ -65,6 +65,17 @@ virtualenv_prompt(){
   echo "%{$fg_bold[yellow]%}$(%M | awk '{print $1}')%{$reset_color%}"
 }
 
+alias rvm-prompt="$HOME/.rvm/bin/rvm-prompt"
+
+# basically, only show the rvm-prompt if it exists
+rvm_prompt () {
+  if [[ -e `which rvm-prompt`]]; then
+      echo "%{$fg_bold[yellow]%}$(rvm-prompt)%{reset_color%}"
+  else
+      echo ""
+  fi
+}
+
 precmd() {
   title "zsh" "%m" "%55<...<%~"
   set_prompt
