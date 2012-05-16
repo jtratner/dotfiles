@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# install ruby-build to easily install ruby
+mkdir -p ~/.rbenv/plugins
+cd ~/.rbenv/plugins
+git clone git://github.com/sstephenson/ruby-build.git
+# install ruby version
+rbenv install 1.9.2-p320
+
+# rebuild the shim binaries
+rbenv hash
