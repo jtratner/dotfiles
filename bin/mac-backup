@@ -2,6 +2,8 @@
 IFS=$'\n'
 
 # Copies a few key files to a mounted partition.
+# 
+# from @holman's dotfiles, going to modify it soon for 'buntu
 #
 # I use Time Machine for backups, but I also wanted to build out an
 # offsite backup with my critical nonreplaceable data (photos, documents,

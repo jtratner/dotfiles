@@ -121,3 +121,10 @@
 [submodule "ubuntu-java/flexion-oab-java6"]
 	path = ubuntu-java/flexion-oab-java6
 	url = git://github.com/flexiondotorg/oab-java6
+[submodule "vim/vim.symlink/bundle/unimpaired"]
+	path = vim/vim.symlink/bundle/unimpaired
+	url = git://github.com/tpope/vim-unimpaired.git
+
+[submodule "zsh/zsh-completions"]
+	path = zsh/zsh-completions
+	url = git://github.com/zsh-users/zsh-completions.git
