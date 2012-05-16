@@ -31,11 +31,13 @@ Installing and Using These Dotfiles
 -----------------------------------
 
 * Two options (for now):
+
   1. Run ``rake install`` - prompts you to back up or overwrite your files,
-       you'll still need to update submodules (use the
-       ``updatesubmodules.sh``) script in the bin.
+     you'll still need to update submodules (use the
+     ``updatesubmodules.sh``) script in the bin.
   2. Run ``install.sh`` - sets up dotfiles and updates submodules + will back
-       up your files to .bak
+     up your files to .bak
+
 
 My personal touches
 ===================
@@ -85,8 +87,6 @@ reStructuredText/autounderline Functions
 * ``:Underline <arg>`` and ``:Title <arg>`` where ``<arg>`` is a character or
   number underline or 'box':
 
-.. code:: vim
-
 ::
 
     some vim text
@@ -109,11 +109,12 @@ reStructuredText/autounderline Functions
 New shortcuts
 -------------
 
+Mappings
+""""""""
+
 ===========  ==============  =============================
 Mapping      Mnemonic        Settings                    
 ===========  ==============  =============================
-Editing + Auto-linebreaks
-----------------------------------------------------------
 <leader> en  'edit normal'   tw=78; fo+=t, colorcolumn+=0
 <leader> ec  'edit comment'  tw=72; fo+=t, colorcolumn+=0
 <leader> ed  'edit done'     restore defaults 
@@ -123,9 +124,14 @@ Editing + Auto-linebreaks
 <S-C-V>      (normal paste)  paste from clipboard
 <S-C-C>      'copy'          yank to clipboard
 Q            'quick form'?   format the current paragraph
+===========  ==============  =============================
 
-Display
-----------------------------------------------------------------
+Commands
+""""""""
+
+===========  ==============  =============================
+Command      Notes           Settings                    
+===========  ==============  =============================
 :SetFont                     use to quickly change font in gvim
 <F3>                         toggle VoOM
 :DiffSaved                   Show diffs between current file and saved file
@@ -148,7 +154,7 @@ Easiest way: ``sudo apt-get build-dep vim-gnome`` (if you're
 using unity)
 
 * **Mac** : I think you can get MacVim_ which should have everything
-* **Windows** : The ``_vim`` files will be helpful, but note that it has to be under
+* **Windows** : The ``vim.symlink`` files will be helpful, but note that it has to be under
   ``vimfiles``, not ``.vim``
 
 .. _MacVim : https://github.com/b4winckler/macvim
@@ -158,7 +164,7 @@ Compiling Vim (Medium!)
 
 0. Handling dependencies - there are a ton and, unfortunately, vim doesn't
    always tell you that you've managed to get all the ones you want. I used to
-   have an install script[1], but it really varies a ton by platform.
+   have an install script[1]_, but it really varies a ton by platform.
 
    * **Ubuntu (and Linux generally)**  there's a raft of libraries, but the most
      important to grab are: ``xorg-dev python-dev ruby ruby-dev`` as well as a
@@ -170,16 +176,12 @@ Compiling Vim (Medium!)
 1. The easiest way to setup vim and be sure that you have the features you want
    is to grab the tarball from the vim homepage, and configure it with[2]
 
-.. code:: bash
-
 ::
 
     ./configure --enable-pythoninterp --enable-rubyinterp --enable-gui --with-features=huge --prefix=$HOME/path/to/directory `
 
 2. Go to your directory where you installed vim and check that you got the right
    version with
-
-.. code:: bash
 
 ::
 
@@ -205,7 +207,6 @@ Option 1: Clone the dotfiles
    to a folder called 'dotfiles' unless you specify a different folder after the
    clone e.g. ``git clone https://github.com/jtratner/dotfiles.git mydotfilecollection/jtratner``):
 
-.. code:: bash
 
 ::
 
@@ -220,7 +221,6 @@ Option 2: Fork the dotfiles yourself
 1. Initiate a git repository, then add your fork of dotfiles on github as a
    remote. Finally, download your files.
 
-.. code:: bash
 
 ::
 
@@ -244,15 +244,13 @@ Symlink the bundle(s) you want to use
 4. To activate all the bundles in a folder, you can run the ``symlinkdirectory``
    script[5]
 
-.. code:: bash
-
 ::
 
     ./symlinkdirectory bundle-available bundle
 
 5. That script created symlinks in the bundle folder to all the plugins in
    bundle-available. To choose just the plugins you want, add or delete some or
-   use ``ln -s`` to create new ones[5]. Bundle-disabled and testing contain
+   use ``ln -s`` to create new ones[5]_. Bundle-disabled and testing contain
    additional plugins that you might try out. Or add your own!
 
 Python Dependencies
@@ -341,17 +339,12 @@ the `IPython website`_ and its `guide to installation`_
 .. _guide to installation: http://ipython.org/ipython-doc/stable/install/install.html
 .. _Stack Overflow: http://www.stackoverflow.com
 
-.. _1 : Email me if you'd like a copy
-.. _2 : The easiest way is to download and install a precompiled version. On Ubuntu, ``vim-gnome`` has most of what you want.
-.. _3 : I set up a different home directory and then symlink it to my local bin,
+.. [2] The easiest way is to download and install a precompiled version. On Ubuntu, ``vim-gnome`` has most of what you want.
+.. [3] I set up a different home directory and then symlink it to my local bin,
        that way I can still use the default system editor as needed (say if xwindows
        crashes or something :P)
-.. _5 : You can also do this individually with ``ln -s``. It's important to use the
-       actual paths to the file, or sometimes the links will mess up. For that reason,
-       I recommend that, instead of using relative paths, use full paths. E.g. in to
-       symlink a file in a subfolder of the \_vim directory: ``ln -s $PWD/myfile ../bundle/``
 
-.. _4 : Here's the whole list:
+.. [4] Here's the whole list:
 
 ::
 
