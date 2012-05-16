@@ -23,11 +23,6 @@ command! W :w
 " Paste from clipboard
 map <leader>p "+p
 map <leader>y "+y
-" Plus if you press ctrl-shift-v and ctrl-shit-p, you can also copy and
-" paste. Neato! (note that you only need remap <leader>p or <leader> y for
-" your system
-map <S-C-V> <leader>p
-map <S-C-C> <leader>y
 
 " Quit window on <leader>q
 nnoremap <leader>q :q<CR>
@@ -302,7 +297,6 @@ let g:acp_behaviorKeywordLength = 4 " make AutoComplPop a little less
 " =============================================
 
 " make it easier to write git commands :P
-cabbrev git Git
 command! -nargs=* MyGitv call MyGitv(<f-args>)
 
 " check out :help gitv-misc for more info
