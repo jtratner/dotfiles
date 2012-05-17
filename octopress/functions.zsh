@@ -13,3 +13,14 @@ function new-post () {
     newpost=$(bundle exec rake "new_post[$1]" | awk '{print $4}')
     $EDITOR $BLOG/$newpost
 }
+
+# go to given octopress folder and preview the blog + open chrome to view
+function octopress-preview () {
+    currdir=$PWD
+    cd $1
+    bundle exec rake preview &
+    google-chrome "http://localhost:4000" &
+    cd $currdir
+}
+
+alias blog-preview="octopress-preview $BLOG"
