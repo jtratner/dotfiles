@@ -16,9 +16,9 @@ git_dirty() {
   else
     if [[ $st == "nothing to commit (working directory clean)" ]]
     then
-      echo " on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
+      echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
     else
-      echo " on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
+      echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
     fi
   fi
 }
@@ -36,7 +36,7 @@ unpushed () {
 need_push () {
   if [[ $(unpushed) == "" ]]
   then
-    echo ""
+    echo " "
   else
     echo " with %{$fg_bold[magenta]%}unpushed%{$reset_color%} "
   fi
@@ -65,16 +65,6 @@ virtualenv_prompt(){
   echo "%{$fg_bold[yellow]%}$(%M | awk '{print $1}')%{$reset_color%}"
 }
 
-alias rvm-prompt="$HOME/.rvm/bin/rvm-prompt"
-
-# basically, only show the rvm-prompt if it exists
-rvm_prompt () {
-  if [[ -e `which rvm-prompt`]]; then
-      echo "%{$fg_bold[yellow]%}$(rvm-prompt)%{reset_color%}"
-  else
-      echo ""
-  fi
-}
 
 precmd() {
   title "zsh" "%m" "%55<...<%~"
