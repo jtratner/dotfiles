@@ -259,13 +259,11 @@ let g:DefaultFont=g:UMono
 
 function! SetFont(size, ...)
     if a:0 > 0                  "a:0 is defined as number of *extra* arguments
-        echo g:{a:1}
         let fontface=g:{a:1}
     else
         let fontface=g:DefaultFont
     endif
     let newfont=fontface.":h".a:size
-    :echo newfont
     :exe ":set guifont=".newfont
 endfunction
 
@@ -282,9 +280,10 @@ else
     colorscheme xoria256
 endif
 
-if has("gui_macvim")
+if has("gui_macvim") && !exists("g:MacVimSettingsLoaded")
+    let g:MacVimSettingsLoaded = 1
     colorscheme xoria256
-    call SetFont(20,"Inconsolata")
+    call SetFont(25,"UMono")
     let g:Powerline_symbols="fancy"
 endif
 
