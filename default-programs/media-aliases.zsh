@@ -24,7 +24,6 @@ function remove-all-defaults() {
     unalias -s zsh txt sh py m down markdown md
 }
 # set our initial editor as vim
-change-default-editor vim
 
 alias usegvim="change-default-editor gvim"
 alias usevim="change-default-editor vim"
@@ -32,3 +31,4 @@ alias usegedit="change-default-editor gedit"
 alias usemvim="change-default-editor mvim"
 # use octave to open .mat files if nothing else selected
 alias radef="remove-all-defaults"
+alias rd="remove-default"
