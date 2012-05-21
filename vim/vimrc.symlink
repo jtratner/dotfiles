@@ -587,8 +587,11 @@ augroup makohtml
     autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 augroup END
 
-
-
+" =======
+" Latex
+" =======
+"
+let g:tex_flavor = 'latex' " sets default tex to latex instead of plainte
 
 
 " Add the virtualenv's site-packages to vim path
