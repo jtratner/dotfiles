@@ -4,14 +4,33 @@ The MIT License
 
 Copyright (c) Jeffrey Tratner, http://www.jeffreytratner.com
 
-TODO: put the license text in here :P
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
---
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-Large portions of these dotfiles are based upon the dotfiles of Zach Holman, 
-and provided under the MIT License. (specifically, the Rakefile, the directory structure implementation, and many of the aliases and settings).
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
-Other parts derived from sontek's dotfiles, which you should definitely go read about.
+---
+
+Portions of these dotfiles are based upon/inspired by the dotfiles of Zach
+Holman, and also provided under the MIT License. (Specifically: the original
+directory structure, the bin scripts, and the zshrc and prompt)
+
+Other parts derived from sontek's dotfiles, which you should definitely go
+read about.
+
 ---
 
 The MIT License
