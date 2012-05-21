@@ -11,36 +11,58 @@ jtratner's dotfiles have begun to slowly evolve in their own right.
 Using these dotfiles
 ====================
 
-tl;dr
------
+Super-quick Install
+-------------------
+
+Get a working set of files by entering the following on a command line.
 
 ::
 
     git clone https://github.com/jtratner/dotfiles.git .dotfiles
     cd .dotfiles
-    rake install
-    ./bin/updatesubmodules
+    ./install.sh
 
-My setup is different than that of sontek and others, because I like to be able
-to individually control bundles on each machine, so I use symlinks to each
-directory. Plus, if you need to remove a bundle, you don't have to go through
-the annoying hassle of removing it from your gitmodules first. But you should do
-what works for you.
+Installing on Windows
+---------------------
 
-Installing and Using These Dotfiles
------------------------------------
+If you are using Windows, you can use the vim files by copying into your home
+folder (where ``$HOME`` is your directory, where you have folders for My
+Documents, etc). You can get my either via git clone or by downloading them as
+a zip file on github.
 
-* Two options (for now):
-
-  1. Run ``rake install`` - prompts you to back up or overwrite your files,
-     you'll still need to update submodules (use the
-     ``updatesubmodules.sh``) script in the bin.
-  2. Run ``install.sh`` - sets up dotfiles and updates submodules + will back
-     up your files to .bak
+* ``vimrc.symlink`` should be copied to ``$HOME/_vimrc`` (note the '_' !)
+* ``vim.symlink`` should be copied to ``$HOME/vimfiles``
 
 
-My personal touches
-===================
+Installation Notes
+------------------
+
+``install.sh``
+""""""""""""""
+
+(see tl;dr above) Running ``install.sh`` sets up the dotfiles and updates
+submodules + will back up your files to .bak. If, for some reason, you don't
+want to update your submodules, you can comment out the lines that start with
+``git``
+
+Some things need dependencies
+"""""""""""""""""""""""""""""
+
+I've tried to document dependencies below, but a quick list here for
+reference. **NONE of these are necessary to use my dotfiles,** they just
+enable additional features.
+
+===========    ==============
+Plugin         Dependencies
+===========    ==============
+Syntastic      Requires 'compilers' for whatever files you want to check (for example, to check ``.rst`` files you need docutils)
+Hammer         Requires ``github/markup``, ``coderay``, and ``tilt``
+Ack            Requires an installation of ``ack`` (well worth it!)
+Vim-IPython    Requires ``ipython`` to be installed (see IPython section for more)
+===========    ==============
+
+My dotvim
+==========
 
 The ``vimrc.symlink`` file is pretty well documented.  You could also go read
 `sontek's description of his dotfiles`_ for more in-depth info on many of
@@ -79,32 +101,21 @@ New bundles
 * **Ctrl-P** - like ``Command-T`` but on steroids + no ruby required. Just
   type ``<ctrl-P>`` and your
 
-.. _simpleutils : https://github.com/jtratner/simpleutils
 
 reStructuredText/autounderline Functions
 ----------------------------------------
 
 * ``:Underline <arg>`` and ``:Title <arg>`` where ``<arg>`` is a character or
-  number underline or 'box':
+  number. (title creates an under and overline)
 
 ::
 
     some vim text
 
-    ":Un 2
+    ":Un -
 
     some vim text
     -------------
-
-    A title
-
-    ":Ti =
-
-    ========
-    A title
-    ========
-
-
 
 New shortcuts
 -------------
@@ -129,14 +140,13 @@ Q            'quick form'?   format the current paragraph
 Commands
 """"""""
 
-===========  ==============  =============================
-Command      Notes           Settings                    
-===========  ==============  =============================
-:SetFont                     use to quickly change font in gvim
-<F3>                         toggle VoOM
-:DiffSaved                   Show diffs between current file and saved file
-
-===========  ==============  =============================
+===========  =============================
+Command      Settings                    
+===========  =============================
+:SetFont     use to quickly change font in gvim
+<F3>         toggle VoOM
+:DiffSaved   Show diffs between current file and saved file
+===========  =============================
 
 
 ====================================
@@ -236,40 +246,23 @@ Install the dotfiles
 2. Go into the dotfiles directory, run ``./install.sh`` in the command line. BOOM!
    You are halfway done.
 
-Symlink the bundle(s) you want to use
-=====================================
-
-3. Change into the ``_vim`` subfolder (``cd *vim``)
-
-4. To activate all the bundles in a folder, you can run the ``symlinkdirectory``
-   script[5]
-
-::
-
-    ./symlinkdirectory bundle-available bundle
-
-5. That script created symlinks in the bundle folder to all the plugins in
-   bundle-available. To choose just the plugins you want, add or delete some or
-   use ``ln -s`` to create new ones[5]_. Bundle-disabled and testing contain
-   additional plugins that you might try out. Or add your own!
-
 Python Dependencies
 ====================
 
 Install rope, nose and ack (optional virtualenv)
 ------------------------------------------------
 
-0. Rope and nose you can get through ``easy_install`` or ``pip`` (I prefer
+1. Rope and nose you can get through ``easy_install`` or ``pip`` (I prefer
    pip)
 
 ::
 
     pip install rope nose
 
-1. Ack you have to get as a package (e.g. ``apt-get install ack`` or through
+2. Ack you have to get as a package (e.g. ``apt-get install ack`` or through
    homebrew)
 
-2. ``virtualenv`` - highly useful, you probably want it. (I list it last because
+3. ``virtualenv`` - highly useful, you probably want it. (I list it last because
    the previous items need to be installed system-wide)
 
 ::
@@ -277,10 +270,6 @@ Install rope, nose and ack (optional virtualenv)
     pip install virtualenv virtualenvwrapper
     virtualenvwrapper.sh
 
-You have a working setup!
--------------------------
-
-Now you should be able to just run your file and have everything work. Whee!
 
 IPython
 =======
@@ -299,19 +288,19 @@ just have to get the dependencies first. Before you do, you might also check out
 the `IPython website`_ and its `guide to installation`_
 
 0. Getting python dependencies (you may already have some or all of these) Note
-   that matplotlib, scipy, and numpy are only required if you want to run pylab;
-   however I highly suggest that you get them because they are very useful and
-   pretty darn cool
+    that matplotlib, scipy, and numpy are only required if you want to run pylab;
+    however I highly suggest that you get them because they are very useful and
+    pretty darn cool
 
 ::
 
     pip install nose tornado pygments pyzmq pexpect distribute matplotlib scipy numpy
 
 1. **Getting Qt** This can be more or less of an ordeal, depending on your system.
-   Do yourself a favor: *try to find a precompiled binary first* it will be far
-   easier. Seriously. Otherwise, you'll probably need to get ``SIP``, ``PyQt`` and
-   ``Qt`` online. (TODO: write instructions for this. For now, Google search is
-   your friend.)
+    Do yourself a favor: *try to find a precompiled binary first* it will be far
+    easier. Seriously. Otherwise, you'll probably need to get ``SIP``, ``PyQt`` and
+    ``Qt`` online. (TODO: write instructions for this. For now, Google search is
+    your friend.)
 
 2. **Install IPython** Okay, actually this is pretty easy now! Yay!
 
@@ -320,7 +309,7 @@ the `IPython website`_ and its `guide to installation`_
     pip install ipython
 
 3. *Check that it's working* Run IPython's testing suite. Read the output to
-   make sure you aren't missing any libraries.
+    make sure you aren't missing any libraries.
 
 ::
 
@@ -328,51 +317,24 @@ the `IPython website`_ and its `guide to installation`_
 
 4. **If it fails,**
 
-   1. It's okay. Happened to me too.
-   2. Read the output of iptest, see if it gives any info. (google is your
-      friend).
-   3. Check that you have all the dependencies.
-   4. Try uninstalling and reinstalling IPython.
-   5. If it's not fixed by now, try Google, `Stack Overflow`_ or the `IPython website`_
+    1. It's okay. Happened to me too.
+    2. Read the output of iptest, see if it gives any info. (google is your
+        friend).
+    3. Check that you have all the dependencies.
+    4. Try uninstalling and reinstalling IPython.
+    5. If it's not fixed by now, try Google, `Stack Overflow`_ or the `IPython website`_
 
 .. _IPython website: http://www.ipython.org
 .. _guide to installation: http://ipython.org/ipython-doc/stable/install/install.html
 .. _Stack Overflow: http://www.stackoverflow.com
 
+
+You have a working setup!
+-------------------------
+
+Now you should be able to just run your file and have everything work. Whee!
+
+
 .. [2] The easiest way is to download and install a precompiled version. On Ubuntu, ``vim-gnome`` has most of what you want.
 .. [3] I set up a different home directory and then symlink it to my local bin,
        that way I can still use the default system editor as needed (say if xwindows
-       crashes or something :P)
-
-.. [4] Here's the whole list:
-
-::
-
-    VIM - Vi IMproved 7.3 (2010 Aug 15, compiled Apr 19 2012 21:01:31)
-    Compiled by root@openwater
-    Huge version with GTK2 GUI.  Features included (+) or not (-):
-    +arabic +autocmd +balloon_eval +browse ++builtin_terms +byte_offset +cindent
-    +clientserver +clipboard +cmdline_compl +cmdline_hist +cmdline_info +comments
-    +conceal +cryptv +cscope +cursorbind +cursorshape +dialog_con_gui +diff
-    +digraphs +dnd -ebcdic +emacs_tags +eval +ex_extra +extra_search +farsi
-    +file_in_path +find_in_path +float +folding -footer +fork() +gettext
-    -hangul_input +iconv +insert_expand +jumplist +keymap +langmap +libcall
-    +linebreak +lispindent +listcmds +localmap -lua +menu +mksession +modify_fname
-    +mouse +mouseshape +mouse_dec +mouse_gpm -mouse_jsbterm +mouse_netterm
-    -mouse_sysmouse +mouse_xterm +multi_byte +multi_lang -mzscheme +netbeans_intg
-    -osfiletype +path_extra -perl +persistent_undo +postscript +printer +profile
-    +python -python3 +quickfix +reltime +rightleft +ruby +scrollbind +signs
-    +smartindent -sniff +startuptime +statusline -sun_workshop +syntax +tag_binary
-    +tag_old_static -tag_any_white -tcl +terminfo +termresponse +textobjects +title
-    +toolbar +user_commands +vertsplit +virtualedit +visual +visualextra +viminfo
-    +vreplace +wildignore +wildmenu +windows +writebackup +X11 -xfontset +xim
-    +xsmp_interact +xterm_clipboard -xterm_save
-    system vimrc file: "$VIM/vimrc"
-        user vimrc file: "$HOME/.vimrc"
-        user exrc file: "$HOME/.exrc"
-    system gvimrc file: "$VIM/gvimrc"
-        user gvimrc file: "$HOME/.gvimrc"
-        system menu file: "$VIMRUNTIME/menu.vim"
-    fall-back for $VIM: "/home/jtratner/vimpyru/share/vim"
-    Compilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H -DFEAT_GUI_GTK  -pthread -I/usr/include/gtk-2.0 -I/usr/lib/i386-linux-gnu/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/pango-1.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12   -I/usr/local/include  -g -O2 -D_FORTIFY_SOURCE=1     -I/usr/lib/ruby/1.8/i686-linux -DRUBY_VERSION=18
-    Linking: gcc   -L. -Wl,-Bsymbolic-functions -rdynamic -Wl,-export-dynamic  -L/usr/local/lib -o vim   -pthread -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lpangocairo-1.0 -lgdk_pixbuf-2.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lrt -lglib-2.0   -lXt -lncurses -lselinux  -lacl -lgpm -L/usr/lib/python2.7/config -lpython2.7 -lutil -Xlinker -export-dynamic -Wl,-O1 -Wl,-Bsymbolic-functions   -lruby1.8 -lrt -lm
