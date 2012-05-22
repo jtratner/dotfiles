@@ -8,8 +8,8 @@ function backup_rename {
         backup_rename "$1.bak";
     else
         echo "Backing up ${target##*/} to ${1}"
-        cp -rP $target "$HOME/${1}"
-        rm -r $target
+        cp -P $target "$HOME/${1}"
+        rm $target
     fi
 }
 
