@@ -95,8 +95,8 @@ command! NoColorColumn :set colorcolumn=0 "sets colorbar just past textwidth
 " important: vip - selects the entire paragraph
 function! ChangeFormat(new_tw)
     " store all the old settings in a local buffer variable
-    " don't store if they've already been set, as those are the originals
-    " TODO: change this to an object instead
+    " don't store if they've already been set, as those are the
+    " originals TODO: change this to an object instead
     if !exists("b:thedict")
        let b:thedict = {"oldtw":&tw,"oldfo":&fo,"oldcc":&colorcolumn}
     endif
@@ -104,6 +104,18 @@ function! ChangeFormat(new_tw)
     :exe ":set textwidth=".a:new_tw." fo+=t"
     :ColorColumn
     :echo "textwidth ".a:new_tw.", autowrapping on, go edit."
+endfunction
+
+" enables smart comment formatting (like wrapping new lines with tw and
+" adding comment string at beginning of wrapped lines.
+" Pass a text_width and it will use ChangeFormat to store previous
+" settings and add color bar
+function! SetCommentFormat(...)
+    " this stores the current comment format
+    if a:0 > 0
+        call ChangeFormat(a:1)
+    endif
+    :exe ":set fo+=roq"
 endfunction
 
 function! RestoreFormat()
@@ -126,7 +138,7 @@ endfunction
 " writing it goes back. One possible option: map '#' to my comment function
 " and then have a short function that deletes the current line of text. Dunno,
 " seems kinda overkill.
-map <leader>ec :call ChangeFormat(72)<CR>
+map <leader>ec :call SetCommentFormat()<CR>:call ChangeFormat(72)<CR>
 map <leader>en :call ChangeFormat(78)<CR>
 map <leader>ed :call RestoreFormat()<CR>
 
@@ -203,8 +215,8 @@ set matchpairs+=<:>         " show matching <> (html mainly) as well
 set foldmethod=indent       " allow us to fold on indents
 set foldlevel=99            " don't fold by default
 
-" don't outdent hashes
-inoremap # #
+" don't outdent hashes (see :help smartindent for more on this)
+inoremap # X#
 
 " TODO: set this up so it isn't called 50x if the file is source again.
 " close preview window automatically when we move around
@@ -623,3 +635,7 @@ augroup python
     " TODO: put LoadPythonPath into here instead of in vimrc
     " set the coloring for errors to be readable :P
 augroup END
+
+" New functions:
+"
+command! -range=% AddFoldMarkersToFxns :<line1>,<line2>s/^\(function!\s*[^{]*\)/\1 {{{2

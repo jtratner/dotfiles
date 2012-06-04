@@ -4,7 +4,6 @@ source /usr/local/bin/virtualenvwrapper.sh
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
-
 # project folders that you can quickly tab to (in order: c, v, p, d)
 export PROJECTS=~/Dropbox/Classes
 export VIMPROJECTS=~/Dropbox/code/viml
