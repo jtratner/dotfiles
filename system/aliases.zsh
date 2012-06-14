@@ -1,15 +1,13 @@
-# grc overides for ls
-#   Made possible through contributions from generous benefactors like
-#   `brew install coreutils`
-if $(gls &>/dev/null)
-then
-  alias ls="gls -F --color"
-  alias l="gls -lAh --color"
-  alias ll="gls -l --color"
-  alias la='gls -A --color'
-else
-  alias ls="ls --color=auto"
-fi
+
+# in linux, -G just omits the group from -l listing.  gg apple, or bsd, or whomever
+case $OSTYPE in
+    linux*)
+        alias ls='ls --color=auto -h'
+    ;;
+    darwin*)
+        alias ls='ls -GHh'
+    ;;
+esac
 
 # Inline aliases, zsh -g aliases can be anywhere in command line
 alias -g G='| grep -'
@@ -33,5 +31,5 @@ alias -g .....='../../../..'
 # deep shortcuts
 hash -d d="$HOME/Dropbox"
 hash -d dot="$HOME/dotfiles"
-
+hash -d b="$HOME/bridge"
 

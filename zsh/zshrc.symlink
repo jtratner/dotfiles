@@ -10,6 +10,11 @@ export VIMPROJECTS=~/Dropbox/code/viml
 export PYTHONPROJECTS=~/Dropbox/code/python
 export DROPBOX=~/Dropbox
 
+# for stupid BSD ls (osx)
+export LSCOLORS="Dxgxcxdxcxegedabagacad"
+# for GNU ls (linux) (I wonder what this looks like)
+export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
+
 # source the .bashrc with this, which converts the issue-laden-thangs to sweet, compatible zsh-functions!
 #bash_source() {
 #  alias shopt=':'
@@ -36,7 +41,8 @@ fi
 export LSCOLORS="Dxgxcxdxcxegedabagacad"
 # for GNU ls (linux) (I wonder what this looks like)
 export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
-
+# load spectrum colors
+autoload spectrum && spectrum
 # the magic history, just like tcsh has
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
