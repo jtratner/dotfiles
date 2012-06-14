@@ -156,6 +156,10 @@ command! LeastBadSpellBad :set hi SpellBad term=underline ctermfg=fg ctermbg=bg 
 " vim editing
 command! Pos :echo col('.')
 
+" real programmers use cat to code, I settle for the following:
+" (turns on/off autocomplete and indentation for the full experience)
+command! L33t exe "normal! :AcpDisable<CR>:filetype indent off<CR>:filetype plugin indent off"
+command! GGnore exe "normal! :AcpEnable<CR>:filetype indent on<CR>:filetype plugin indent on"
 " ================
 " Basic Settings
 " ================
@@ -332,6 +336,13 @@ function! MyGitv(cmd, ...)
     call Gitv_OpenGitCommand(a:cmd,window)
 endfunction
 
+" =========
+" Syntastic
+" =========
+
+let g:syntastic_mode_map = { 'mode': 'passive',
+            \  'active_filetypes': ['rst'],
+            \ 'passive_filetypes': ['c'] }
 
 " ==========================================================
 " tComment
