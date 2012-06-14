@@ -70,7 +70,7 @@ setopt c_bases # output hex and octal in better format.  what the hell?
 # in linux, -G just omits the group from -l listing.  gg apple, or bsd, or whomever
 case $OSTYPE in
     linux*)
-        alias ls='ls --color=auto -Hh'
+        alias ls='ls --color=auto -h'
     ;;
     darwin*)
         alias ls='ls -GHh'
