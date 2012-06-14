@@ -484,7 +484,7 @@ function! DiffWithSaved()
   diffthis
   exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
-com! DiffSaved call :DiffWithSaved()
+com! DiffSaved call DiffWithSaved()
 map <Leader>ds :DiffSaved<CR>
 
 " disable arrow keys to force myself to adapt to hjkl - h/t to
