@@ -17,3 +17,16 @@ alias gco='git checkout'
 alias gb='git branch'
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+
+
+# cd to the current git or hg repo root
+rr() {
+    local dir="."
+    until ( [[ -a "$dir/.git" ]] || [[ -a "$dir/.hg" ]] ); do
+        dir="../$dir"
+        if [[ $dir -ef / ]]; then
+            return 1
+        fi
+    done
+    cd $dir
+}

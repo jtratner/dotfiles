@@ -26,10 +26,6 @@
 	path = vim/vim.symlink/bundle/minibufexpl
 	url = git://github.com/sontek/minibufexpl.vim.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/nerdtree"]
-	path = vim/vim.symlink/bundle/nerdtree
-	url = git://github.com/scrooloose/nerdtree.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/VOoM"]
 	path = vim/vim.symlink/bundle/VOoM
 	url = git://github.com/vim-scripts/VOoM.git
@@ -169,3 +165,7 @@
 	path = zsh/zsh-completions
 	url = git://github.com/zsh-users/zsh-completions.git
 	ignore=dirty
+[submodule "vim/vim.symlink/bundle/vimpad"]
+	path = vim/vim.symlink/bundle/vimpad
+	url = https://github.com/fmoralesc/vim-pad
+	ignore = dirty
