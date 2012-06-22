@@ -229,7 +229,8 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " make tab completion context sensitive
 let g:SuperTabDefaultCompletionType = "context"
-
+let g:SuperTabMappingTabLiteral = "<S-TAB>"
+let g:SuperTabMappingForward = "<S-TAB>"
 """" Reading/Writing
 set noautowrite             " Never write a file unless I request it.
 set noautowriteall          " NEVER.
