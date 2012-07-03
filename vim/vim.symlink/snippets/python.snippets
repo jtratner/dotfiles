@@ -1,16 +1,8 @@
 # snippets I might want to contribute
-snippet mapd:
+snippet mapd
 	map(lambda ${1:vars} : ${3:action}, ${4:somelst})
-snippet filterd:
+snippet filterd
 	filter(lambda ${1:vars} : ${3:cond}, ${4:somelst})
-# ternary statement
-snippet tern:
-	${2:$1 is true} if ${1:condition} else ${3:$1 is false}
-# quick file reads
-snippet fread:
-	f = open(${1:path},${2:'rb'})
-	fread = f.read()
-	f.close()
 # for with dicts
 snippet fork
 	for ${1:k} in ${2:dict}.iterkeys():
@@ -26,19 +18,6 @@ snippet bs4
 snippet ifn IfNone (one line)
 	if ${1:obj} is${2:} None:
 		${2:pass}
-# if nonei
-snippet ifn IfNone/Else
-	if ${1:obj} is None:
-		${2:pass}
-	else:
-		${3:pass}
-snippet ifn IfNone/Elif/Else
-	if ${1:obj} is${2:} None:
-		${2:pass}
-	elif ${3:$1}${4:cond}:
-		${5:pass}
-	else:
-		${4:pass}
 snippet elifn
 	elif ${1:obj} is${2:not }None:
 		${3:pass}
@@ -99,10 +78,14 @@ snippet tryw Try/Except/Finally (write)
 		${4:raise $5}
 	finally:
 		$1.close()
-
-
-snippet test
+snippet var
+	${1:id} = $1 or ${2:default}${3:,}
+snippet id
+	${1:id} = $1 or ${2:default}${3:,}
+snippet jtest
 	def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
 		${3:pass}
-
-
+snippet kw
+	${1:var}=None,${2}
+snippet kwget
+	${1:var} = kwargs.get("$1") or ${2:$1},${3}
