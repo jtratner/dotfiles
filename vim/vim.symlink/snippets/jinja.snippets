@@ -1,0 +1,42 @@
+snippet iftag
+	('${1:tag}="%s"' % ${2:text} if $2) | safe
+snippet hasprop
+	if ${1:obj} and $1[${2:property}]
+snippet forblock Normal
+	{% for ${1:item} in ${2:list} %}
+		${3}
+	{% endfor %}
+snippet forblock SetSpacing
+	{%${1:-} for ${5:item} in ${6:list} ${2:-}%}
+		${7}
+	{%${3:-} endfor ${4:-}%}
+snippet block Normal
+	{% ${1:block} ${2:name} %}
+		${4}
+	{% end$1 ${5:$2} %}
+snippet block SetSpacing
+	{%${1:-} ${5:block} ${6:name} ${2:-}%}
+		${7}
+	{%${3:-} end$5 ${8:$6} ${4:-}%}
+snippet ifblock Normal
+	{% if ${2:name} %}
+		${4}
+	{% endif %}
+snippet ifblock SetSpacing
+	{%${1:-} if ${5:name} ${2:-}%}
+		${6}
+	{%${3:-} endif ${4:-}%}
+snippet ifattrs
+	{{ (' class="%s"' % ${1:ident}.css_class if $1.css_class) | safe }}{{' value="%s"' % $1.value if $1.value}}{{' type="%s"' % if
+snippet macro Normal
+	{% macro ${2:name}(${3:args}) %}
+		${4}
+	{% endmacro  %}
+snippet from /.html
+	{%- from "/${1:macros}.html" import ${2:blocks/functions} -%}
+snippet include /.html
+	{%- include "/${1:filename}.html" ${3:scoped} -%}
+snippet ifsafe
+	{{ ((${3:text}) if ${1:condition})${4:|safe} }}
+snippet strsafe
+	{{ ("${2:text}" if ${1:condition})${5:|safe} }}
