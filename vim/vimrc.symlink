@@ -224,12 +224,17 @@ inoremap # X#
 
 " TODO: set this up so it isn't called 50x if the file is source again.
 " close preview window automatically when we move around
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+augroup cursor
+    au!
+        autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+augroup END
 
 " make tab completion context sensitive
 let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabMappingTabLiteral = "<C-Space>"
+" make snipmate use c-space for completions
+let g:snips_trigger_key = "<C-Tab>"
+let g:snips_author = "Jeffrey Tratner" "change this to your own name!
 """" Reading/Writing
 set noautowrite             " Never write a file unless I request it.
 set noautowriteall          " NEVER.
@@ -533,6 +538,10 @@ command! -nargs=? S call Spaces(<args>)</args>
 "
 :augroup javascript
     au!
+    " set coffeescript to compile on every save and pop up with resulting
+    " code/errors.
+    autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow
+    autocmd FileType coffee setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     au BufRead *.js set makeprg=jslint\ %
 :augroup END
 " ===========================
