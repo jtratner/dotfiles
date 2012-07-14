@@ -159,7 +159,8 @@ def update_submodules(directory = None):
             "git submodule update", "git submodule foreach git pull origin master", 
             "git submodule foreach git submodule init",
             "git submodule foreach git submodule update"):
-        had_result = had_result or run_command(command)
+        result = run_command(command)
+        had_result = had_result or result
     if not had_result:
         print "Nothing to update."
     else:
