@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 Portions of these dotfiles are based upon/inspired by the dotfiles of Zach
 Holman, and also provided under the MIT License. (Specifically: the original
-directory structure, the bin scripts, and the zshrc and prompt)
+directory structure, most of the bin scripts, and the original zshrc and prompt)
 
 Other parts derived from sontek's dotfiles, which you should definitely go
 read about.
