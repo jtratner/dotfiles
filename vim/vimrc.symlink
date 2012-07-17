@@ -232,9 +232,9 @@ augroup END
 
 " make tab completion context sensitive
 let g:SuperTabDefaultCompletionType = "context"
-" make snipmate use c-space for completions
-let g:snips_trigger_key = "<C-Tab>"
 let g:snips_author = "Jeffrey Tratner" "change this to your own name!
+" set ctrlp to default to MRU files
+let g:ctrlp_cmd = "CtrlPMRUFiles"
 """" Reading/Writing
 set noautowrite             " Never write a file unless I request it.
 set noautowriteall          " NEVER.
@@ -320,7 +320,7 @@ endif
 
 let g:acp_behaviorKeywordLength = 4 " make AutoComplPop a little less
                                     " aggressive
-" let g:acp_enableAtStartup = 0 " uncomment to disable autocomplpop
+let g:acp_enableAtStartup = 0 " set to 1 to enable at startup
 
 " =============================================
 " Gitv - git + gitk + diff all in vim -- yay!
@@ -347,8 +347,8 @@ endfunction
 " =========
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-            \  'active_filetypes': ['rst'],
-            \ 'passive_filetypes': ['c'] }
+            \ 'active_filetypes' : [],
+            \ 'passive_filetypes': ['c', 'python', 'rst'] }
 
 " ==========================================================
 " tComment
