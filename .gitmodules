@@ -175,3 +175,6 @@
 [submodule "vim/vim.symlink/bundle/makegreen"]
 	path = vim/vim.symlink/bundle/makegreen
 	url = git://github.com/reinh/vim-makegreen.git
+[submodule "vim/vim.symlink/bundle/rails"]
+	path = vim/vim.symlink/bundle/rails
+	url = https://github.com/tpope/vim-rails.git
