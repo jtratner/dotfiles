@@ -61,7 +61,7 @@ def make_link(source, target, symlinks=True):
 
 
 # only installs vim-related files (for now), in the future, may try for valgrind, etc
-def backup_rename(source, counter = None, symlinks=None, prefix=None, suffix=None, do_backup=True):
+def backup_rename(source, counter = None, symlinks=None, prefix=None, suffix=None, do_backup=True, **kwargs):
     counter = counter or 0
     symlinks = symlinks if symlinks is not None else True
     prefix = prefix or ""
@@ -95,7 +95,7 @@ def link_file(source, home, symlinks=False, prefix=None, backup_prefix=None, bac
     exists = os.path.exists(target)
     # first try and remove
     if exists:
-        exists = not backup_rename(target, backup_prefix, backup_suffix, symlinks=symlinks, **kwargs)
+        exists = not backup_rename(source=target, prefix=backup_prefix, suffix=backup_suffix, symlinks=symlinks, **kwargs)
     # if removed or didn't exist initially
     if not exists:
         return make_link(source, target, symlinks, **kwargs)
@@ -195,12 +195,15 @@ def update_files(update="all", repo="origin", debug=None, **kwargs):
     print "Finished updates."
 
 def install(*args, **kwargs):
-    if kwargs.get("has_windows"):
+    if kwargs.get("has_windows") or kwargs.get("install_only")=="vim":
         print "Detected Windows, only installing vimfiles"
         kwargs["update"] = "subs"
         update_files(*args, **kwargs)
         make_symlinks(*args, **kwargs)
         vim(*args, **kwargs)
+    elif kwargs.get("install_only") == "dotfiles":
+        make_symlinks(regex=SYMLINK_RE, **kwargs)
+        dots(*args, **kwargs)
     else:
         kwargs["update"] = "all"
         print "installing all dotfiles and getting submodules"
@@ -216,12 +219,10 @@ def install(*args, **kwargs):
 def add_directory_group(parser, dir_description=None):
     dir_description = dir_description or """(optional) set default directories for source, target, vim, etc"""
     set_directories = parser.add_argument_group(title="Choose default directories", description=dir_description)
-    set_directories.add_argument("--dotfiles", metavar="SRC", dest="directory", nargs=1, 
-            help="explicitly set location of dotfiles/source files for copying") 
     set_directories.add_argument("--vim-directory", metavar="DIR", dest="vim_directory", nargs=1, 
             help="directory to install vim.symlink (default: ~/.vim - posix/osx, $HOME/vimfiles - windows)")
-    set_directories.add_argument("--target", default=None, dest="home",help="""target directory for copying,
-        default is home directory""")
+    # set_directories.add_argument("--target", default=None, dest="home",help="""target directory for copying,
+    #     default is home directory""")
 
 def add_filename_group(parser):
     parser.add_argument("--no-backups", dest="no_backups", action="store_true", default=False, help="don't make backups, just overwrite")
@@ -252,7 +253,7 @@ parser = argparse.ArgumentParser(description="uninstall, install dotfiles/vimfil
 subparser = parser.add_subparsers()
 installer = subparser.add_parser("install", help="symlink/copy dotfiles on to your system (don't worry, it's all backed up first!", description="Install vim, dotfiles, or both (on Windows all defaults to not installing dotfiles)")
 installer.set_defaults(func=install)
-installer.add_argument("install_only", nargs="?", help="(optional) 'dotfiles' for only dotfiles or 'vim' for only vimfiles (defaults: posix: allfiles, windows: vimfiles only)", choices=["all, dotfiles, vim"]) 
+installer.add_argument("install_only", nargs="?", help="(optional) 'dotfiles' for only dotfiles or 'vim' for only vimfiles (defaults: posix: allfiles, windows: vimfiles only)", choices=["all", "dotfiles", "vim"]) 
 add_all(installer)
 
 
@@ -265,14 +266,13 @@ merge changes and/or submodules from git.
 update.add_argument("update", help="(optional) choose to only update subs or merge changes (from origin)", nargs="?", choices=["subs", "changes", "all"], default="all")
 update.set_defaults(func=update_files)
 update.add_argument("--repo", help="set which repo to update from (for changes), default is origin", dest="repo", default="origin")
-update.add_argument("--dotfiles", help="set dotfiles directory", dest="dotfiles", nargs=1, metavar="DIR")
 add_debug(update)
 def main():
     args = parser.parse_args()
     args.__dict__["symlinks"] = args.__dict__.get("has_windows", True)
-    args.__dict__["directory"] = args.__dict__.get("directory", None) or os.getcwd()
-    # global DEBUG
-    # DEBUG = "debug" in args.__dict__ and args.debug or DEBUG
+    args.__dict__["directory"] = os.getcwd()
+    global DEBUG
+    DEBUG = "debug" in args.__dict__ and args.debug or DEBUG
     if DEBUG:
         print "Running in DEBUG mode, all commands will print to terminal but won't be run."
     if not ("home" in args.__dict__ and args.__dict__["home"] is not None):
