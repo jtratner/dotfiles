@@ -10,10 +10,6 @@
 	path = vim/vim.symlink/bundle/jquery
 	url = git://github.com/itspriddle/vim-jquery.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/hammer"]
-	path = vim/vim.symlink/bundle/hammer
-	url = git://github.com/matthias-guenther/hammer.vim.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/repeat"]
 	path = vim/vim.symlink/bundle/repeat
 	url = git://github.com/tpope/vim-repeat.git
@@ -29,10 +25,6 @@
 [submodule "vim/vim.symlink/bundle/VOoM"]
 	path = vim/vim.symlink/bundle/VOoM
 	url = git://github.com/vim-scripts/VOoM.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/tagbar"]
-	path = vim/vim.symlink/bundle/tagbar
-	url = git://github.com/majutsushi/tagbar.git
 	ignore=dirty
 [submodule "vim/vim.symlink/bundle/taglist"]
 	path = vim/vim.symlink/bundle/taglist
@@ -57,10 +49,6 @@
 [submodule "vim/vim.symlink/bundle/commentary"]
 	path = vim/vim.symlink/bundle/commentary
 	url = git://github.com/tpope/vim-commentary.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/TaskList"]
-	path = vim/vim.symlink/bundle/TaskList
-	url = git://github.com/vim-scripts/TaskList.vim.git
 	ignore=dirty
 [submodule "vim/vim.symlink/bundle/ack"]
 	path = vim/vim.symlink/bundle/ack
@@ -130,10 +118,6 @@
 	path = vim/vim.symlink/bundle/ipython
 	url = git://github.com/ivanov/vim-ipython.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/rope"]
-	path = vim/vim.symlink/bundle/rope
-	url = git://github.com/sontek/rope-vim.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/python"]
 	path = vim/vim.symlink/bundle/python
 	url = git://github.com/sorin-ionescu/python.vim.git
@@ -141,10 +125,6 @@
 [submodule "vim/vim.symlink/bundle/javascript"]
 	path = vim/vim.symlink/bundle/javascript
 	url = git://github.com/pangloss/vim-javascript.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/togglemouse"]
-	path = vim/vim.symlink/bundle/togglemouse
-	url = git://github.com/nvie/vim-togglemouse.git
 	ignore=dirty
 [submodule "vim/vim.symlink/bundle/octave.vim"]
 	path = vim/vim.symlink/bundle/octave.vim
@@ -165,10 +145,6 @@
 	path = zsh/zsh-completions
 	url = git://github.com/zsh-users/zsh-completions.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/vimpad"]
-	path = vim/vim.symlink/bundle/vimpad
-	url = https://github.com/fmoralesc/vim-pad
-	ignore = dirty
 [submodule "vim/vim.symlink/bundle/vim-coffee-script"]
 	path = vim/vim.symlink/bundle/vim-coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
