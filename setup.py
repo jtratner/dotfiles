@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 import os
+import sys
 import re
 import shutil
-import argparse
 from subprocess import Popen, PIPE
-import sys
 DEBUG = True
 PREFIX = "."
 BACKUP_PREFIX = ""
 SYMLINK_SUB = re.compile("\.symlink")
 SYMLINK_RE = re.compile(".*\.symlink")
-# setup script for windows, based on a combo of sontek and holman's models
 def remove(path):
     """ tries to remove path or directory. returns True if successful, False otherwise.
     (silences OSErrors and shutil.Error messages)."""
@@ -61,15 +59,11 @@ def make_link(source, target, symlinks=True):
 
 
 # only installs vim-related files (for now), in the future, may try for valgrind, etc
-def backup_rename(source, counter = None, symlinks=None, prefix=None, suffix=None, do_backup=True, **kwargs):
+def backup_rename(source, counter = None, symlinks=None, prefix=None, suffix=None):
     counter = counter or 0
     symlinks = symlinks if symlinks is not None else True
     prefix = prefix or ""
     suffix = suffix if suffix is not None else ".bak"
-    do_backup = do_backup if do_backup is not None else True
-    if not do_backup:
-        print "Not backing up"
-        return True
     split = os.path.split(source)
     prefix_str, suffix_str = prefix, suffix
     if counter and prefix:
@@ -83,7 +77,7 @@ def backup_rename(source, counter = None, symlinks=None, prefix=None, suffix=Non
        print("Backing up {source} to {path}".format(source=source, path=path))
        return make_link(source, path, symlinks) and remove(source)
 
-def link_file(source, home, symlinks=False, prefix=None, backup_prefix=None, backup_suffix=None, **kwargs):
+def link_file(source, home, symlinks=False, prefix=None, backup_prefix=None, backup_suffix=None, do_backups=True):
     """ attempts to link source file to file in homedirectory.
     On Windows, you can't symlink, so it instead makes a copy"""
     assert source is not None, "incorrect data passed to link file"
@@ -98,7 +92,7 @@ def link_file(source, home, symlinks=False, prefix=None, backup_prefix=None, bac
         exists = not backup_rename(source=target, prefix=backup_prefix, suffix=backup_suffix, symlinks=symlinks, **kwargs)
     # if removed or didn't exist initially
     if not exists:
-        return make_link(source, target, symlinks, **kwargs)
+        return make_link(source, target, symlinks, do_backups=do_backups)
     else:
         return False
 
@@ -172,7 +166,7 @@ def do_nothing(*args, **kwargs):
     print "Args: ", args
     print "Kwargs: ", kwargs
 update_files = subs = merge_upstream = vim = dots = install = uninstall = do_nothing
-def update_files(update="all", repo="origin", debug=None, **kwargs):
+def update_files(update="all", repo="origin", debug=None):
     print "Checking if git repo and can run."
     error = Popen("git status",stdout=PIPE, stderr=PIPE, shell=True).stderr.read()
     if error:
@@ -215,60 +209,16 @@ def install(*args, **kwargs):
     sys.exit(0)
 # def uninstall():
 #     pass
-
-def add_directory_group(parser, dir_description=None):
-    dir_description = dir_description or """(optional) set default directories for source, target, vim, etc"""
-    set_directories = parser.add_argument_group(title="Choose default directories", description=dir_description)
-    set_directories.add_argument("--vim-directory", metavar="DIR", dest="vim_directory", nargs=1, 
-            help="directory to install vim.symlink (default: ~/.vim - posix/osx, $HOME/vimfiles - windows)")
-    # set_directories.add_argument("--target", default=None, dest="home",help="""target directory for copying,
-    #     default is home directory""")
-
-def add_filename_group(parser):
-    parser.add_argument("--no-backups", dest="no_backups", action="store_true", default=False, help="don't make backups, just overwrite")
-    parser.add_argument("--prefix", dest="prefix", nargs=1, help="set prefix for *.symlink files")
-
-ARGS_SET = set(["no_backups", "backup_prefix", "backup_suffix", "dotfiles", "vim_directory", "home", "symlink"])
-def add_windows(parser, windows_help=None):
-    windows_help = windows_help or """
-use if the system isn't detecting that your os is windows. Creates the following defaults:
-1. _ as file prefix
-2. $HOME/vimfiles as vim directory
-3. only installs vimfiles"""
-
-    parser.add_argument("--windows", action="store_true", help=windows_help, default=None)
-def add_debug(parser):
-    parser.add_argument("-d", "--debug", help="Just print actions to std out, don't do anything.", default=None, action="store_true")
-def add_copy_type(parser):
-    group = parser.add_mutually_exclusive_group(required=False)
-    group.add_argument("--copy", action="store_false", help="force installer to copy *.symlink files instead of symlinking (windows default)", dest="symlink", default=None) 
-    group.add_argument("--symlink", action="store_true", help="force installer to symlink *.symlink files (default for non-windows)", dest="symlink")
-def add_all(parser, exclude=None):
-    """ exclude should be a list of functions"""
-    exclude = exclude or set()
-    for func in (add_copy_type, add_windows, add_filename_group, add_directory_group, add_debug):
-        if func not in exclude:
-            func(parser)
-parser = argparse.ArgumentParser(description="uninstall, install dotfiles/vimfiles")
-subparser = parser.add_subparsers()
-installer = subparser.add_parser("install", help="symlink/copy dotfiles on to your system (don't worry, it's all backed up first!", description="Install vim, dotfiles, or both (on Windows all defaults to not installing dotfiles)")
-installer.set_defaults(func=install)
-installer.add_argument("install_only", nargs="?", help="(optional) 'dotfiles' for only dotfiles or 'vim' for only vimfiles (defaults: posix: allfiles, windows: vimfiles only)", choices=["all", "dotfiles", "vim"]) 
-add_all(installer)
-
-
-download = subparser.add_parser("download", help="""download the files from github.""", description="""
-download dotfiles from github, after download, you can cd into the directory and run the setup.py install script""")
-update = subparser.add_parser("update", help="""merge changes (or submodules) from git""",
-        description="""
-merge changes and/or submodules from git. 
-(NOTE: if you installed via copying (e.g. if you are on Windows) you'll have to reinstall via `install all`""")
-update.add_argument("update", help="(optional) choose to only update subs or merge changes (from origin)", nargs="?", choices=["subs", "changes", "all"], default="all")
-update.set_defaults(func=update_files)
-update.add_argument("--repo", help="set which repo to update from (for changes), default is origin", dest="repo", default="origin")
-add_debug(update)
 def main():
-    args = parser.parse_args()
+    has_windows = os.name == "windows"
+    args = dict( home = os.path.expanduser("~"),
+            directory = os.getcwd(),
+            debug = DEBUG,
+            symlinks = not has_windows)
+
+    if len(sys.argv) == 1:
+        install()
+    args = {}
     args.__dict__["symlinks"] = args.__dict__.get("has_windows", True)
     args.__dict__["directory"] = os.getcwd()
     global DEBUG
