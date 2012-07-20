@@ -1,0 +1,3 @@
+# ignore eclim -- only on computer-by-computer basis
+/eclim
+/plugin
