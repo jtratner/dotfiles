@@ -1,1 +1,0 @@
-changeset = '{rev|red}:{node|short|red} - {tags|parens|trailingspace|yellow}{desc|firstline|strip} {date|age|parens|green} {author|user|anglebrackets|light_blue}\n'
