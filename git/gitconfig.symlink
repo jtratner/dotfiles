@@ -41,6 +41,7 @@
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = ls-files
+    us = update-subs
 
     # Show files ignored by git:
     ign = ls-files -o -i --exclude-standard
