@@ -93,17 +93,24 @@ command! NoColorColumn :set colorcolumn=0 "sets colorbar just past textwidth
 "Format text + wrapping
 "
 " important: vip - selects the entire paragraph
-function! ChangeFormat(new_tw)
+function! ChangeFormat(new_tw,...)
     " store all the old settings in a local buffer variable
     " don't store if they've already been set, as those are the
     " originals TODO: change this to an object instead
+    if a:0 > 0
+        let verb=a:1
+    else
+        let verb=0
+    endif
     if !exists("b:thedict")
        let b:thedict = {"oldtw":&tw,"oldfo":&fo,"oldcc":&colorcolumn}
     endif
     " set new textwidth
     :exe ":set textwidth=".a:new_tw." fo+=t"
     :ColorColumn
-    :echo "textwidth ".a:new_tw.", autowrapping on, go edit."
+    if verb
+        :echo "textwidth ".a:new_tw.", autowrapping on, go edit."
+    endif
 endfunction
 
 " enables smart comment formatting (like wrapping new lines with tw and
@@ -528,6 +535,16 @@ command! -nargs=? S call Spaces(<args>)</args>
 " Filetype Settings
 " ===================
 "
+" ==========
+" Markdown
+" ==========
+
+" .md is markdown, not modula2, sorry modula2!
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=markdown
+    au BufNewFile,BufRead *.md,*.markdown call ChangeFormat(80,0)
+augroup END
 
 " note: autocommands are separated into groups so that, even if you source
 " your vimrc multiple times, you won't end up setting far too many
@@ -544,10 +561,6 @@ command! -nargs=? S call Spaces(<args>)</args>
     autocmd FileType coffee setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     au BufRead *.js set makeprg=jslint\ %
 :augroup END
-" ===========================
-" FileType specific changes
-" ===========================
-"
 " Mako/HTML
 augroup makohtml
     au!
