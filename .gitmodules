@@ -165,10 +165,6 @@
 	path = zsh/zsh-completions
 	url = git://github.com/zsh-users/zsh-completions.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/vimpad"]
-	path = vim/vim.symlink/bundle/vimpad
-	url = https://github.com/fmoralesc/vim-pad
-	ignore = dirty
 [submodule "vim/vim.symlink/bundle/vim-coffee-script"]
 	path = vim/vim.symlink/bundle/vim-coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
