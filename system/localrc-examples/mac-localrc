@@ -1,0 +1,11 @@
+# add zsh completions from homebrew
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# add Enthought distribution (for mac) to path
+
+# Setting PATH for EPD-7.3-1
+PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
+export PATH
+
+MKL_NUM_THREADS=1
+export MKL_NUM_THREADS
