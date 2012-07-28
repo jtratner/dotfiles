@@ -1,5 +1,0 @@
-(dp1
-Vhtmlfiles = filter(lambda x: 'html' in x, htmlfiles)
-p2
-I15
-s.
