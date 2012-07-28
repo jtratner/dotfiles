@@ -34,7 +34,7 @@ from time import strftime
 # c.TerminalIPythonApp.ignore_old_config = False
 
 # If a command or file is given via the command-line, e.g. 'ipython foo.py
-# c.TerminalIPythonApp.force_interact = False
+c.TerminalIPythonApp.force_interact = False
 
 # The name of the IPython directory. This directory is used for logging
 # configuration (through profiles), history storage, etc. The default is usually
@@ -282,7 +282,7 @@ c.TerminalInteractiveShell.editor = 'vim'
 # c.TerminalInteractiveShell.readline_use = True
 
 # Start logging to the given file in append mode.
-c.TerminalInteractiveShell.logappend = os.path.expanduser('~/ipythonlogs/%s-qtipython_log.py' % strftime('%Y-%m-%d'))
+# c.TerminalInteractiveShell.logappend = os.path.expanduser('~/ipythonlogs/%s-qtipython_log.py' % strftime('%Y-%m-%d'))
 
 # 
 # c.TerminalInteractiveShell.xmode = 'Context'
