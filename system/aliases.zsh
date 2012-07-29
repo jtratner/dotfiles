@@ -9,9 +9,14 @@ case $OSTYPE in
     ;;
 esac
 
+alias sr='screen -r'
+alias hgst='hg st'
+
+#alias vimdiff="vimdiff -c 'map q :qa!<CR>'"
 # Inline aliases, zsh -g aliases can be anywhere in command line
 alias -g G='| grep -'
 alias -g L='| less'
+
 #this reduces a command like
 #ls | grep foo | less
 #to 

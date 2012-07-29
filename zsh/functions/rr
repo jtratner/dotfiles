@@ -1,0 +1,12 @@
+
+# cd to the current git or hg repo root
+rr() {
+    local dir="."
+    until ( [[ -a "$dir/.git" ]] || [[ -a "$dir/.hg" ]] ); do
+        dir="../$dir"
+        if [[ $dir -ef / ]]; then
+            return 1
+        fi
+    done
+    cd $dir
+}

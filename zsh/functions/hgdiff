@@ -1,0 +1,4 @@
+# use vimdiff for hgdiffs
+hgdiff() {
+    vimdiff <(hg cat "$1") "$1";
+}

@@ -1,46 +1,19 @@
+### Some settings from natw's dotfiles/zshrc
+#
+# many of these settings are great. many of them I don't understand.
+# I'm slowly copying things out to named folders as I decide what I do and
+# don't want from them.  For now, it's mostly completions &c
+#
 ## ENVIRONMENT
 
-# add natw's neat custom files (TODO: change this because probably unnecessary with Holman's sourcing setup)
-# however, there seem to be some conflicts between files, so I'm disabling a lot of stuff
-#fpath=(
-#    "$HOME/.zsh/zsh-completions"
-#    "$HOME/.zsh/functions"
-#    "/usr/local/share/zsh/site-functions"
-#    "/usr/local/share/zsh/4.3.10/functions"
-#    "/usr/local/share/zsh/4.3.9/functions"
-#    "/usr/share/zsh/functions"
-#    "/usr/share/zsh/functions/Completion"
-#    "$fpath[@]"
-#)
-# remove duplicates from fpath
-#typeset -U fpath
-#export fpath
-export VISUAL="vim"
-export EDITOR="vim"
 export LC_CTYPE=en_US.UTF-8
 export LC_TYPE=$LC_CTYPE
-#export MANPATH=$MANPATH:/usr/local/man:/opt/local/share/man
-#export LESS="FSRX"
-
-export WORKON_HOME="$HOME/.virtualenvs"
-export VIRTUALENV_USE_DISTRIBUTE=true
-export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/.virtualenvs"
-export VIRTUALENVWRAPPER_LOG_DIR="$HOME/.virtualenvs"
-export PIP_VIRTUALENV_BASE=$WORKON_HOME
-export PIP_RESPECT_VIRTUALENV=true # best option
-
-#export RUBYOPT=rubygems
-export GRIN_ARGS="--force-color"
 
 export HISTFILE=~/.zhistory
 export HISTSIZE='100000'
 export SAVEHIST='100000'
 export WORDCHARS=${WORDCHARS//[\/.]}
 
-# for stupid BSD ls (osx)
-export LSCOLORS="Dxgxcxdxcxegedabagacad"
-# for GNU ls (linux) (I wonder what this looks like)
-export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
 
 
 #### OPTIONS
@@ -65,54 +38,11 @@ setopt pushd_silent
 setopt prompt_subst # allow variable substitution in the prompt
 setopt c_bases # output hex and octal in better format.  what the hell?
 
-### ALIASES
-
-# in linux, -G just omits the group from -l listing.  gg apple, or bsd, or whomever
-case $OSTYPE in
-    linux*)
-        alias ls='ls --color=auto -h'
-    ;;
-    darwin*)
-        alias ls='ls -GHh'
-    ;;
-esac
-
-alias sr='screen -r'
-alias hgst='hg st'
-#alias vimdiff="vimdiff -c 'map q :qa!<CR>'"
 
 # fancy renaming
 autoload -U zmv
 alias mmv='noglob zmv -W'
 #
-#alias vims='mvim --servername VIM'
-#
-#vimr() {
-#    vim_instances=( $(mvim --serverlist) )
-#    if (( ${#vim_instances} )); then
-#        mvim --servername $vim_instances[-1] --remote-tab-silent $argv
-#    else
-#        mvim --servername VIM $argv
-#    fi
-#}
-#
-#vimcd() {
-#    # change the working directory of the newest macvim instance to the current directory
-#    # or, if argument provided, use macvim instance with that name
-#    vim_instances=( $(mvim --serverlist) )
-#    local inst
-#    if [[ -n $argv ]] then
-#        inst=$argv
-#    else
-#        inst=$vim_instances[-1]
-#    fi
-#    mvim --servername $inst --remote-send ":cd `pwd`<CR>"
-#}
-#
-alias rl="tail -f log/development.log"
-alias sc="script/console"
-alias ss="script/server"
-alias be='bundle exec'
 
 #autoload edit-command-line
 #zle -N edit-command-line
@@ -162,17 +92,21 @@ setopt autolist # list completion candidates
 #autoload -U compinit
 #compinit -C
 
-#_force_rehash() {
-#    (( CURRENT ==1 )) && rehash
-#    return 1
-#}
 
 #zstyle ':completion:*' completer _oldlist _expand _force_rehash _complete _list _oldlist _expand _ignored _match _correct _approximate _prefix
 
-#local _myhosts
-#_myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
-#zstyle ':completion:*' hosts $_myhosts
+### Colors (they're important!!)
 
+# for stupid BSD ls (osx)
+export LSCOLORS="Dxgxcxdxcxegedabagacad"
+# for GNU ls (linux) (I wonder what this looks like)
+export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
+
+# TODO: Fix my 'the system knows it's colored but the shell doesn't issue. For now I'm just autoloading all colors stuff
+#if (($(tput colors) == 256)) {
+    autoload spectrum && spectrum # this way, if the terminal doesn't support 256 colors,
+                                  # the spectrum arrays just won't exist, and there won't be any color
+#}
 ## formatting and messages
 #zstyle ':completion:*' verbose yes
 zstyle ':completion:*' list-colors "${LS_COLORS}" # just setting ZLS_COLORS works too, I guess
@@ -233,35 +167,4 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 ## the only candidates for completion after 'nosetests' will be .py files
 # zstyle ':completion:*:*:nosetests:*:*' file-patterns '*.py' 
 
-### FUNCTIONS
-
-#
-# # use vimdiff for hg diffs (new version on right side)
-# hgdiff() {
-#     vimdiff <(hg cat "$1") "$1";
-# }
-# 
-# 
-
-# cd to the current git or hg repo root
-rr() {
-    local dir="."
-    until ( [[ -a "$dir/.git" ]] || [[ -a "$dir/.hg" ]] ); do
-        dir="../$dir"
-        if [[ $dir -ef / ]]; then
-            return 1
-        fi
-    done
-    cd $dir
-}
-
-
-
-### Version Control Info (rprompt)
-
-# TODO: Fix my 'the system knows it's colored but the shell doesn't issue. For now I'm just autoloading all colors stuff
-#if (($(tput colors) == 256)) {
-    autoload spectrum && spectrum # this way, if the terminal doesn't support 256 colors,
-                                  # the spectrum arrays just won't exist, and there won't be any color
-#}
 
