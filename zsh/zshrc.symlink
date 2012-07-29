@@ -1,7 +1,7 @@
-# source virtualenvwrapper *first*
-source /usr/local/bin/virtualenvwrapper.sh
 
-# shortcut to this dotfiles path is $ZSH
+
+
+#shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
 # project folders that you can quickly tab to (in order: c, v, p, j, d)
@@ -15,6 +15,16 @@ export DROPBOX=~/Dropbox
 export LSCOLORS="Dxgxcxdxcxegedabagacad"
 # for GNU ls (linux) (I wonder what this looks like)
 export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
+
+# use .localrc for SUPER SECRET CRAP that you don't
+# want in your public, versioned repo.
+# particularly useful to change default python, etc
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+# source virtualenvwrapper *first*
+source /usr/local/bin/virtualenvwrapper.sh
 
 # source the .bashrc with this, which converts the issue-laden-thangs to sweet, compatible zsh-functions!
 #bash_source() {
@@ -30,12 +40,6 @@ export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
 # source every .zsh file in this rep
 for config_file ($ZSH/**/*.zsh) source $config_file
 
-# use .localrc for SUPER SECRET CRAP that you don't
-# want in your public, versioned repo.
-if [[ -a ~/.localrc ]]
-then
-  source ~/.localrc
-fi
 
 # ls colors! Whee! :)
 # for stupid BSD ls (osx)
