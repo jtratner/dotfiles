@@ -154,7 +154,7 @@ alias vim="$vim"
 
 # osx vim
 if [ -x "/Applications/MacVim.app/Contents/MacOS/Vim" ]; then
-    PATH=/Applications/MacVim.app/Contents/MacOS/:$PATH
+    PATH=/Applications/MacVim.app/Contents/MacOS:$PATH
 fi
 
 PYTHONSTARTUP=~/.pythonrc.py

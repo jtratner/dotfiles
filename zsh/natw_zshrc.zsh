@@ -78,8 +78,6 @@ case $OSTYPE in
 esac
 
 alias sr='screen -r'
-alias svns='svn status -u'
-alias pgrep='pgrep -fiL'
 alias hgst='hg st'
 #alias vimdiff="vimdiff -c 'map q :qa!<CR>'"
 
@@ -157,7 +155,7 @@ bindkey "^[[3~" delete-char # delete
 ### COMPLETION
 
 #setopt correct # correct commands
-#setopt autolist # list completion candidates
+setopt autolist # list completion candidates
 
 #zmodload -i zsh/complist
 #autoload -U zstyle+
@@ -233,37 +231,10 @@ zstyle ':completion:*:*:kill:*:processes' command 'ps -axco pid,user,command'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 
 ## the only candidates for completion after 'nosetests' will be .py files
-zstyle ':completion:*:*:nosetests:*:*' file-patterns '*.py' 
-
-# commands that have nice --help output and I want to complete arguments for
-compdef _gnu_generic nosetests
-
-# pip zsh completion start
-export COMP_WORDS=""
-function _pip_completion {
-#   print "HELLO"
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS=$words
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] ) )
-}
-compctl -K _pip_completion pip
-# pip zsh completion end
-
-
+# zstyle ':completion:*:*:nosetests:*:*' file-patterns '*.py' 
 
 ### FUNCTIONS
 
-#
-#autoload -Uz vcs_info # for pulling info from version control systems
-## precmd is a builtin function that is called before every rendering of the command prompt
-#precmd() {
-#    echo -ne "\033]0;${host_nick}: ${PWD/#$HOME/~}\007"
-#    vcs_info
-#}
-#
 #
 # # use vimdiff for hg diffs (new version on right side)
 # hgdiff() {
@@ -271,18 +242,6 @@ compctl -K _pip_completion pip
 # }
 # 
 # 
-# # I hope I never need this again
-# function hg-svn-merge-branch() {
-#     local targetrev
-#     local striprev
-#     targetrev=$(hg id | cut -d ' ' -f 1)
-#     hg merge $1
-#     hg ci -m "Merging $1"
-#     striprev=$(hg id | cut -d ' ' -f 1)
-#     hg co $targetrev
-#     hg diff -r$targetrev:$striprev | hg import - -m "Merged branch $1."
-#     hg strip $striprev
-# }
 
 # cd to the current git or hg repo root
 rr() {
@@ -306,94 +265,3 @@ rr() {
                                   # the spectrum arrays just won't exist, and there won't be any color
 #}
 
-#zstyle ':vcs_info:*' enable svn hg git bzr cvs darcs
-#zstyle ':vcs_info:*' get-revision true
-#zstyle ':vcs_info:*' get-unapplied true
-#zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
-## zstyle ':vcs_info:hg*:*' use-simple true # a little faster, but I like seeing if there are outstanding changes.
-#                                           # maybe only for bzr?
-#                                           #
-#zstyle ':vcs_info:*' formats "$FG[015]($FG[107]%s$FG[015])-[$FG[221]%b %i%m$FG[015]]$FG[167]%u%c$FX[reset]"
-#zstyle ':vcs_info:*' actionformats "$FG[015]($FG[107]%s$FG[015])-[$FG[221]%b %i%m $FG[167]$FX[bold]%a$FX[reset]$FG[015]]$FG[167]%u$FX[reset]"
-#zstyle ':vcs_info:*' branchformat "%b" # don't show rev in branchformat, use %i for that to pick up head marker
-#
-## mercurial-specific stuff
-#zstyle ':vcs_info:hg*:*' get-mq true
-#zstyle ':vcs_info:hg*:*' get-unapplied true
-#zstyle ':vcs_info:hg*:*' get-bookmarks true
-#zstyle ':vcs_info:hg*:*' unstagedstr "+" # uncommitted changes
-#zstyle ':vcs_info:hg*:*' hgrevformat "%r" # only show local revision
-#zstyle ':vcs_info:hg*:*' patch-format " $FG[103]%n$FX[reset]/$FG[103]%c %p$FX[reset]" # this should show when patches are applied, but it doesn't
-#zstyle ':vcs_info:hg*:*' nopatch-format " $FG[103]Q$FX[reset]" # mq present, but no applied patches
-#zstyle ':vcs_info:hg*+set-hgrev-format:*' hooks hg-storerev hg-hashfallback
-#zstyle ':vcs_info:hg*+set-message:*' hooks mq-vcs hg-branchhead
-#
-## git stuff
-#zstyle ':vcs_info:git*' unstagedstr "+" # fix these once I learn how git works
-#zstyle ':vcs_info:git*' stagedstr "S"
-#zstyle ':vcs_info:git*' formats "$FG[015]($FG[107]%s$FG[015])-[$FG[221]%b %8>>%i%<<%m$FG[015]]$FG[167]%u%c$FX[reset]"
-#zstyle ':vcs_info:git*' actionformats "$FG[015]($FG[107]%s$FG[015])-[$FG[221]%b %8.8i%m $FG[167]$FX[bold]%a$FX[reset]$FG[015]]$FG[167]%u$FX[reset]"
-##zstyle ':vcs_info:git*' actionformats "$FG[015]($FG[107]%s$FG[015]|$FG[167]%a$FG[015])-[$FG[221]%u%b%m %12.12i$FG[015]]$FX[reset]"
-#
-#
-#### Store the localrev and global hash for use in other hooks
-#function +vi-hg-storerev() {
-#    user_data[localrev]=${hook_com[localrev]}
-#    user_data[hash]=${hook_com[hash]}
-#}
-#
-#### Show marker when the working directory is not on a branch head
-## 'marker' is just coloring the rev red
-## This may indicate that running `hg up` will do something
-#function +vi-hg-branchhead() {
-#    local branchheadsfile i_tiphash i_branchname
-#    local -a branchheads
-#
-#    local branchheadsfile=${hook_com[base]}/.hg/branchheads.cache
-#
-#    # Bail out if any mq patches are applied
-#    [[ -s ${hook_com[base]}/.hg/patches/status ]] && return 0
-#
-#    if [[ -r ${branchheadsfile} ]] ; then
-#        while read -r i_tiphash i_branchname ; do
-#            branchheads+=( $i_tiphash )
-#        done < ${branchheadsfile}
-#
-#        if [[ ! ${branchheads[(i)${user_data[hash]}]} -le ${#branchheads} ]] ; then
-#            hook_com[revision]="$FX[bold]$FG[124]${hook_com[revision]}$FX[reset]"
-#        fi
-#    fi
-#}
-#
-#
-#export RPROMPT='${vcs_info_msg_0_}'
-#
-#
-#### OTHER
-#
-#if [ -z host_nick ]; then
-#    host_nick = '%m'
-#fi
-#
-## render machine name in red for root users
-## this is probably dumb, as it uses root's rc for a root shell, right?
-#if [ "x`whoami`" = "xroot" ]; then
-#    ucolor=$fg_bold[red]
-#else
-#    ucolor=$fg_bold[green]
-#fi
-#
-#local _override_ps1
-#_override_ps1=false
-#
-## machine specific settings
-#if [[ -a ~/.zshrc-local ]]; then
-#    source ~/.zshrc-local
-#fi
-#
-## PS1 depends on info from the local zsh config, but I want the option to
-## override it completely from within there as well
-#
-#if [[ $_override_ps1 = false ]]; then
-#    PS1="$FG[015][$FG[107]${host_nick} $FG[173]%~$FG[015]]$FG[107]%# $FX[reset]"
-#fi
