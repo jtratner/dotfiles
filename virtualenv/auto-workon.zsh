@@ -4,7 +4,7 @@
  function workon_cwd {
  # Check that this is a Git repo
  GIT_DIR=`git rev-parse --git-dir 2> /dev/null`
- if [ $? == 0 ]; then
+ if [[ $? == 0 ]]; then
      # Find the repo root and check for virtualenv name override
      GIT_DIR=`\cd $GIT_DIR; pwd`
      PROJECT_ROOT=`dirname "$GIT_DIR"`
@@ -13,7 +13,7 @@
          ENV_NAME=`cat "$PROJECT_ROOT/.venv"`
      fi
      # Activate the environment only if it is not already active
-     if [ "$VIRTUAL_ENV" != "$WORKON_HOME/$ENV_NAME" ]; then
+     if [[ "$VIRTUAL_ENV" != "$WORKON_HOME/$ENV_NAME" ]]; then
          if [ -e "$WORKON_HOME/$ENV_NAME/bin/activate" ]; then
              workon "$ENV_NAME" && export CD_VIRTUAL_ENV="$ENV_NAME"
          fi
@@ -32,3 +32,4 @@ function venv_cd {
 
 alias workon-this-project="workon_cwd"
 alias wtp="workon_cwd"
+alias vcd="venv_cd"

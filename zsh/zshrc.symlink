@@ -3,7 +3,10 @@
 
 #shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
-
+if [[ -a ~/.pythonrc.py ]]
+then
+    export PYTHONSTARTUP=~/.pythonrc.py
+fi
 # project folders that you can quickly tab to (in order: c, v, p, j, d)
 export PROJECTS=~/Dropbox/Classes
 export VIMPROJECTS=~/viml
@@ -21,10 +24,13 @@ export LS_COLORS='di=93:fi=0:ln=96:pi=5:so=5:bd=5:cd=5:or=31:mi=31:ex=32'
 # particularly useful to change default python, etc
 if [[ -a ~/.localrc ]]
 then
-  source ~/.localrc
+    source ~/.localrc
 fi
 # source virtualenvwrapper *first*
-source /usr/local/bin/virtualenvwrapper.sh
+if [[ -a /usr/local/bin/virtualenvwrapper.sh ]]
+then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
 
 # source the .bashrc with this, which converts the issue-laden-thangs to sweet, compatible zsh-functions!
 #bash_source() {
@@ -101,4 +107,5 @@ bindkey "^R" history-incremental-search-backward
 # brings you back to what you were doing
 bindkey "^P" push-line
 bindkey "^L" clear-screen
+
 

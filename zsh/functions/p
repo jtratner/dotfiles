@@ -1,1 +1,1 @@
-cd $PYTHONPROJECTS/$1;
+venv_cd $PYTHONPROJECTS/$1;
