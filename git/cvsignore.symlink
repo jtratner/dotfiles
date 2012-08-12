@@ -5,6 +5,10 @@
 *.egg
 *.egg-info
 
+# coverage and nose reports
+\.noseids
+\.coverage
+
 # swap files
 *.swp
 
