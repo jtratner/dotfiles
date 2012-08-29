@@ -311,7 +311,7 @@ endif
 if has("gui_macvim") && !exists("g:MacVimSettingsLoaded")
     let g:MacVimSettingsLoaded = 1
     colorscheme xoria256
-    call SetFont(25,"UMono")
+    call SetFont(18,"UMono")
     let g:Powerline_symbols="fancy"
 endif
 
@@ -595,6 +595,7 @@ augroup python
     au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
     au FileType python set fo+=roc
+    au FileType python call LoadPythonPath()
     " TODO: put LoadPythonPath into here instead of in vimrc
 augroup END
 

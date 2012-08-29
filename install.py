@@ -5,7 +5,7 @@ import shutil
 import argparse
 from subprocess import Popen, PIPE
 import sys
-DEBUG = True
+DEBUG = False
 PREFIX = "."
 BACKUP_PREFIX = ""
 SYMLINK_SUB = re.compile("\.symlink")
@@ -16,17 +16,17 @@ def remove(path):
     (silences OSErrors and shutil.Error messages)."""
     try:
         if os.path.isdir(path):
-            if DEBUG: print "removing directory {path}".format(path=path); return True
+            if DEBUG: print("removing directory {path}".format(path=path)); return True
             shutil.rmtree(path)
         else:
-            if DEBUG: print "removing path {path!r}".format(path=path); return True
+            if DEBUG: print("removing path {path!r}".format(path=path)); return True
             os.remove(path)
         return True
     except OSError as e:
-        print "Couldn't remove file -- {message}".format(message=e.strerror)
+        print("Couldn't remove file -- {message}".format(message=e.strerror))
         return False
     except shutil.Error as e:
-        print "Couldn't remove director -- {message}".format(message=e[2])
+        print("Couldn't remove director -- {message}".format(message=e[2]))
 
 def make_link(source, target, symlinks=True):
     """ tries to copy or symlink given source path or directory. Uses shutil.copytree or shutil.copy2 to do so.
@@ -42,21 +42,21 @@ def make_link(source, target, symlinks=True):
     try:
         if not symlinks:
             if os.path.isdir(source):
-                if DEBUG: print "copying from {source} to {target}".format(source=source, target=target); return True
+                if DEBUG: print("copying from {source} to {target}".format(source=source, target=target)); return True
                 shutil.copytree(source, target, symlinks=symlinks)
             else:
-                if DEBUG: print "copying from {source} to {target}".format(source=source, target=target); return True
+                if DEBUG: print("copying from {source} to {target}".format(source=source, target=target)); return True
                 shutil.copy2(source, target)
             return True
         else:
-            if DEBUG: print "symlinking from {source} to {target}".format(source=source, target=target); return True
+            if DEBUG: print("symlinking from {source} to {target}".format(source=source, target=target)); return True
             os.symlink(source, target)
             return True
     except shutil.Error as e:
-        print "Couldn't copy {source} to {target}: {message!r}".format(source=source, target=target, messsage=e[2])
+        print("Couldn't copy {source} to {target}: {message!r}".format(source=source, target=target, messsage=e[2]))
         return False
     except OSError as e:
-        print "Couldn't make symlink from {source} to {target}: {message!r}".format(source=source, target=target, message=e.strerror)
+        print("Couldn't make symlink from {source} to {target}: {message!r}".format(source=source, target=target, message=e.strerror))
         return False
 
 
@@ -68,19 +68,21 @@ def backup_rename(source, counter = None, symlinks=None, prefix=None, suffix=Non
     suffix = suffix if suffix is not None else ".bak"
     do_backup = do_backup if do_backup is not None else True
     if not do_backup:
-        print "Not backing up"
+        print("Not backing up")
         return True
     split = os.path.split(source)
-    prefix_str, suffix_str = prefix, suffix
+    prefix_str = prefix
+    suffix_str = suffix
     if counter and prefix:
         prefix_str = prefix + str(counter) if counter else ""
     else:
+        print(suffix_str)
         suffix_str += str(counter) if counter else ""
     path = os.path.join(split[0], prefix_str + split[1] + suffix_str)
     if os.path.exists(path):
         return backup_rename(source, counter + 1, prefix, suffix, symlinks)
     else:
-       print("Backing up {source} to {path}".format(source=source, path=path))
+       print(("Backing up {source} to {path}".format(source=source, path=path)))
        return make_link(source, path, symlinks) and remove(source)
 
 def link_file(source, home, symlinks=False, prefix=None, backup_prefix=None, backup_suffix=None, **kwargs):
@@ -118,10 +120,10 @@ def find_files(directory, regex=SYMLINK_RE, depth=0, maxdepth=5):
     return list(set(found))
 
 def make_symlinks(directory, home, regex, symlinks=False, maxdepth=5, vim_directory=None, **kwargs):
-    print "Making symlinks"
+    print("Making symlinks")
     not_linked = []
     names = find_files(directory, regex, 0, maxdepth) or []
-    print "Installing symlinks"
+    print("Installing symlinks")
     for filename in names:
         if os.path.basename(filename) == "vim.symlink" and vim_directory:
             link_file(filename, home = vim_directory, symlinks=symlinks, **kwargs)
@@ -130,12 +132,12 @@ def make_symlinks(directory, home, regex, symlinks=False, maxdepth=5, vim_direct
     if symlinks:
         pass
     if not_linked:
-        print "Couldn't link these files: {files}".format(files=', '.join(not_linked))
+        print("Couldn't link these files: {files}".format(files=', '.join(not_linked)))
     return not not_linked
 
 def run_command(command, shell=False):
     if DEBUG:
-        print str(command) + "\n"
+        print(str(command) + "\n")
         return
     sys.__stdout__.write(str(command) + "\n")
     stdout = Popen(command, stdout=PIPE, shell=True).stdout
@@ -150,9 +152,11 @@ def update_submodules(directory = None):
     directory = directory or os.listdir(os.getcwd())
     error = Popen("git status", stdout=PIPE, stderr=PIPE, shell=True).stderr.read()
     if error:
-        print "Not updating, something awry with git/not a git repo."
+        print("Not updating, something awry with git/not a git repo.")
         return
-    print "Updating submodules"
+    print("Updating submodules")
+    if DEBUG:
+        return
     run_command = lambda command: Popen(command, stdout=None, shell=True)
     had_result = False
     for command in ( "git submodule sync", "git submodule init", 
@@ -162,41 +166,37 @@ def update_submodules(directory = None):
         result = run_command(command)
         had_result = had_result or result
     if not had_result:
-        print "Nothing to update."
+        print("Nothing to update.")
     else:
-        print "Finished updating subs."
+        print("Finished updating subs.")
     return
 
 
 def do_nothing(*args, **kwargs):
-    print "Args: ", args
-    print "Kwargs: ", kwargs
+    print("Args: ", args)
+    print("Kwargs: ", kwargs)
 update_files = subs = merge_upstream = vim = dots = install = uninstall = do_nothing
 def update_files(update="all", repo="origin", debug=None, **kwargs):
-    print "Checking if git repo and can run."
+    print("Checking if git repo and can run.")
     error = Popen("git status",stdout=PIPE, stderr=PIPE, shell=True).stderr.read()
     if error:
         if "Not a git repository" in error:
-            print "Can't run unless we're in a git repo! Sorry.\n" + error
+            print("Can't run unless we're in a git repo! Sorry.\n" + error)
         else:
-            print "Sorry, there was a git error.\n" + error
+            print("Sorry, there was a git error.\n" + error)
         sys.exit("git error")
     if update in ("all", "changes"):
-        print "Ok, we're good. Let's go!\n"
-        print "Saving your current state"
-        run_command("git stash save")
-        print "Pulling changes from {repo}".format(repo = repo)
+        print("Ok, we're good. Let's go!\n")
+        print("Pulling changes from {repo}".format(repo = repo))
         run_command("git pull {repo} master".format(repo=repo))
         run_command("git merge {repo}/master".format(repo=repo))
-        print "Re-applying your changes"
-        run_command("git stash apply")
     if update in ("all", "subs"):
         update_submodules()
-    print "Finished updates."
+    print("Finished updates.")
 
 def install(*args, **kwargs):
     if kwargs.get("has_windows") or kwargs.get("install_only")=="vim":
-        print "Detected Windows, only installing vimfiles"
+        print("Detected Windows, only installing vimfiles")
         kwargs["update"] = "subs"
         update_files(*args, **kwargs)
         make_symlinks(*args, **kwargs)
@@ -206,12 +206,12 @@ def install(*args, **kwargs):
         dots(*args, **kwargs)
     else:
         kwargs["update"] = "all"
-        print "installing all dotfiles and getting submodules"
+        print("installing all dotfiles and getting submodules")
         update_files(*args, **kwargs)
         make_symlinks(regex=SYMLINK_RE, **kwargs)
         vim(*args, **kwargs)
         dots(*args, **kwargs)
-    print "finished"
+    print("finished")
     sys.exit(0)
 # def uninstall():
 #     pass
@@ -258,7 +258,7 @@ add_all(installer)
 
 
 download = subparser.add_parser("download", help="""download the files from github.""", description="""
-download dotfiles from github, after download, you can cd into the directory and run the setup.py install script""")
+download dotfiles from github, after download, you can cd into the directory and run the install.py install script""")
 update = subparser.add_parser("update", help="""merge changes (or submodules) from git""",
         description="""
 merge changes and/or submodules from git. 
@@ -274,11 +274,11 @@ def main():
     global DEBUG
     DEBUG = "debug" in args.__dict__ and args.debug or DEBUG
     if DEBUG:
-        print "Running in DEBUG mode, all commands will print to terminal but won't be run."
+        print("Running in DEBUG mode, all commands will print to terminal but won't be run.")
     if not ("home" in args.__dict__ and args.__dict__["home"] is not None):
         args.__dict__["home"] = os.path.expanduser("~")
     if args.func == update_files:
-        print "Updating"
+        print("Updating")
     args.func(**args.__dict__)
     # using_windows = os.name == "windows"
     # regex = SYMLINK_RE
