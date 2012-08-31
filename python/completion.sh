@@ -1,0 +1,1 @@
+compdef pys=setup.py
