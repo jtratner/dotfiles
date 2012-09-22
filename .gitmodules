@@ -180,3 +180,6 @@
 [submodule "vim/vim.symlink/bundle/pep8"]
 	path = vim/vim.symlink/bundle/pep8
 	url = git://github.com/vim-scripts/pep8.git
+[submodule "vim/vim.symlink/bundle/sparkup"]
+	path = vim/vim.symlink/bundle/sparkup
+	url = git://github.com/bingaman/vim-sparkup.git
