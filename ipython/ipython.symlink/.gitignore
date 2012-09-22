@@ -2,3 +2,5 @@
 history.sqlite
 dhist
 db
+security/*
+security
