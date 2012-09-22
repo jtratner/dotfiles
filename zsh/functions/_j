@@ -1,2 +1,2 @@
 #compdef j
-_files -W $JAVAPROJECTS -/
+_files -W $JAVASCRIPTPROJECTS -/

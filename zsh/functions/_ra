@@ -1,0 +1,2 @@
+#compdef ra
+_files -W $RAILSPROJECTS -/

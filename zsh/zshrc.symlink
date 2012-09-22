@@ -7,12 +7,15 @@ if [[ -a ~/.pythonrc.py ]]
 then
     export PYTHONSTARTUP=~/.pythonrc.py
 fi
-# project folders that you can quickly tab to (in order: c, v, p, j, d)
-export PROJECTS=~/Dropbox/Classes
-export VIMPROJECTS=~/viml
-export PYTHONPROJECTS=~/python
-export JAVAPROJECTS=~/java
+# project folders that you can quickly tab to (in order: c, v, p, j, d, s)
+export PROJECTS=~/projects
+export VIMPROJECTS=$PROJECTS/viml
+export PYTHONPROJECTS=$PROJECTS/python
+# export JAVAPROJECTS=$PROJECTS/java
+export JAVASCRIPTPROJECTS=$PROJECTS/js
 export DROPBOX=~/Dropbox
+export SLIDEDECKS=$PROJECTS/slides
+export RAILSPROJECTS=$PROJECTS/rails
 
 # for stupid BSD ls (osx)
 export LSCOLORS="Dxgxcxdxcxegedabagacad"
