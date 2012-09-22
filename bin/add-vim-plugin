@@ -1,0 +1,30 @@
+#!/bin/bash
+# run this to add a plugin to your vim directory (either by cloning [default] or by submodule)
+
+
+if [[ $# < 1 ]] || [[ $# > 3 ]]
+    then
+    echo "usage: $0 [optional: clone|submodule] path/to/clone/to/bundle [optional directory name]"
+    exit 1
+fi
+
+cd $HOME/.dotfiles/vim/vim.symlink/bundle
+
+if [[ $1 == clone ]]
+then
+    hub clone $2 $3
+elif [[ $1 == submodule ]]
+then
+    # need a third argument to bundle
+    if [[ $# < 3 ]]
+    then
+        echo "to add a submodule, you need to specify a bundle name (e.g. 'syntastic')"
+        exit 1
+    fi
+    cd $HOME/.dotfiles
+    hub submodule add $2 vim/vim.symlink/bundle/$3
+else
+    hub clone $1 $2
+fi
+
+
