@@ -565,7 +565,7 @@ augroup END
 augroup makohtml
     au!
     autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html.jinja
-    autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+    autocmd FileType html,xhtml,xml,css,jade setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 augroup END
 
 " =======
@@ -578,6 +578,7 @@ let g:tex_flavor = 'latex' " sets default tex to latex instead of plainte
 
 augroup ruby
     au!
+    autocmd BufNewFile,BufRead Gemfile,Rakefile,Guardfile set filetype=ruby
     au FileType ruby,eruby set omnifunc=rubycomplete#Complete
     au FileType ruby,eruby set ai sw=2 sts=2 et
     " The following are from http://cstropz.net/2011/10/12/vim-ruby-auto-completion-and-supertab/
@@ -586,6 +587,9 @@ augroup ruby
     au FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
     au FileType ruby,eruby set fo+=roc
     au FileType ruby,eruby colo vividchalk
+    " set ERB wrappers to use with surround
+    au FileType ruby,eruby let b:surround_45 = "<% \r %>" " '-'
+    au FileType ruby,eruby let b:surround_61 = "<%= \r %>" " '='
 augroup END
 " Python
 augroup python
