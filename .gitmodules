@@ -157,6 +157,7 @@
 [submodule "ubuntu-java/flexion-oab-java6"]
 	path = ubuntu-java/flexion-oab-java6
 	url = git://github.com/flexiondotorg/oab-java6
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/unimpaired"]
 	path = vim/vim.symlink/bundle/unimpaired
 	url = git://github.com/tpope/vim-unimpaired.git
@@ -168,18 +169,44 @@
 [submodule "vim/vim.symlink/bundle/vim-coffee-script"]
 	path = vim/vim.symlink/bundle/vim-coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/makegreen"]
 	path = vim/vim.symlink/bundle/makegreen
 	url = git://github.com/reinh/vim-makegreen.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/rails"]
 	path = vim/vim.symlink/bundle/rails
 	url = https://github.com/tpope/vim-rails.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/nerdtree"]
 	path = vim/vim.symlink/bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/pep8"]
 	path = vim/vim.symlink/bundle/pep8
 	url = git://github.com/vim-scripts/pep8.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/sparkup"]
 	path = vim/vim.symlink/bundle/sparkup
 	url = git://github.com/bingaman/vim-sparkup.git
+	ignore=dirty
+[submodule "vim/vim.symlink/bundle/endwise"]
+	path = vim/vim.symlink/bundle/endwise
+	url = git://github.com/tpope/vim-endwise.git
+	ignore=dirty
+[submodule "vim/vim.symlink/bundle/conque-term"]
+	path = vim/vim.symlink/bundle/conque-term
+	url = git://github.com/rosenfeld/conque-term.git
+	ignore=dirty
+[submodule "vim/vim.symlink/bundle/scss-syntax"]
+	path = vim/vim.symlink/bundle/scss-syntax
+	url = git://github.com/cakebaker/scss-syntax.vim.git
+	ignore=dirty
+[submodule "vim/vim.symlink/bundle/ruby-conque"]
+	path = vim/vim.symlink/bundle/ruby-conque
+	url = git://github.com/skwp/vim-ruby-conque.git
+	ignore=dirty
+[submodule "vim/vim.symlink/bundle/vroom"]
+	path = vim/vim.symlink/bundle/vroom
+	url = git://github.com/skalnik/vim-vroom.git
+	ignore=dirty

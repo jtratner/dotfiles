@@ -42,8 +42,8 @@ nnoremap <leader><space> :nohlsearch<cr>
 " Remove trailing whitespace on <leader>S
 nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
 
-" Select the item in the list with enter
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" " Select the item in the list with enter
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Edit/Reload Vimrc
 map <silent> <leader>ev :edit ~/.vimrc<CR>
@@ -229,13 +229,13 @@ set foldlevel=99            " don't fold by default
 " don't outdent hashes (see :help smartindent for more on this)
 inoremap # X#
 
-" TODO: set this up so it isn't called 50x if the file is source again.
-" close preview window automatically when we move around
-augroup cursor
-    au!
-        autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-augroup END
+" This is commented out to use ConqueTerm
+" " close preview window automatically when we move around
+" augroup cursor
+"     au!
+"         autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+" augroup END
 
 " make tab completion context sensitive
 let g:SuperTabDefaultCompletionType = "context"
@@ -575,6 +575,13 @@ augroup END
 let g:tex_flavor = 'latex' " sets default tex to latex instead of plainte
 
 " Ruby
+" NOTE: this requires all of: rspec, ConqueTerm, vim-ruby-conque
+" Cmd-Shift-R for RSpec
+nmap <silent> <D-R> :call RunRspecCurrentFileConque()<CR>
+" Cmd-Shift-L for RSpec Current Line
+nmap <silent> <D-L> :call RunRspecCurrentLineConque()<CR>
+" Cmd-Shift-U for Last conque command
+nmap <silent> <D-U> :call RunLastConqueCommand()<CR>
 
 augroup ruby
     au!
@@ -590,6 +597,7 @@ augroup ruby
     " set ERB wrappers to use with surround
     au FileType ruby,eruby let b:surround_45 = "<% \r %>" " '-'
     au FileType ruby,eruby let b:surround_61 = "<%= \r %>" " '='
+    au BufRead *.rb,*.erb,*.scss,*.coffee call Pl#Load()
 augroup END
 " Python
 augroup python
