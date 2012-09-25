@@ -1,0 +1,10 @@
+#!/bin/sh
+# From tpope's http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
+# sidenote: tpope is awesome -- he's written tons of useful utilities -- https://github.com/tpope
+# NOTE: You might want to remove this from projects that *don't* need ctags (for example, these dotfiles)
+
+set -e
+PATH="/usr/local/bin:$PATH"
+trap "rm -f .git/tags.$$" EXIT
+ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --languages=-javascript,sql
+mv .git/tags.$$ .git/tags

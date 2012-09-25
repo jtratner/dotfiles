@@ -1,0 +1,4 @@
+#!/bin/sh
+# from tpope's post on exuberant ctags
+# note that it forks here for better performance
+.git/hooks/ctags >/dev/null 2>&1 &

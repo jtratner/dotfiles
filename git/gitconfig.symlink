@@ -57,3 +57,5 @@
   ri = rebase --interactive --autosquash
   # pull upstream changes together
   pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+[init]
+	templatedir = ~/.git_template
