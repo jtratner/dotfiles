@@ -90,10 +90,6 @@
 	path = vim/vim.symlink/bundle/snipmate
 	url = git://github.com/garbas/vim-snipmate.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/snipmate-snippets"]
-	path = vim/vim.symlink/bundle/snipmate-snippets
-	url = git://github.com/honza/snipmate-snippets.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/addon-mw-utils"]
 	path = vim/vim.symlink/bundle/addon-mw-utils
 	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
@@ -210,3 +206,6 @@
 	path = vim/vim.symlink/bundle/vroom
 	url = git://github.com/skalnik/vim-vroom.git
 	ignore=dirty
+[submodule "vim/vim.symlink/bundle/snipmate-snippets"]
+	path = vim/vim.symlink/bundle/snipmate-snippets
+	url = https://github.com/jtratner/snipmate-snippets
