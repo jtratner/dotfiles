@@ -1,0 +1,86 @@
+#!/bin/bash
+# run this to add a plugin to your vim directory (either by cloning [default] or by submodule)
+# TODO: add a remove function (for now...feels too dangerous to be really useful)
+
+function dotfile_root() {
+    echo "$HOME/scratch/testing"
+}
+
+# converts an input path to a bundle path from the root
+# (suitable for submodule path)
+# so my-awesome-plugin --> $HOME/.dotfiles/vim/vim.symlink/bundle/my-awesome-plugin
+
+function bundle_to_abs_path() {
+if [[ -d $1 ]]
+then
+    echo "`$(dotfiles_root)`/vim/vim.symlink/bundle/$1"
+else
+    echo ""
+fi
+
+}
+
+function bad_usage() {
+    echo 'Usage: git vim plugin add (s[ubmodule]|c[lone]) (git-path) (bundle-name)'
+    exit
+}
+
+# function bad_usage_add() {
+#     echo 'Usage: git vim plugin add (s[ubmodule]|c[lone]) (git-path) (bundle-name)'
+#     exit
+# }
+
+# function bad_usage_rm() {
+#     echo 'Usage: git vim plugin rm (s[ubmodule]|c[lone]) (bundle-name)'
+#     exit
+# }
+
+# usage: add_plugin (clone/submodule) git-path file-path
+function add_plugin() {
+case $1 in 
+    [s]*)
+        hub submodule add $2 `$(bundle_to_abs_path $3)`
+        ;;
+    # [c]*)
+    #     hub clone $2 `$(bundle_path_to_abspath $3)`
+    #     ;;
+    *)
+        $(bad_usage)
+        ;;
+esac
+}
+
+# # taken from git-submodule-rm
+# function is_submodule() {
+#     local top_level parent_git module_name
+
+#     if [ -d "$1" ]; then
+#       cd $1
+#     else
+#       return 1
+#     fi
+
+#     # Find the root of this git repo, then check if its parent dir is also a repo
+#     top_level="$(git rev-parse --show-toplevel)"
+#     if [ ! actual_path $toplevel ]; then
+#       top_level="$(cd $top_level && pwd -P)"
+#     fi
+
+#     module_name="$(basename "$top_level")"
+#     parent_git="$(cd "$top_level/.." && git rev-parse --show-toplevel 2> /dev/null)"
+
+#     if [[ -n $parent_git ]]; then
+#       return 0
+#     else
+#       return 1
+#     fi
+# }
+
+if [[ $# < 3 || $# > 4 ]]
+then
+    $(bad_usage)
+else
+    $(add_plugin $2 $3 $4)
+fi
+
+
