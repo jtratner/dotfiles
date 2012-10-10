@@ -399,13 +399,6 @@ let g:pep8_map='<leader>8'
 let g:pyflakes_use_quickfix = 0
 
 " ==========================================================
-" Command-T
-" ==========================================================
-" Run command-t file search
-map <leader>f :CommandT<CR>
-"command -nargs=* C :CommandT
-
-" ==========================================================
 " Ack
 " ==========================================================
 " Ack searching
@@ -600,6 +593,12 @@ augroup ruby
     au FileType ruby,eruby let b:surround_45 = "<% \r %>" " '-'
     au FileType ruby,eruby let b:surround_61 = "<%= \r %>" " '='
     au BufRead *.rb,*.erb,*.scss,*.coffee call Pl#Load()
+augroup END
+
+" Rails
+augroup rails
+  au!
+  au User Rails Rnavcommand routes routes -glob=*.* -suffix= -default=routes.rb
 augroup END
 " Python
 augroup python
