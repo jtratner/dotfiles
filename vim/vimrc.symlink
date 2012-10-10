@@ -623,10 +623,18 @@ function! CalcSpaces(lnum)
     return (spaces / &shiftwidth)
 endfunction
 
+" ==================
+" C and *.h syntax
+" ==================
+
+" highlight special gnu variables
+let c_gnu=1
+" use Ch syntax for *.h files
+let ch_syntax_for_h = 1
 " Python-dependent vim functions
 
 if !has("python")
-    echo "Couldn't find Python features, not loading python script"
+    echo "Couldn't find Python features, not loading python scripts"
 else
 " Add the virtualenv's site-packages to vim path
 py << EOF
