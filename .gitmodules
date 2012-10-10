@@ -209,3 +209,12 @@
 [submodule "vim/vim.symlink/bundle/snipmate-snippets"]
 	path = vim/vim.symlink/bundle/snipmate-snippets
 	url = https://github.com/jtratner/snipmate-snippets
+[submodule "vim/vim.symlink/bundle/html5"]
+	path = vim/vim.symlink/bundle/html5
+	url = git://github.com/othree/html5.vim.git
+[submodule "vim/vim.symlink/bundle/indent-guides"]
+	path = vim/vim.symlink/bundle/indent-guides
+	url = git://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "vim/vim.symlink/bundle/jade"]
+	path = vim/vim.symlink/bundle/jade
+	url = git://github.com/digitaltoad/vim-jade.git
