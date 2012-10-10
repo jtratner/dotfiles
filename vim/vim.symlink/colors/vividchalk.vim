@@ -10,7 +10,7 @@
 if has("gui_running")
     set background=dark
 endif
-hi clear
+"hi clear
 if exists("syntax_on")
    syntax reset
 endif
