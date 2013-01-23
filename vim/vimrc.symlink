@@ -7,6 +7,8 @@ call pathogen#infect()                     " Only way to get the helptags to ins
 call pathogen#helptags()                   "
 source $VIMRUNTIME/macros/matchit.vim      " not on by default for some reason
 
+" Need this for mac
+set shell=bash
 
 "TODO: make a help doc for all this
 " <leader> mapping
@@ -313,8 +315,15 @@ endif
 if has("gui_macvim") && !exists("g:MacVimSettingsLoaded")
     let g:MacVimSettingsLoaded = 1
     colorscheme xoria256
-    call SetFont(18,"UMono")
+    call SetFont(14,"Inconsolata")
     let g:Powerline_symbols="fancy"
+endif
+if has("mac")
+    function! FancySchmancy()
+        let g:Powerline_symbols="fancy"
+        exe "PowerlineReloadColorscheme"
+    endfunction
+    command! FancySchmancy call FancySchmancy()
 endif
 
 " =================
