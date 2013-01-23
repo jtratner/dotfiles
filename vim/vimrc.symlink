@@ -26,7 +26,7 @@ if exists("&undofile")
 endif
 if exists("&undodir")
     " this is especially neat, because it lets you have undo persistence
-    set undodir=$~/.dotfiles/vim/vim.symlink/swaps//
+    set undodir=$~/.dotfiles/vim/vim.symlink/undo//
 endif
 
 " Seriously, guys. It's not like :W is bound to anything anyway.
