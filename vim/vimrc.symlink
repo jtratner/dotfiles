@@ -607,7 +607,8 @@ augroup END
 " Rails
 augroup rails
   au!
-  au User Rails Rnavcommand routes routes -glob=*.* -suffix= -default=routes.rb
+  au User Rails Rnavcommand routes config -glob=*.* -suffix= -default=routes.rb
+  au User Rails Rnavcommand admin app/admin -glob=*.* -suffix=.rb -default=model()
 augroup END
 " Python
 augroup python
