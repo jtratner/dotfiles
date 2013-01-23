@@ -22,8 +22,7 @@ alias -g L='| less'
 #to 
 #ls G foo L
 # 
-alias -g R=' > /c/aaa/tee.txt '           # redirect
-alias -g T=' | tee /c/aaa/tee.txt '       # tee
+alias -g T=' | tee ~/scratch/tee.txt '       # tee
 alias -g F=' | fmt -'                     # format
 alias -g W=' | wc -l'                     # wc
 
