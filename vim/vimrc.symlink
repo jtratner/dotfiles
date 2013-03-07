@@ -561,7 +561,7 @@ augroup END
     au!
     " set coffeescript to compile on every save and pop up with resulting
     " code/errors.
-    autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow
+    " autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow
     autocmd FileType coffee setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     au BufRead *.js set makeprg=jslint\ %
 :augroup END
@@ -646,12 +646,13 @@ let ch_syntax_for_h = 1
 if !has("python")
     echo "Couldn't find Python features, not loading python scripts"
 else
+function LoadVirtualEnv()
 " Add the virtualenv's site-packages to vim path
 py << EOF
 import os.path
 import sys
 import vim
-if 'VIRTUALENV' in os.environ:
+if 'VIRTUAL_ENV' in os.environ:
     project_base_dir = os.environ['VIRTUAL_ENV']
     sys.path.insert(0, project_base_dir)
     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
@@ -662,6 +663,8 @@ EOF
 if filereadable($VIRTUAL_ENV . '/.vimrc')
     source $VIRTUAL_ENV/.vimrc
 endif
+endfunction
+call LoadVirtualEnv()
 
 " ================
 " LoadPythonPath
