@@ -1,2 +1,8 @@
 vim-latex
 vim-latex/*
+vim-ruby
+vim-ruby/*
+vim-rvm
+vim-rvm/*
+python.snippets
+\.gitignore
