@@ -15,4 +15,10 @@ pdjango () {
         DJANGO_SETTINGS_MODULE=$1.settings python
     fi
 }
+vimdjango () {
+   DJANGO_SETTINGS_MODULE=${PWD##*/}.settings vim
+}
+gvimdjango () {
+   DJANGO_SETTINGS_MODULE=${PWD##*/}.settings gvim
+}
 alias pd=pdjango
