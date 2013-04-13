@@ -365,7 +365,7 @@ endfunction
 " =========
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes' : [],
+            \ 'active_filetypes' : ['javascript','coffeescript'],
             \ 'passive_filetypes': ['c', 'python', 'rst'] }
 
 " ==========================================================
