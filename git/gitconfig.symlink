@@ -1,5 +1,5 @@
 [core]
-  excludefiles = ~/.cvsignore
+  excludesfile = ~/.cvsignore
 
 [user]
   name = Jeffrey Tratner
