@@ -57,5 +57,14 @@
   ri = rebase --interactive --autosquash
   # pull upstream changes together
   pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+  # from http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+  # super good
+  assume   = update-index --assume-unchanged
+  unassume = update-index --no-assume-unchanged
+  assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+  # I did not know that ours and theirs existed - nifty
+  ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
+  theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
 [init]
 	templatedir = ~/.git_template
