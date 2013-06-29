@@ -1,5 +1,6 @@
 [core]
   excludesfile = ~/.cvsignore
+  autocrlf = input
 
 [user]
   name = Jeffrey Tratner
@@ -55,8 +56,7 @@
   fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
   squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
   ri = rebase --interactive --autosquash
-  # pull upstream changes together
-  pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+  uprb = "!git fetch upstream && git rebase upstream/master"
   # from http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
   # super good
   assume   = update-index --assume-unchanged
@@ -67,4 +67,4 @@
   ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
   theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
 [init]
-	templatedir = ~/.git_template
+  templatedir = ~/.git_template
