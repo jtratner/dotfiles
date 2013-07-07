@@ -11,6 +11,7 @@
 
 [merge]
   tool = meld
+  conflictstyle = diff3
 
 [color]
   branch = auto
@@ -68,3 +69,5 @@
   theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
 [init]
   templatedir = ~/.git_template
+[push]
+  default = simple
