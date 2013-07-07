@@ -1,6 +1,7 @@
  # Automatically activate Git projects' virtual environments based on the
  # directory name of the project. Virtual environment name can be overridden
  # by placing a .venv file in the project root with a virtualenv name in it
+ # written by Harry Marr @ http://hmarr.com/2010/jan/19/making-virtualenv-play-nice-with-git/
  function workon_cwd {
  # Check that this is a Git repo
  GIT_DIR=`git rev-parse --git-dir 2> /dev/null`
