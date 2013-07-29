@@ -1,5 +1,4 @@
 set nocompatible  " be iMproved
-set nocp
 call pathogen#infect()
 syntax on
 filetype plugin indent on
@@ -8,9 +7,8 @@ call pathogen#helptags()                   "
 source $VIMRUNTIME/macros/matchit.vim      " not on by default for some reason
 
 " Need this for mac
-set shell=bash
+set shell=zsh
 
-"TODO: make a help doc for all this
 " <leader> mapping
 let mapleader=","             " change the leader to be a comma vs slash
 
@@ -443,18 +441,11 @@ map <F3> :Voomtoggle<CR>
 
 let g:pymode_lint_checker = 'pyflakes,pep8'
 let g:pymode_lint_onfly = 0
+let g:pymode_lint_write = 1
 
 " ===========
 " Functions
 " ===========
-
-
-" Note, this will be eliminated in favor of either a plugin or move into main
-" vimrc in the future. Not enough stuff here to necessarily justify separate
-" placement.
-"
-" turn on and off color bar relative to textwidth
-" TODO: fix for when textwidth is zero
 
 " for these two functions, you can give them a number, and that will give it
 " precedence
@@ -548,14 +539,14 @@ command! -nargs=? S call Spaces(<args>)</args>
 " Filetype Settings
 " ===================
 "
-" ==========
+" =========
 " Markdown
-" ==========
+" =========
 
 " .md is markdown, not modula2, sorry modula2!
 augroup markdown
     au!
-    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=markdown
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
     au BufNewFile,BufRead *.md,*.markdown call ChangeFormat(80,0)
 augroup END
 

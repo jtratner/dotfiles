@@ -11,7 +11,6 @@
 
 [merge]
   tool = meld
-  conflictstyle = diff3
 
 [color]
   branch = auto
@@ -47,7 +46,7 @@
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
   us = update-subs
-  undo = reset --soft
+  undo = reset --soft HEAD^
 
   # Show files ignored by git:
   ign = ls-files -o -i --exclude-standard
