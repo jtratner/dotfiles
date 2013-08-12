@@ -173,18 +173,32 @@
 [submodule "vim/vim.symlink/bundle/snipmate-snippets"]
 	path = vim/vim.symlink/bundle/snipmate-snippets
 	url = https://github.com/jtratner/snipmate-snippets
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/html5"]
 	path = vim/vim.symlink/bundle/html5
 	url = git://github.com/othree/html5.vim.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/indent-guides"]
 	path = vim/vim.symlink/bundle/indent-guides
 	url = git://github.com/nathanaelkane/vim-indent-guides.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/jade"]
 	path = vim/vim.symlink/bundle/jade
 	url = git://github.com/digitaltoad/vim-jade.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/vim-flavored-markdown"]
 	path = vim/vim.symlink/bundle/vim-flavored-markdown
 	url = git://github.com/jtratner/vim-flavored-markdown.git
+	ignore=dirty
 [submodule "vim/vim.symlink/bundle/powerline"]
 	path = vim/vim.symlink/bundle/powerline
 	url = git://github.com/Lokaltog/powerline.git
+	ignore=dirty
+[submodule "vim/vim.symlink/bundle/vim-cython"]
+	path = vim/vim.symlink/bundle/vim-cython
+	url = git://github.com/tshirtman/vim-cython.git
+	ignore=dirty
+[submodule "vim/vim.symlink/bundle/vim-bufferline"]
+	path = vim/vim.symlink/bundle/vim-bufferline
+	url = git://github.com/bling/vim-bufferline.git
+	ignore=dirty
