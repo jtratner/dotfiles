@@ -11,6 +11,8 @@
 
 [merge]
   tool = meld
+  conflictstyle = diff3
+
 
 [color]
   branch = auto
@@ -58,7 +60,6 @@
   ri = rebase --interactive --autosquash
   uprb = "!git fetch upstream && git rebase upstream/master"
   # from http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-  # super good
   assume   = update-index --assume-unchanged
   unassume = update-index --no-assume-unchanged
   assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
