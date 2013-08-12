@@ -35,6 +35,7 @@ command! W :w
 map <leader>p "+p
 map <leader>y "+y
 
+let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml', 'rst']
 " Quit window on <leader>q
 nnoremap <leader>q :q<CR>
 "
