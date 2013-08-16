@@ -202,3 +202,6 @@
 	path = vim/vim.symlink/bundle/vim-bufferline
 	url = git://github.com/bling/vim-bufferline.git
 	ignore=dirty
+[submodule "vim/vim.symlink/bundle/emmet-vim"]
+	path = vim/vim.symlink/bundle/emmet-vim
+	url = https://www.github.com/mattn/emmet-vim.git
