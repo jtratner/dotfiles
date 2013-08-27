@@ -1,5 +1,5 @@
-compdef _git-commit gc
-compdef _git-add ga
-compdef _git-branch gb
-compdef _git-diff-files gd
-compdef _git-checkout gco
+compdef _git gc=git-commit
+compdef _git ga=git-add
+compdef _git gb=git-branch
+compdef _git gd=git-diff
+compdef _git gco=git-checkout

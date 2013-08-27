@@ -56,9 +56,7 @@ enable additional features.
 Plugin         Dependencies
 ===========    ==============
 Syntastic      Requires 'compilers' for whatever files you want to check (for example, to check ``.rst`` files you need docutils)
-Hammer         Requires ``github/markup``, ``coderay``, and ``tilt``
 Ack            Requires an installation of ``ack`` (well worth it!)
-Vim-IPython    Requires ``ipython`` to be installed (see IPython section for more)
 ===========    ==============
 
 My dotvim
@@ -77,12 +75,6 @@ New bundles
 * **syntastic** - makes it real easy to check the syntax on any filetype (just
   have to have the parser installed. I have ``docutils`` (rst), ``pyflakes``,
   ``pep8`` (for python) installed at the moment, to name a few).
-
-* **Hammer** ``:Hammer``, converts your current lightweight-markup file to
-  HTML.
-
-* **vim-ipython** - *hands down the best tool to help you code in python* lets
-  you connect to ipython, which is a fabulous suite for
 
 * **VOom** - simple but very useful vim application. Creates a two-pane outline
   window that allows you to browse the structure of your files (or
@@ -163,47 +155,11 @@ Prepacked
 Easiest way: ``sudo apt-get build-dep vim-gnome`` (if you're
 using unity)
 
-* **Mac** : I think you can get MacVim_ which should have everything
+* **Mac** : You can download MacVim_ or use ``homebrew``
 * **Windows** : The ``vim.symlink`` files will be helpful, but note that it has to be under
   ``vimfiles``, not ``.vim``
 
 .. _MacVim : https://github.com/b4winckler/macvim
-
-Compiling Vim (Medium!)
------------------------
-
-0. Handling dependencies - there are a ton and, unfortunately, vim doesn't
-   always tell you that you've managed to get all the ones you want. I used to
-   have an install script[1]_, but it really varies a ton by platform.
-
-   * **Ubuntu (and Linux generally)**  there's a raft of libraries, but the most
-     important to grab are: ``xorg-dev python-dev ruby ruby-dev`` as well as a
-     raft of ncurses libraries.
-   * **Mac**  Check out homebrew_
-
-.. _homebrew : http://mxcl.github.com/homebrew/
-
-1. The easiest way to setup vim and be sure that you have the features you want
-   is to grab the tarball from the vim homepage, and configure it with[2]
-
-::
-
-    ./configure --enable-pythoninterp --enable-rubyinterp --enable-gui --with-features=huge --prefix=$HOME/path/to/directory `
-
-2. Go to your directory where you installed vim and check that you got the right
-   version with
-
-::
-
-    ./vim --version
-
-3. If you did it correctly, you'll get a huge amount of input with ``+`` and ``-``.
-   Most important thing is to check that you had the following:
-
-   * ``+python``
-   * ``+ruby`` (if you want Command-T)
-   * ``+xterm-clipboard`` (if on Linux w/ X11) or another ``+clipboard`` entry
-     -- you need this to be able to copy/paste from the clipboard.
 
 Getting the dotfiles
 ====================
@@ -269,72 +225,3 @@ Install rope, nose and ack (optional virtualenv)
 
     pip install virtualenv virtualenvwrapper
     virtualenvwrapper.sh
-
-
-IPython
-=======
-
-Installing IPython (+ dependencies)
------------------------------------
-
-*Preface* This ought to work:
-
-::
-
-    easy_install ipython[zmq,qtconsole,notebook,test]
-
-It never works for me. You **can** install IPython with ``pip``/``easy_install``, you
-just have to get the dependencies first. Before you do, you might also check out
-the `IPython website`_ and its `guide to installation`_
-
-0. Getting python dependencies (you may already have some or all of these) Note
-    that matplotlib, scipy, and numpy are only required if you want to run pylab;
-    however I highly suggest that you get them because they are very useful and
-    pretty darn cool
-
-::
-
-    pip install nose tornado pygments pyzmq pexpect distribute matplotlib scipy numpy
-
-1. **Getting Qt** This can be more or less of an ordeal, depending on your system.
-    Do yourself a favor: *try to find a precompiled binary first* it will be far
-    easier. Seriously. Otherwise, you'll probably need to get ``SIP``, ``PyQt`` and
-    ``Qt`` online. (TODO: write instructions for this. For now, Google search is
-    your friend.)
-
-2. **Install IPython** Okay, actually this is pretty easy now! Yay!
-
-::
-
-    pip install ipython
-
-3. *Check that it's working* Run IPython's testing suite. Read the output to
-    make sure you aren't missing any libraries.
-
-::
-
-    iptest
-
-4. **If it fails,**
-
-    1. It's okay. Happened to me too.
-    2. Read the output of iptest, see if it gives any info. (google is your
-        friend).
-    3. Check that you have all the dependencies.
-    4. Try uninstalling and reinstalling IPython.
-    5. If it's not fixed by now, try Google, `Stack Overflow`_ or the `IPython website`_
-
-.. _IPython website: http://www.ipython.org
-.. _guide to installation: http://ipython.org/ipython-doc/stable/install/install.html
-.. _Stack Overflow: http://www.stackoverflow.com
-
-
-You have a working setup!
--------------------------
-
-Now you should be able to just run your file and have everything work. Whee!
-
-
-.. [2] The easiest way is to download and install a precompiled version. On Ubuntu, ``vim-gnome`` has most of what you want.
-.. [3] I set up a different home directory and then symlink it to my local bin,
-       that way I can still use the default system editor as needed (say if xwindows
