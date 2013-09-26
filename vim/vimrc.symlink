@@ -19,13 +19,9 @@ nnoremap ; :
 " Centralize backups, swapfiles and undo historu
 set backupdir=~/.dotfiles/vim/vim.symlink/backups//
 set directory=~/.dotfiles/vim/vim.symlink/swaps//
-if exists("&undofile")
-    set undofile
-endif
-if exists("&undodir")
-    " this is especially neat, because it lets you have undo persistence
-    set undodir=$~/.dotfiles/vim/vim.symlink/undo//
-endif
+set undofile
+" this is especially neat, because it lets you have undo persistence
+set undodir=~/.dotfiles/vim/vim.symlink/undo//
 
 " Seriously, guys. It's not like :W is bound to anything anyway.
 command! W :w
@@ -364,7 +360,7 @@ endfunction
 " =========
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes' : ['javascript','coffeescript'],
+            \ 'active_filetypes' : ['javascript','coffeescript', 'go'],
             \ 'passive_filetypes': ['c', 'python', 'rst'] }
 
 " ==========================================================
@@ -440,9 +436,10 @@ map <F3> :Voomtoggle<CR>
 " Python-Mode
 " =============
 
-let g:pymode_lint_checker = 'pyflakes,pep8'
+let g:pymode_lint_checker = 'pyflakes'
 let g:pymode_lint_onfly = 0
 let g:pymode_lint_write = 1
+let g:pymode_lint_hold = 0
 
 " ===========
 " Functions
@@ -572,6 +569,18 @@ augroup makohtml
     autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html.jinja
     autocmd FileType html,xhtml,xml,css,jade setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 augroup END
+
+" ====
+" Go
+" ====
+
+augroup golang
+    au!
+    autocmd FileType go setlocal noexpandtab shiftwidth=2 tabstop=2 softtabstop=2 nolist
+augroup END
+
+" Set up golint
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 
 " =======
 " Latex
