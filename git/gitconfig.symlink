@@ -3,7 +3,7 @@
   autocrlf = input
 
 [user]
-  name = Jeffrey Tratner
+  name = Jeff Tratner
   email = jeffrey.tratner@gmail.com
 
 [github]
