@@ -230,11 +230,11 @@ inoremap # X#
 
 " This is commented out to use ConqueTerm
 " " close preview window automatically when we move around
-" augroup cursor
-"     au!
-"         autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-"         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-" augroup END
+augroup cursor
+    au!
+        autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+augroup END
 
 " make tab completion context sensitive
 let g:SuperTabDefaultCompletionType = "context"
@@ -261,7 +261,7 @@ set laststatus=2            " Always show statusline, even if only 1 window.
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 
 " displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:>-,eol:$,trail:-,precedes:<,extends:>
+set listchars=tab:>-,trail:-,precedes:<,extends:>
 set list
 
 """ Searching and Patterns
@@ -360,9 +360,11 @@ endfunction
 " =========
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes' : ['javascript','coffeescript', 'go'],
-            \ 'passive_filetypes': ['c', 'python', 'rst'] }
+            \ 'active_filetypes' : ['javascript','coffeescript', 'go', 'python'],
+            \ 'passive_filetypes': ['c', 'rst'] }
 
+let g:syntastic_python_checkers = ['pyflakes', 'python', 'pep8']
+let g:syntastic_go_checkers = ['go', 'golint', 'govet']
 " ==========================================================
 " tComment
 " ==========================================================
@@ -555,14 +557,15 @@ augroup END
 " Javascript
 " ============
 "
-:augroup javascript
+augroup javascript
     au!
     " set coffeescript to compile on every save and pop up with resulting
     " code/errors.
     " autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow
     autocmd FileType coffee setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-    au BufRead *.js set makeprg=jslint\ %
-:augroup END
+    autocmd FileType javascript set expandtab shiftwidth=2 tabstop=2 softtabstop=2
+    au BufRead *.js set makeprg=jshint\ %
+augroup END
 " Mako/HTML
 augroup makohtml
     au!
