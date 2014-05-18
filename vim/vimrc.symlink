@@ -402,7 +402,7 @@ map <leader>td <Plug>TaskList
 " pep8
 " ==========================================================
 " Run pep8
-let g:pep8_map='<leader>8'
+" let g:pep8_map='<leader>8'
 
 " Don't let pyflakes use the quickfix window
 let g:pyflakes_use_quickfix = 0
