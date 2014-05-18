@@ -30,8 +30,9 @@ command! W :w
 " Paste from clipboard
 map <leader>p "+p
 map <leader>y "+y
+map <leader>8 u
 
-let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml', 'rst']
+let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml', 'rst', 'js']
 " Quit window on <leader>q
 nnoremap <leader>q :q<CR>
 "
@@ -238,6 +239,8 @@ augroup END
 
 " make tab completion context sensitive
 let g:SuperTabDefaultCompletionType = "context"
+" let g:SuperTabMappingForward = '<c-space>'
+" let g:SuperTabMappingBackward = '<s-c-space>'
 let g:snips_author = "Jeffrey Tratner" "change this to your own name!
 " set ctrlp to default to MRU files
 let g:ctrlp_cmd = "CtrlPMRUFiles"
@@ -261,7 +264,7 @@ set laststatus=2            " Always show statusline, even if only 1 window.
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 
 " displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:>-,trail:-,precedes:<,extends:>
+set listchars=tab:>-,trail:-,eol:$,precedes:<,extends:>,
 set list
 
 """ Searching and Patterns
@@ -360,8 +363,8 @@ endfunction
 " =========
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes' : ['javascript','coffeescript', 'go', 'python'],
-            \ 'passive_filetypes': ['c', 'rst'] }
+            \ 'active_filetypes' : ['javascript','coffeescript', 'go'],
+            \ 'passive_filetypes': ['c', 'rst', 'python'] }
 
 let g:syntastic_python_checkers = ['pyflakes', 'python', 'pep8']
 let g:syntastic_go_checkers = ['go', 'golint', 'govet']
@@ -432,16 +435,21 @@ map <leader>r :RopeRename<CR>
 let g:voom_ft_modes = {'markdown': 'markdown', 'python': 'python', 'rst': 'rest'}
 map <F3> :Voomtoggle<CR>
 
-
+" ==========================================================
+" Snipmate
+" ==========================================================
+" imap <C-t> <Plug>snipMateNextOrTrigger
 "
 " =============
 " Python-Mode
 " =============
 
+let g:pymode_lint_checkers = ['pyflakes', 'pep8']
 let g:pymode_lint_checker = 'pyflakes'
 let g:pymode_lint_onfly = 0
 let g:pymode_lint_write = 1
 let g:pymode_lint_hold = 0
+let g:pymode_lint_cwindow = 0
 
 " ===========
 " Functions
@@ -657,127 +665,145 @@ let c_gnu=1
 let ch_syntax_for_h = 1
 " Python-dependent vim functions
 
-" " if !has("python")
-" if 1
-"     echo "Couldn't find Python features, not loading python scripts"
-" else
-" function LoadVirtualEnv()
-" " Add the virtualenv's site-packages to vim path
-" py << EOF
-" import os.path
-" import sys
-" import vim
-" if 'VIRTUAL_ENV' in os.environ:
-"     project_base_dir = os.environ['VIRTUAL_ENV']
-"     sys.path.insert(0, project_base_dir)
-"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"     execfile(activate_this, dict(__file__=activate_this))
-" EOF
+if !has("python")
+    echo "Couldn't find Python features, not loading python scripts"
+else
+function LoadVirtualEnv()
+" Add the virtualenv's site-packages to vim path
+py << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
 
-" " Load up virtualenv's vimrc if it exists
-" if filereadable($VIRTUAL_ENV . '/.vimrc')
-"     source $VIRTUAL_ENV/.vimrc
-" endif
-" endfunction
-" call LoadVirtualEnv()
+" Load up virtualenv's vimrc if it exists
+if filereadable($VIRTUAL_ENV . '/.vimrc')
+    source $VIRTUAL_ENV/.vimrc
+endif
+endfunction
+call LoadVirtualEnv()
 
-" " ================
-" " LoadPythonPath
-" " ================
-" "
+" ================
+" LoadPythonPath
+" ================
+"
 
-" " autoload function to load and unload python path (thereby enhancing
-" " autocomplete possibilities, etc. Note that this may be unnecessary if you
-" " have other Vim plugins installed. I'm not sure :P)
+" autoload function to load and unload python path (thereby enhancing
+" autocomplete possibilities, etc. Note that this may be unnecessary if you
+" have other Vim plugins installed. I'm not sure :P)
 
 
-" " If you want to autoload the python path any time you open a .py file, you
-" " can do use this function (note that it will not reload the python path every
-" " time, only if it hasn't been loaded already)
+" If you want to autoload the python path any time you open a .py file, you
+" can do use this function (note that it will not reload the python path every
+" time, only if it hasn't been loaded already)
 
-" function! GetPythonPath()
-"     if !exists("g:PythonPathLoaded")
-"         call LoadPythonPath()
-"         return
-"     elseif g:PythonPathLoaded
-"         return
-"     else
-"         call LoadPythonPath()
-"     endif
-" endfunction
+function! GetPythonPath()
+    if !exists("g:PythonPathLoaded")
+        call LoadPythonPath()
+        return
+    elseif g:PythonPathLoaded
+        return
+    else
+        call LoadPythonPath()
+    endif
+endfunction
 
-" " Load Python Path - allows hovering over module name and opening file in vim
-" function! LoadPythonPath()
-" py <<EOF
-" # load PYTHONPATH into vim, this lets you hover over a module name
-" # and type 'gf' (for goto file) and open that file in vim. Useful
-" # and easier than rope for simple tasks
-" import os.path
-" import sys
-" import vim
-" for p in sys.path:
-"     if os.path.isdir(p):
-"         vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
-" EOF
+" Load Python Path - allows hovering over module name and opening file in vim
+function! LoadPythonPath()
+py <<EOF
+# load PYTHONPATH into vim, this lets you hover over a module name
+# and type 'gf' (for goto file) and open that file in vim. Useful
+# and easier than rope for simple tasks
+import os.path
+import sys
+import vim
+for p in sys.path:
+    if os.path.isdir(p):
+        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
+EOF
 
-"     let g:PythonPathLoaded = 1
+    let g:PythonPathLoaded = 1
 
-" endfunction
+endfunction
 
-" "Unfortunately, this also seems to slow down autocomplete, so I only want to
-" "load/unload when *I* choose
-" function! UnloadPythonPath()
+"Unfortunately, this also seems to slow down autocomplete, so I only want to
+"load/unload when *I* choose
+function! UnloadPythonPath()
 
-" py <<EOF
-"     # load PYTHONPATH into vim, this lets you hover over a module name
-"     # and type 'gf' (for goto file) and open that file in vim. Useful
-"     # and easier than rope for simple tasks
-" for p in sys.path:
-"     if os.path.isdir(p):
-"         vim.command(r"set path-=%s" % (p.replace(" ", r"\ ")))
-" EOF
+py <<EOF
+    # load PYTHONPATH into vim, this lets you hover over a module name
+    # and type 'gf' (for goto file) and open that file in vim. Useful
+    # and easier than rope for simple tasks
+for p in sys.path:
+    if os.path.isdir(p):
+        vim.command(r"set path-=%s" % (p.replace(" ", r"\ ")))
+EOF
 
-"     let g:PythonPathLoaded = 0
-" endfunction
+    let g:PythonPathLoaded = 0
+endfunction
 
-" let g:GAEDir="~/google_appengine/"
-" let g:GAEPythonDir="~/google_appengine/lib/"
-" function! LoadGAEPath()
+let g:GAEDir="~/google_appengine/"
+let g:GAEPythonDir="~/google_appengine/lib/"
+function! LoadGAEPath()
 
-" py <<EOF
-" # load GoogleAppEngine into vim, this lets you hover over a module name
-" # and type 'gf' (for goto file) and open that file in vim. Useful
-" # and easier than rope for simple tasks
-" import os.path
-" import sys
-" import vim
-" gae_dir = "/home/jtratner/google_appengine/lib"
-" filelist = map(lambda x: os.path.join(gae_dir, x), os.listdir(gae_dir))
+py <<EOF
+# load GoogleAppEngine into vim, this lets you hover over a module name
+# and type 'gf' (for goto file) and open that file in vim. Useful
+# and easier than rope for simple tasks
+import os.path
+import sys
+import vim
+gae_dir = "/Users/jtratner/google-cloud-sdk/platform/google_appengine/"
+filelist = map(lambda x: os.path.join(gae_dir, x), os.listdir(gae_dir))
 
-" for p in filelist:
-"     if os.path.isdir(p):
-"         vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
-" EOF
+DIR_PATH = os.path.abspath(os.environ['GAE_SDK_ROOT'])
+EXTRA_PATHS = [
+    DIR_PATH,
+    os.path.join(DIR_PATH, 'lib', 'antlr3'),
+    os.path.join(DIR_PATH, 'lib', 'django-0.96'),
+    os.path.join(DIR_PATH, 'lib', 'fancy_urllib'),
+    os.path.join(DIR_PATH, 'lib', 'ipaddr'),
+    os.path.join(DIR_PATH, 'lib', 'jinja2-2.6'),
+    os.path.join(DIR_PATH, 'lib', 'protorpc-1.0'),
+    os.path.join(DIR_PATH, 'lib', 'PyAMF'),
+    os.path.join(DIR_PATH, 'lib', 'markupsafe'),
+    os.path.join(DIR_PATH, 'lib', 'webob_0_9'),
+    os.path.join(DIR_PATH, 'lib', 'webapp2-2.5.2'),
+    os.path.join(DIR_PATH, 'lib', 'yaml', 'lib'),
+    os.path.join(DIR_PATH, 'lib', 'simplejson'),
+]
 
-"     let g:GAEPathLoaded = 1
-" endfunction
-" function! UnLoadGAEPath()
+sys.path = EXTRA_PATHS[:] + sys.path
+for p in EXTRA_PATHS:
+    if os.path.isdir(p):
+        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
+EOF
 
-" py <<EOF
-" # unload GAppEnginePATH into vim, this lets you hover over a module name
-" # and type 'gf' (for goto file) and open that file in vim. Useful
-" # and easier than rope for simple tasks
-" import os.path
-" import sys
-" import vim
-" gae_dir = "/home/jtratner/google_appengine/lib"
-" filelist = map(lambda x: os.path.join(gae_dir, x), os.listdir(gae_dir))
+    let g:GAEPathLoaded = 1
+endfunction
+function! UnLoadGAEPath()
 
-" for p in filelist:
-"     if os.path.isdir(p):
-"         vim.command(r"set path-=%s" % (p.replace(" ", r"\ ")))
-" EOF
+py <<EOF
+# unload GAppEnginePATH into vim, this lets you hover over a module name
+# and type 'gf' (for goto file) and open that file in vim. Useful
+# and easier than rope for simple tasks
+import os.path
+import sys
+import vim
+gae_dir = "/home/jtratner/google_appengine/lib"
+filelist = map(lambda x: os.path.join(gae_dir, x), os.listdir(gae_dir))
 
-"     let g:GAEPathLoaded = 1
-" endfunction
-" endif
+for p in filelist:
+    if os.path.isdir(p):
+        vim.command(r"set path-=%s" % (p.replace(" ", r"\ ")))
+EOF
+
+    let g:GAEPathLoaded = 1
+endfunction
+endif
+call LoadGAEPath()
