@@ -647,6 +647,11 @@ augroup END
 " Fix the awful awful default pink color for completions
 highlight Pmenu ctermbg=238 gui=bold
 
+" Mouse support!
+set ttyfast
+set mouse=a
+set ttymouse=xterm2
+
 " New functions:
 "
 command! -range=% AddFoldMarkersToFxns :<line1>,<line2>s/^\(function!\s*[^{]*\)/\1 {{{2
