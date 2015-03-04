@@ -26,6 +26,12 @@ function link_file {
     ln -sf ${source} ${target}
 }
 
+function setup_vim_swaps {
+    mkdir -p $HOME/.vim-cache/backups
+    mkdir -p $HOME/.vim-cache/swaps
+    mkdir -p $HOME/.vim-cache/undo
+}
+
 # find symlinks in subdirectories
 for i in *
     do
@@ -46,6 +52,9 @@ for i in *.symlink
         link_file $i
     fi
 done
+
+setup_vim_swaps
+
 echo "Updating submodules"
 
 git submodule sync
