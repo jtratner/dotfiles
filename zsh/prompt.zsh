@@ -58,7 +58,7 @@ host_name(){
 
 export PROMPT=$'$(user_name) on $(host_name) in $(directory_name)$(git_dirty)$(need_push)\n›› '
 set_prompt () {
-  export RPROMPT="%{$fg_bold[cyan]%}$(TZ='America/New_York' date +'%l:%M %b%e')%{$reset_color%}"
+  export RPROMPT="%{$fg_bold[cyan]%}$(date +'%l:%M %b%e')%{$reset_color%}"
 }
 
 virtualenv_prompt(){
