@@ -6,14 +6,6 @@
 	path = vim/vim.symlink/bundle/ctrlp
 	url = git://github.com/kien/ctrlp.vim.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/jquery"]
-	path = vim/vim.symlink/bundle/jquery
-	url = git://github.com/itspriddle/vim-jquery.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/hammer"]
-	path = vim/vim.symlink/bundle/hammer
-	url = git://github.com/matthias-guenther/hammer.vim.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/repeat"]
 	path = vim/vim.symlink/bundle/repeat
 	url = git://github.com/tpope/vim-repeat.git
@@ -29,10 +21,6 @@
 [submodule "vim/vim.symlink/bundle/tagbar"]
 	path = vim/vim.symlink/bundle/tagbar
 	url = git://github.com/majutsushi/tagbar.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/taglist"]
-	path = vim/vim.symlink/bundle/taglist
-	url = git://github.com/vim-scripts/taglist.vim.git
 	ignore=dirty
 [submodule "vim/vim.symlink/bundle/tabular"]
 	path = vim/vim.symlink/bundle/tabular
@@ -50,18 +38,6 @@
 	path = vim/vim.symlink/bundle/tcomment
 	url = git://github.com/tomtom/tcomment_vim.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/commentary"]
-	path = vim/vim.symlink/bundle/commentary
-	url = git://github.com/tpope/vim-commentary.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/TaskList"]
-	path = vim/vim.symlink/bundle/TaskList
-	url = git://github.com/vim-scripts/TaskList.vim.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/ack"]
-	path = vim/vim.symlink/bundle/ack
-	url = git://github.com/mileszs/ack.vim.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/fugitive"]
 	path = vim/vim.symlink/bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
@@ -74,18 +50,6 @@
 	path = vim/vim.symlink/bundle/gitv
 	url = git://github.com/gregsexton/gitv.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/gist"]
-	path = vim/vim.symlink/bundle/gist
-	url = git://github.com/mattn/gist-vim.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/webapi"]
-	path = vim/vim.symlink/bundle/webapi
-	url = git://github.com/mattn/webapi-vim.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/snipmate"]
-	path = vim/vim.symlink/bundle/snipmate
-	url = git://github.com/garbas/vim-snipmate.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/addon-mw-utils"]
 	path = vim/vim.symlink/bundle/addon-mw-utils
 	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
@@ -97,10 +61,6 @@
 [submodule "vim/vim.symlink/bundle/supertab"]
 	path = vim/vim.symlink/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/AutoComplPop"]
-	path = vim/vim.symlink/bundle/AutoComplPop
-	url = git://github.com/vim-scripts/AutoComplPop.git
 	ignore=dirty
 [submodule "vim/vim.symlink/bundle/flake8"]
 	path = vim/vim.symlink/bundle/flake8
@@ -117,18 +77,6 @@
 [submodule "vim/vim.symlink/bundle/rope"]
 	path = vim/vim.symlink/bundle/rope
 	url = git://github.com/sontek/rope-vim.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/python"]
-	path = vim/vim.symlink/bundle/python
-	url = git://github.com/sorin-ionescu/python.vim.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/javascript"]
-	path = vim/vim.symlink/bundle/javascript
-	url = git://github.com/pangloss/vim-javascript.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/octave.vim"]
-	path = vim/vim.symlink/bundle/octave.vim
-	url = git://github.com/vim-scripts/octave.vim--.git
 	ignore=dirty
 [submodule "vim/vim.symlink/bundle/syntastic"]
 	path = vim/vim.symlink/bundle/syntastic
@@ -150,10 +98,6 @@
 	path = vim/vim.symlink/bundle/vim-coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/rails"]
-	path = vim/vim.symlink/bundle/rails
-	url = https://github.com/tpope/vim-rails.git
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/nerdtree"]
 	path = vim/vim.symlink/bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree.git
@@ -162,29 +106,9 @@
 	path = vim/vim.symlink/bundle/pep8
 	url = git://github.com/vim-scripts/pep8.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/endwise"]
-	path = vim/vim.symlink/bundle/endwise
-	url = git://github.com/tpope/vim-endwise.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/scss-syntax"]
-	path = vim/vim.symlink/bundle/scss-syntax
-	url = git://github.com/cakebaker/scss-syntax.vim.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/snipmate-snippets"]
-	path = vim/vim.symlink/bundle/snipmate-snippets
-	url = https://github.com/jtratner/snipmate-snippets
-	ignore=dirty
 [submodule "vim/vim.symlink/bundle/html5"]
 	path = vim/vim.symlink/bundle/html5
 	url = git://github.com/othree/html5.vim.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/indent-guides"]
-	path = vim/vim.symlink/bundle/indent-guides
-	url = git://github.com/nathanaelkane/vim-indent-guides.git
-	ignore=dirty
-[submodule "vim/vim.symlink/bundle/jade"]
-	path = vim/vim.symlink/bundle/jade
-	url = git://github.com/digitaltoad/vim-jade.git
 	ignore=dirty
 [submodule "vim/vim.symlink/bundle/vim-flavored-markdown"]
 	path = vim/vim.symlink/bundle/vim-flavored-markdown
@@ -198,6 +122,6 @@
 	path = vim/vim.symlink/bundle/vim-bufferline
 	url = git://github.com/bling/vim-bufferline.git
 	ignore=dirty
-[submodule "vim/vim.symlink/bundle/emmet-vim"]
-	path = vim/vim.symlink/bundle/emmet-vim
-	url = https://www.github.com/mattn/emmet-vim.git
+[submodule "vim/vim.symlink/bundle/vim-commentary"]
+	path = vim/vim.symlink/bundle/vim-commentary
+	url = https://github.com/tpope/vim-commentary
