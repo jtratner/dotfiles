@@ -1,5 +1,0 @@
-https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | bash
-source /Users/xdissent/.venvburrito/startup.sh
-mkvirtualenv jekyll-rst
-pip install docutils pygments
-# now go read github.com/xdissent for more
