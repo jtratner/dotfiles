@@ -46,7 +46,7 @@ function is_gitroot() {
 
 # first check if it's a valid path
 if [ ! -d "$1" ]; then
-  echo "Usage: git submodule rm <path>"
+  echo "Path does not exist - Usage: git submodule rm <path>"
   exit
 fi
 

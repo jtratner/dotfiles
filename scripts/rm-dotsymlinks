@@ -125,6 +125,8 @@ This script must be called as:
 Error message: 
 %r"""  % (sys.argv[0], msg)
         sys.exit(msg)
+        print msg
+        raise
     sys.exit(output)
 
 
