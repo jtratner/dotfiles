@@ -147,12 +147,7 @@ fi
 #     source $venwrap
 # fi
 
-# vim=`type -P vim`
-# if [ "$vim" == "" ]; then
-#     vim="gvim -v"
-# fi
-
-# alias vim="$vim"
+vim=`type -P vim`
 
 # osx vim
 if [ -x "/Applications/MacVim.app/Contents/MacOS/Vim" ]; then
