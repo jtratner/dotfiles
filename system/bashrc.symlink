@@ -140,17 +140,19 @@ fi
   }
 } >/dev/null 2>/dev/null
 
-venwrap=`type -P virtualenvwrapper.sh`
-if [ "$venwrap" != "" ]; then
-    source $venwrap
-fi
+# uncomment this if you want virtualenvwrapper - I find that it ends up
+# causing issues when on a slow host
+# venwrap=`type -P virtualenvwrapper.sh`
+# if [ "$venwrap" != "" ]; then
+#     source $venwrap
+# fi
 
-vim=`type -P vim`
-if [ "$vim" == "" ]; then
-    vim="gvim -v"
-fi
+# vim=`type -P vim`
+# if [ "$vim" == "" ]; then
+#     vim="gvim -v"
+# fi
 
-alias vim="$vim"
+# alias vim="$vim"
 
 # osx vim
 if [ -x "/Applications/MacVim.app/Contents/MacOS/Vim" ]; then
@@ -164,18 +166,9 @@ parse_git_branch ()
 {
   git name-rev HEAD 2> /dev/null | sed 's#HEAD\ \(.*\)#(git::\1)#'
 }
-parse_svn_branch() {
-  parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | awk -F / '{print "(svn::"$1 "/" $2 ")"}'
-}
-parse_svn_url() {
-  svn info 2>/dev/null | sed -ne 's#^URL: ##p'
-}
-parse_svn_repository_root() {
-  svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
-}
 set -o emacs
 export EDITOR="$vim"
 export GIT_EDITOR="$vim"
 
 # Add git and svn branch names
-export PS1="$PS1\$(parse_git_branch)\$(parse_svn_branch) "
+export PS1="$PS1\$(parse_git_branch)"

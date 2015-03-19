@@ -29,11 +29,12 @@ if [[ -a ~/.localrc ]]
 then
     source ~/.localrc
 fi
-# source virtualenvwrapper *first*
-if [[ -a /usr/local/bin/virtualenvwrapper.sh ]]
-then
-    source /usr/local/bin/virtualenvwrapper.sh
-fi
+# skipping virtualenvwrapper for now, because it adds a lot of complexity
+# # source virtualenvwrapper *first*
+# if [[ -a /usr/local/bin/virtualenvwrapper.sh ]]
+# then
+#     source /usr/local/bin/virtualenvwrapper.sh
+# fi
 
 # source the .bashrc with this, which converts the issue-laden-thangs to sweet, compatible zsh-functions!
 #bash_source() {
