@@ -125,3 +125,6 @@
 [submodule "vim/vim.symlink/bundle/vim-commentary"]
 	path = vim/vim.symlink/bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary
+[submodule "vim/vim.symlink/bundle/vim-puppet"]
+	path = vim/vim.symlink/bundle/vim-puppet
+	url = git://github.com/rodjek/vim-puppet.git
