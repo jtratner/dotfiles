@@ -16,7 +16,7 @@ let mapleader=","             " change the leader to be a comma vs slash
 " Faster! Smarter! Woo!
 nnoremap ; :
 
-" Centralize backups, swapfiles and undo historu
+" Centralize backups, swapfiles and undo history
 set backupdir=~/.vim-cache/backups/
 set directory=~/.vim-cache/swaps/
 set undofile
