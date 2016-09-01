@@ -264,7 +264,7 @@ set laststatus=2            " Always show statusline, even if only 1 window.
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 
 " displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:>-,trail:-,eol:$,precedes:<,extends:>,
+set listchars=tab:>-,trail:-,precedes:<,extends:>,
 set list
 
 """ Searching and Patterns
@@ -363,8 +363,8 @@ endfunction
 " =========
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes' : ['javascript','coffeescript', 'go'],
-            \ 'passive_filetypes': ['c', 'rst', 'python'] }
+            \ 'active_filetypes' : ['javascript','coffeescript', 'go', 'python'],
+            \ 'passive_filetypes': ['c', 'rst'] }
 
 let g:syntastic_python_checkers = ['pyflakes', 'python', 'pep8']
 let g:syntastic_go_checkers = ['go', 'golint', 'govet']
@@ -558,6 +558,11 @@ augroup markdown
     au BufNewFile,BufRead *.md,*.markdown call ChangeFormat(80,0)
 augroup END
 
+augroup snakemake
+    au!
+    au BufNewFile,BufRead *.snake,Snakefile setlocal filetype=snakemake
+augroup END
+
 " note: autocommands are separated into groups so that, even if you source
 " your vimrc multiple times, you won't end up setting far too many
 " autocommands
@@ -625,6 +630,11 @@ augroup ruby
     au BufRead *.rb,*.erb,*.scss,*.coffee call Pl#Load()
 augroup END
 
+augroup vagrant
+  au!
+  au BufNewFile,BufRead, Vagrantfile set filetype=ruby
+augroup END
+
 " Rails
 augroup rails
   au!
@@ -659,6 +669,9 @@ function! CalcSpaces(lnum)
     let spaces = match(getline(a:lnum), "[^ ]")
     return (spaces / &shiftwidth)
 endfunction
+
+" For tmux, makes entire screen show background
+set t_ut=
 
 " ==================
 " C and *.h syntax
