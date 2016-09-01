@@ -164,6 +164,9 @@ parse_git_branch ()
 set -o emacs
 export EDITOR="$vim"
 export GIT_EDITOR="$vim"
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
 
 # Add git and svn branch names
 export PS1="$PS1\$(parse_git_branch)"
