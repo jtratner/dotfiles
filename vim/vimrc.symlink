@@ -650,6 +650,8 @@ augroup python
     au FileType python setlocal textwidth=79
     au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
     au FileType python set fo+=roc
+    " make 'gd' really go to local definition
+    au BufRead *.py nmap gd :let varname = '\<<C-R><C-W>\>'<CR>?\<def\><CR>/<C-R>=varname<CR><CR>
     " au FileType python call LoadPythonPath()
     " TODO: put LoadPythonPath into here instead of in vimrc
 augroup END
