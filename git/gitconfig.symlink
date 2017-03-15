@@ -48,6 +48,7 @@
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
   pb = !git push origin $(git rev-parse --abbrev-ref HEAD)
+  su = !git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
   us = update-subs
   undo = reset --soft HEAD^
 
