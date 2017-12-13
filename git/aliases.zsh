@@ -12,15 +12,19 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C
 alias gp='git push'
 alias gd='git diff'
 alias gc='git commit'
-alias gcm='git commit -m'
 alias gca='git commit --amend -C HEAD'
 alias ga="git add -p"
-alias gca='git commit -a'
 alias gco='git checkout'
 alias gb='git branch'
 alias gs='git status -sb'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias grc="git rebase --continue"
+alias gpb="git pb"
+
+gcm() {
+    ARGS="$@"
+    git commit -m "$ARGS"
+}
 
 
 # cd to the current git or hg repo root

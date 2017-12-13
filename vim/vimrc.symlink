@@ -195,7 +195,7 @@ set wildignore+=*.o,*.obj,.git,*.pyc
 set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
 
-set grepprg=ack         " replace the default grep program with ack
+"set grepprg=ack         " replace the default grep program with ack
 
 """ Insert completion
 " don't select first item, follow typing in autocomplete
@@ -363,11 +363,11 @@ endfunction
 " =========
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes' : ['javascript','coffeescript', 'go', 'python'],
-            \ 'passive_filetypes': ['c', 'rst'] }
+            \ 'active_filetypes' : ['javascript','coffeescript'],
+            \ 'passive_filetypes': ['c', 'rst', 'python', 'go'] }
 
 let g:syntastic_python_checkers = ['pyflakes', 'python', 'pep8']
-let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 " ==========================================================
 " tComment
 " ==========================================================
@@ -595,8 +595,8 @@ augroup golang
     autocmd FileType go setlocal noexpandtab shiftwidth=2 tabstop=2 softtabstop=2 nolist
 augroup END
 
-" Set up golint
-set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+" " Set up golint
+" set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 
 " =======
 " Latex
@@ -647,7 +647,7 @@ augroup python
     "au BufRead *.py compiler nose
     au FileType python set omnifunc=pythoncomplete#Complete
     au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-    au FileType python setlocal textwidth=79
+    au FileType python setlocal textwidth=99
     au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
     au FileType python set fo+=roc
     " make 'gd' really go to local definition
@@ -662,7 +662,9 @@ highlight Pmenu ctermbg=238 gui=bold
 " Mouse support!
 set ttyfast
 set mouse=a
-set ttymouse=xterm2
+if !has("nvim")
+  set ttymouse=xterm2
+end
 
 " New functions:
 "
@@ -671,9 +673,6 @@ function! CalcSpaces(lnum)
     let spaces = match(getline(a:lnum), "[^ ]")
     return (spaces / &shiftwidth)
 endfunction
-
-" For tmux, makes entire screen show background
-set t_ut=
 
 " ==================
 " C and *.h syntax
@@ -686,7 +685,7 @@ let ch_syntax_for_h = 1
 " Python-dependent vim functions
 
 if !has("python")
-    echo "Couldn't find Python features, not loading python scripts"
+    " echo "Couldn't find Python features, not loading python scripts"
 else
 function LoadVirtualEnv()
 " Add the virtualenv's site-packages to vim path
@@ -824,5 +823,7 @@ EOF
 
     let g:GAEPathLoaded = 1
 endfunction
-endif
 call LoadGAEPath()
+endif
+
+" set clipboard=unnamed
