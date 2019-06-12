@@ -69,7 +69,12 @@
   # I did not know that ours and theirs existed - nifty
   ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
   theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+  # https://coderwall.com/p/euwpig/a-better-git-log
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
 [init]
   templatedir = ~/.git_template
 [push]
     default=nothing
+[grep]
+	lineNumber = true
