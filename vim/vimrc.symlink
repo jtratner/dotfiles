@@ -560,9 +560,9 @@ augroup markdown
     au BufNewFile,BufRead *.md,*.markdown call ChangeFormat(80,0)
 augroup END
 
-augroup snakemake
-    au!
-    au BufNewFile,BufRead *.snake,Snakefile setlocal filetype=snakemake
+augroup yaml
+  au!
+  au BufNewFile,BufRead *.yml,*.yaml setlocal sw=2
 augroup END
 
 " note: autocommands are separated into groups so that, even if you source
@@ -632,28 +632,25 @@ augroup ruby
     au BufRead *.rb,*.erb,*.scss,*.coffee call Pl#Load()
 augroup END
 
-augroup vagrant
-  au!
-  au BufNewFile,BufRead, Vagrantfile set filetype=ruby
-augroup END
-
 " Rails
 augroup rails
   au!
   au User Rails Rnavcommand routes config -glob=*.* -suffix= -default=routes.rb
   au User Rails Rnavcommand admin app/admin -glob=*.* -suffix=.rb -default=model()
 augroup END
+augroup snakemake
+  au!
+  au BufRead *.smk,Snakefile,Snakefile.* set ft=snakemake
+augroup END
 " Python
 augroup python
     au!
     "au BufRead *.py compiler nose
-    au FileType python set omnifunc=pythoncomplete#Complete
+    " au FileType python set omnifunc=pythoncomplete#Complete
     au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     au FileType python setlocal textwidth=99
     au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
     au FileType python set fo+=roc
-    " make 'gd' really go to local definition
-    au BufRead *.py nmap gd :let varname = '\<<C-R><C-W>\>'<CR>?\<def\><CR>/<C-R>=varname<CR><CR>
     " au FileType python call LoadPythonPath()
     " TODO: put LoadPythonPath into here instead of in vimrc
 augroup END
@@ -829,3 +826,4 @@ call LoadGAEPath()
 endif
 
 " set clipboard=unnamed
+let g:black_line_length=99
