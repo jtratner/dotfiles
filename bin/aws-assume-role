@@ -1,0 +1,11 @@
+#!/bin/bash
+# Use this to temporarily assume a role, setting environment variables for boto.
+# Usage: eval "$(aws-assume-role arn:aws:iam::<ACCOUNT ID>:role/<NAME>)"
+ARN=$1
+details=$(aws sts assume-role --role-arn ${ARN} --role-session-name whatever)
+echo "${details}" | jq -r '.Credentials | "
+export AWS_ACCESS_KEY_ID=\"\(.AccessKeyId)\"
+export AWS_SECRET_ACCESS_KEY=\"\(.SecretAccessKey)\"
+export AWS_SESSION_TOKEN=\"\(.SessionToken)\""'
+
+
