@@ -1,0 +1,47 @@
+#!/bin/bash -e
+
+# Utility script which attempts to build and cache wheels for packages installed
+# by pip. This can drastically reduce the time to re-install dependencies later,
+# especially in cases where packages compile native extensions. This requires a
+# pip configuration file containing something like the following, replacing
+# `$PIP_DIR` with `$HOME/.pip` or `/var/pip` as appropriate.
+
+# [global]
+# download-cache = $PIP_DIR/download_cache
+# find-links = $PIP_DIR/wheelhouse
+# index-url = https://pypi.counsyl.com/counsyl/prod/
+# use-wheel = true
+#
+# [wheel]
+# wheel-dir = $PIP_DIR/wheelhouse
+
+
+if [[ -z $1 ]]; then
+    echo "Must provide pip arguments" >&2
+    exit 1
+fi
+
+if ! which pip > /dev/null; then
+    echo "Python 'pip' command is not installed!" >&2
+    exit 1
+fi
+
+if ! pip list | grep '^wheel ' > /dev/null; then
+    pip install wheel
+fi
+
+INSTALL_OPTS="--no-deps $@"
+WHEEL_INSTALL_OPTS=${INSTALL_OPTS//--ignore-installed/}
+
+LOCAL_OPTS="--no-index $INSTALL_OPTS"
+WHEEL_LOCAL_OPTS=${LOCAL_OPTS//--ignore-installed/}
+
+# First, try to install packages from existing wheels.
+if ! pip install $LOCAL_OPTS &> /dev/null
+then
+    # Try to install the wheels locally.
+    pip wheel $WHEEL_LOCAL_OPTS &> /dev/null || pip wheel $WHEEL_INSTALL_OPTS || true
+
+    # Try to re-install from the new wheel.
+    pip install $LOCAL_OPTS
+fi

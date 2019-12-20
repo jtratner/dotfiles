@@ -6,17 +6,27 @@ call pathogen#infect()                     " Only way to get the helptags to ins
 call pathogen#helptags()                   "
 source $VIMRUNTIME/macros/matchit.vim      " not on by default for some reason
 
-" Need this for mac
-set shell=zsh
+" " Need this for mac
+" set shell=zsh
 
 " <leader> mapping
 let mapleader=","             " change the leader to be a comma vs slash
+
+let g:ale_fixers = {
+            \    'python': [
+            \        'add_blank_lines_for_python_control_statements',
+            \        'yapf',
+            \        'remove_trailing_lines',
+            \        'trim_whitespace',
+            \        'isort'
+            \    ]
+            \}
 
 " map semicolon to ':' so you don't have to press 'shift-;' for each command.
 " Faster! Smarter! Woo!
 nnoremap ; :
 
-" Centralize backups, swapfiles and undo history
+" Centralize backups, swapfiles and undo historu
 set backupdir=~/.vim-cache/backups/
 set directory=~/.vim-cache/swaps/
 set undofile
@@ -199,11 +209,11 @@ set wildignore+=*.egg-info/**
 
 """ Insert completion
 " don't select first item, follow typing in autocomplete
-set completeopt=menuone,longest,preview
+" set completeopt=menuone,longest,preview
 set pumheight=6             " Keep a small completion window
 
 
-let g:acp_completeoptPreview=1
+" let g:acp_completeoptPreview=1
 
 """ Moving Around/Editing
 set cursorline              " have a line indicate the cursor location
@@ -239,6 +249,7 @@ augroup END
 
 " make tab completion context sensitive
 let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 " let g:SuperTabMappingForward = '<c-space>'
 " let g:SuperTabMappingBackward = '<s-c-space>'
 let g:snips_author = "Jeffrey Tratner" "change this to your own name!
@@ -827,3 +838,4 @@ endif
 
 " set clipboard=unnamed
 let g:black_line_length=99
+set rtp+=/usr/local/opt/fzf

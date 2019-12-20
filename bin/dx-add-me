@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+# Usage: dx-add-me someproject CONTRIBUTE
+# Used to invite yourself to a project at a particular level
+# (even if you aren't part of porject
+import dxpy
+import defopt
+import sys
+
+ORDERED_LEVELS = [
+    "VIEW", "UPLOAD", "CONTRIBUTE", "ADMINISTER"
+]
+
+def main():
+    defopt.run(invite_self_with_admin)
+
+
+def invite_self_with_admin(project: str, level: str="VIEW", *,
+                           exact: bool = False):
+    """Invite yourself with admin credentials
+
+    Args:
+        project: project ID to set
+        level: what level to set
+        exact: if True, set permissions to _exactly_ that level, rather than allowing higher.
+    """
+    level_idx = ORDERED_LEVELS.index(level)
+    my_user_id = dxpy.whoami()
+    should_invite = True
+    existing_level = None
+    try:
+        dxpy.verify_string_dxid(project, 'project')
+    except Exception:
+        project = dxpy.search.find_one_project(project)['id']
+    try:
+        existing_level = dxpy.api.project_describe(project, {"level": True})["level"]
+    except Exception:
+        print(f"Looks like I'm not a member of {project}", file=sys.stderr)
+    if (
+        not existing_level or
+        ORDERED_LEVELS.index(existing_level) < level_idx
+    ):
+        resp = dxpy.api.project_invite(project, {"invitee": my_user_id, "level": level,
+            "suppressEmailNotifications": True})
+        print(f"Invited {my_user_id} to {project}: {existing_level} => {level} ({resp.get('state')})")
+    elif exact and existing_level != level:
+        resp = dxpy.api.project_decrease_permissions(project, {my_user_id: level})
+        print(f"Decreased {my_user_id} in {project}: {existing_level} => {level}")
+    else:
+        print(f"{project}: No change to existing level ({existing_level}) needed", file=sys.stderr)
+
+
+if __name__ == '__main__':
+    main()
