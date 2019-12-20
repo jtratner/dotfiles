@@ -1,0 +1,4 @@
+#!/bin/bash
+set -o nounset -o pipefail -e
+JOB_ID=$(dx describe $1 --json | jq -r .createdBy.job)
+dx describe $JOB_ID --json | jq -r .rootExecution

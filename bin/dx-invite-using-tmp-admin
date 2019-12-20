@@ -1,0 +1,14 @@
+#!/bin/bash
+# Usage: dx-tmp-admin-invite someuser someproject CONTRIBUTE
+# Used to temporarily invite and then uninvite yourself from a project.
+set -e
+USER_TO_INVITE=$1
+PROJECT=$2
+LEVEL=$3
+set -o nounset
+set -x
+dx invite "$(dx whoami --id)" "${PROJECT}" ADMINISTER --no-email
+dx invite "${USER_TO_INVITE}" "${PROJECT}" "${LEVEL}" --no-email
+dx uninvite "$(dx whoami --id)" "${PROJECT}"
+
+
