@@ -837,5 +837,5 @@ call LoadGAEPath()
 endif
 
 " set clipboard=unnamed
-let g:black_line_length=99
+let g:black_linelength=99
 set rtp+=/usr/local/opt/fzf

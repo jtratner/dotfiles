@@ -68,3 +68,4 @@ Thumbs.db
 *.noseids
 .ipynb_checkpoints
 .env
+.git-old
