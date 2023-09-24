@@ -45,3 +45,4 @@ pip-log.txt
 #submodule files I need to remove
 #symlinks
 _oh_my_zsh
+config/config.symlink/*
