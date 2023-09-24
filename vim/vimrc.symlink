@@ -715,7 +715,9 @@ if filereadable($VIRTUAL_ENV . '/.vimrc')
     source $VIRTUAL_ENV/.vimrc
 endif
 endfunction
+if !has("nvim")
 call LoadVirtualEnv()
+endif
 
 " ================
 " LoadPythonPath
@@ -776,64 +778,6 @@ EOF
     let g:PythonPathLoaded = 0
 endfunction
 
-function! LoadGAEPath()
-
-py <<EOF
-# load GoogleAppEngine into vim, this lets you hover over a module name
-# and type 'gf' (for goto file) and open that file in vim. Useful
-# and easier than rope for simple tasks
-import os.path
-import sys
-import vim
-# only set these up when there's actually this environment variable set,
-# otherwise just be silent
-SDK_ROOT = os.environ.get('GAE_SDK_ROOT')
-if SDK_ROOT:
-    DIR_PATH = os.path.abspath(SDK_ROOT)
-    EXTRA_PATHS = [
-        DIR_PATH,
-        os.path.join(DIR_PATH, 'lib', 'antlr3'),
-        os.path.join(DIR_PATH, 'lib', 'django-0.96'),
-        os.path.join(DIR_PATH, 'lib', 'fancy_urllib'),
-        os.path.join(DIR_PATH, 'lib', 'ipaddr'),
-        os.path.join(DIR_PATH, 'lib', 'jinja2-2.6'),
-        os.path.join(DIR_PATH, 'lib', 'protorpc-1.0'),
-        os.path.join(DIR_PATH, 'lib', 'PyAMF'),
-        os.path.join(DIR_PATH, 'lib', 'markupsafe'),
-        os.path.join(DIR_PATH, 'lib', 'webob_0_9'),
-        os.path.join(DIR_PATH, 'lib', 'webapp2-2.5.2'),
-        os.path.join(DIR_PATH, 'lib', 'yaml', 'lib'),
-        os.path.join(DIR_PATH, 'lib', 'simplejson'),
-    ]
-
-    sys.path = EXTRA_PATHS[:] + sys.path
-    for p in EXTRA_PATHS:
-        if os.path.isdir(p):
-            vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
-EOF
-
-    let g:GAEPathLoaded = 1
-endfunction
-function! UnLoadGAEPath()
-
-py <<EOF
-# unload GAppEnginePATH into vim, this lets you hover over a module name
-# and type 'gf' (for goto file) and open that file in vim. Useful
-# and easier than rope for simple tasks
-import os.path
-import sys
-import vim
-gae_dir = "/home/jtratner/google_appengine/lib"
-filelist = map(lambda x: os.path.join(gae_dir, x), os.listdir(gae_dir))
-
-for p in filelist:
-    if os.path.isdir(p):
-        vim.command(r"set path-=%s" % (p.replace(" ", r"\ ")))
-EOF
-
-    let g:GAEPathLoaded = 1
-endfunction
-call LoadGAEPath()
 endif
 
 " set clipboard=unnamed
