@@ -20,7 +20,13 @@ function link_file {
     target="${HOME}/.${base/\.symlink/}"
 
     if [ -e "${target}" ]; then
-        backup_rename "${target##*/}.bak"
+        current_pointer="$(readlink -f ${target})"
+        if [ ${current_pointer} = ${source} ]; then
+            echo "Already symlinked: ${target}"
+            return 0
+        else
+            backup_rename "${target##*/}.bak"
+        fi
 
     fi
     ln -sf ${source} ${target}
