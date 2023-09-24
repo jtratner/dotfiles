@@ -11,7 +11,8 @@ the_silver_searcher `# ag` \
 fzf `# fuzzy search` \
 xsv \
 neovim \
-pyenv `# python environment installer` \
+pyenv  `# python environment installer` \
+pyenv-virtualenv `# simpler virtualenv management` \
 iterm2
-$(brew --prefix)/opt/fzf/install
+# $(brew --prefix)/opt/fzf/install
 
