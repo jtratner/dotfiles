@@ -22,16 +22,16 @@ Get a working set of files by entering the following on a command line.
     cd .dotfiles
     ./install.sh
 
-Installing on Windows
----------------------
+Installing on Mac
+-----------------
 
-If you are using Windows, you can use the vim files by copying into your home
-folder (where ``$HOME`` is your directory, where you have folders for My
-Documents, etc). You can get my either via git clone or by downloading them as
-a zip file on github.
+Install homebrew from https://brew.sh . Then edit ``~/.localrc`` to reference homebrew.
 
-* ``vimrc.symlink`` should be copied to ``$HOME/_vimrc`` (note the '_' !)
-* ``vim.symlink`` should be copied to ``$HOME/vimfiles``
+::
+
+    ./homebrew/install_stuff.sh
+    ./homebrew/install_media_ai.sh
+    ./python/install_system_pythons.sh
 
 
 Installation Notes
@@ -139,6 +139,7 @@ Command      Settings
 <F3>         toggle VoOM
 :DiffSaved   Show diffs between current file and saved file
 ===========  =============================
+
 
 
 ====================================

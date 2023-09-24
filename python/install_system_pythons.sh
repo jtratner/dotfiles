@@ -5,9 +5,4 @@
 set -o nounset
 set -e
 set -x
-brew install pyenv
-pyenv install 3.6.4
-pyenv install 3.7.2
-# 😭 sigh...
-pyenv install 2.7.12
-pyenv global 3.6.4
+pyenv install 3.11.1
