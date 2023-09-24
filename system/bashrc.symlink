@@ -170,3 +170,5 @@ export GIT_EDITOR="$vim"
 
 # Add git and svn branch names
 export PS1="$PS1\$(parse_git_branch)"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

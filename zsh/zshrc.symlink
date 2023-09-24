@@ -119,3 +119,6 @@ alias cbrev='echo "$(git rev-parse HEAD | cut -c 1-8) ($(git branch | grep '"'*'
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
+
+# add fuzzy search to zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
